@@ -6,9 +6,52 @@ import java.time.LocalDate;
 public class Lote
 {	
 	
+	
+	
+	
 	//Atributos
+	/* Estructura CSV:
+	 * Producto	
+	 * Categoría	
+	 * Vencimiento (D/M/A)	
+	 * Ingreso (D/M/A)	
+	 * Precio Proveedor	
+	 * Precio Público	
+	 * Unidades	
+	 * Peso por una unidad (g)	
+	 * Empacado 
+	 */
 
-	private String tipo;
+	/**
+	 * @param nameProducto
+	 * @param categoria
+	 * @param fechaDeVencimiento
+	 * @param fechaDeIngreso
+	 * @param precioProveedor
+	 * @param precioPublico
+	 * @param cantidadUnidades
+	 * @param peso
+	 * @param esEmpacado
+	 */
+	public Lote(String nameProducto, String categoria, LocalDate fechaDeVencimiento, LocalDate fechaDeIngreso, Double precioProveedor, Double precioPublico, Integer cantidadUnidades, double peso,
+			boolean esEmpacado)
+	{
+		this.nameProducto = nameProducto;
+		this.categoria = categoria;
+		this.fechaDeVencimiento = fechaDeVencimiento;
+		this.fechaDeIngreso = fechaDeIngreso;
+		this.precioProveedor = precioProveedor;
+		this.precioPublico = precioPublico;
+		this.cantidadUnidades = cantidadUnidades;
+		this.peso = peso;
+		this.esEmpacado = esEmpacado;
+		
+		// method para codigo de barras 
+	}
+
+	private String nameProducto;
+	
+	private String categoria;
 
 	private LocalDate fechaDeVencimiento;
 	
@@ -20,13 +63,37 @@ public class Lote
 	
 	private Integer cantidadUnidades;
 	
+	private double peso;
+	
+	private boolean esEmpacado; // para el metodo de get precio
+	
+	/*
+	 * Fuera del constructor.
+	 */
+	
+	private int codigoDeBarras; // ver c[omo lo hacemos
+	
+		
 	// Métodos	
 		
-	public String getTipo()
-	{
-		return this.tipo;
-	}
 	
+	
+	/**
+	 * @return the nameProducto
+	 */
+	public String getNameProducto()
+	{
+		return nameProducto;
+	}
+
+	/**
+	 * @return the categoria
+	 */
+	public String getCategoria()
+	{
+		return categoria;
+	}
+
 	public LocalDate getfechaDeVencimiento()
 	{
 		return this.fechaDeVencimiento;

@@ -1,12 +1,19 @@
 package interfaz;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.RowFilter;
+
+import modelo.Inventario;
 
 public class EncargadoInventario
 {
-	
+	Inventario inventario = new Inventario();
 	
 	/**
 	 * 
@@ -22,7 +29,7 @@ public class EncargadoInventario
 		
 		if (result == JFileChooser.APPROVE_OPTION) {
 		    File selectedFile = fileChooser.getSelectedFile();
-		    //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+		    // TODO Save to data folder
 		    
 		    return (selectedFile.getAbsolutePath());
 		}
@@ -31,10 +38,36 @@ public class EncargadoInventario
 	}
 	
 	
-	public static void main(String[] args)
+	
+	private void readCSV(String pathCSV) throws IOException
+	{
+		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
+		
+		/* Estructura CSV:
+		 * Producto	
+		 * Categoría	
+		 * Vencimiento (D/M/A)	
+		 * Ingreso (D/M/A)	
+		 * Precio Proveedor	
+		 * Precio Público	
+		 * Unidades	
+		 * Peso por una unidad (g)	
+		 * Empacado 
+		 */
+		csvReader.readLine(); // Lee primera linea
+		String row;
+		while ((row = csvReader.readLine()) != null)
+		{
+			String[] elArray = row.split(",");
+		}
+	}
+	
+	
+	public static void main(String[] args) throws IOException
 	{
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
 		
-		System.out.println(objEncargadoInventario.getCSVPath()); // TODO revisar que le sirva a thais
+		String pathCSV =  objEncargadoInventario.getCSVPath();
+		objEncargadoInventario.readCSV(pathCSV);
 	}
 }

@@ -8,11 +8,10 @@ public class Inventario
 {
 	//Atributos
 	
-	private ArrayList<Lote> lotes = new ArrayList<Lote>();
+	private HashMap<String, ArrayList<Lote>> lotes = new HashMap<String, ArrayList<Lote>>();
 	
 	private HashMap<String, ArrayList<Integer>> gananciasPerdidas = new HashMap <String, ArrayList<Integer>>();
 	
-	private HashMap<String, ArrayList<Producto>> categorias = new HashMap <String, ArrayList<Producto>>();
 	
 	
 	// Métodos
@@ -21,7 +20,7 @@ public class Inventario
 	/**
 	 * @return the lotes
 	 */
-	public ArrayList<Lote> getLotes()
+	public HashMap<String, ArrayList<Lote>> getLotes()
 	{
 		return lotes;
 	}
@@ -34,12 +33,6 @@ public class Inventario
 		return gananciasPerdidas;
 	}
 
-	/**
-	 * @return the categorias
-	 */
-	public HashMap<String, ArrayList<Producto>> getCategorias()
-	{
-		return categorias;
-	}
+	
 	
 }

@@ -6,7 +6,7 @@ public class Compra
 {
 	// Atributos
 	
-	private ArrayList<Producto> productos = new ArrayList<Producto>();
+	//TODO arreglo de productos String
 	
 	private String factura = "";
 	
@@ -14,13 +14,7 @@ public class Compra
 	
 	// Methods
 
-	/**
-	 * @return the productos
-	 */
-	public ArrayList<Producto> getProductos()
-	{
-		return productos;
-	}
+	
 
 	/**
 	 * @return the factura
