@@ -1,0 +1,2 @@
+en este folder vamos a guardar todos los csv seleccionados
+cuando se comience a ejecutar el programa se van a cargar :0
