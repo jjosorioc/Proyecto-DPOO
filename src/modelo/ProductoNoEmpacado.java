@@ -1,5 +1,7 @@
 package modelo;
 
+import java.time.LocalDate;
+
 public class ProductoNoEmpacado implements Producto
 {
 	// Atributos
@@ -12,9 +14,9 @@ public class ProductoNoEmpacado implements Producto
 	
 	private int codigoDeBarras = 0;
 	
-	// Date fechaDeIngreso
+	private LocalDate fechaDeIngreso;
 	
-	// Date fechaDeVencimiento
+	private LocalDate fechaDeVencimiento;
 	
 	private String nombre = "";
 	
@@ -57,8 +59,26 @@ public class ProductoNoEmpacado implements Producto
 	{
 		return codigoDeBarras;
 	}
+	
+	
+	/**
+	 * @return the fechaDeIngreso
+	 */
+	public LocalDate getFechaDeIngreso()
+	{
+		return fechaDeIngreso;
+	}
 
 
+	/**
+	 * @return the fechaDeVencimiento
+	 */
+	public LocalDate getFechaDeVencimiento()
+	{
+		return fechaDeVencimiento;
+	}
+
+	
 	/**
 	 * @return the nombre
 	 */

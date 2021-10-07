@@ -1,15 +1,18 @@
 package modelo;
 
+import java.time.LocalDate;
+
+
 public class Lote
-{
+{	
 	
 	//Atributos
 
 	private String tipo;
 
-	private Date fechaVencimiento;
+	private LocalDate fechaDeVencimiento;
 	
-	private Date fechaIngreso;
+	private LocalDate fechaDeIngreso;
 	
 	private Double precioProveedor;
 	
@@ -24,14 +27,14 @@ public class Lote
 		return this.tipo;
 	}
 	
-	public Date getFechaVencimiento()
+	public LocalDate getfechaDeVencimiento()
 	{
-		return this.fechaVencimiento;
+		return this.fechaDeVencimiento;
 	}
 	
-	public Date getFechaIngreso()
+	public LocalDate getfechaDeIngreso()
 	{
-		return this.fechaIngreso;
+		return this.fechaDeIngreso;
 	}
 	
 	public Double getPrecioProveedor()

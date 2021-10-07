@@ -8,27 +8,38 @@ public class Inventario
 {
 	//Atributos
 	
-	private Lote lote;
+	private ArrayList<Lote> lotes = new ArrayList<Lote>();
 	
 	private HashMap<String, ArrayList<Integer>> gananciasPerdidas = new HashMap <String, ArrayList<Integer>>();
 	
 	private HashMap<String, ArrayList<Producto>> categorias = new HashMap <String, ArrayList<Producto>>();
 	
+	
 	// Métodos
 	
-	public Lote getLote()
-	{
-		return this.lote;
-	}
 	
-	public HashMap<String, ArrayList<Integer>> gananciasPerdidas()
+	/**
+	 * @return the lotes
+	 */
+	public ArrayList<Lote> getLotes()
 	{
-		return this.gananciasPerdidas;
+		return lotes;
 	}
-	
-	public HashMap<String, ArrayList<Producto>> categorias()
+
+	/**
+	 * @return the gananciasPerdidas
+	 */
+	public HashMap<String, ArrayList<Integer>> getGananciasPerdidas()
 	{
-		return this.categorias;
+		return gananciasPerdidas;
+	}
+
+	/**
+	 * @return the categorias
+	 */
+	public HashMap<String, ArrayList<Producto>> getCategorias()
+	{
+		return categorias;
 	}
 	
 }
