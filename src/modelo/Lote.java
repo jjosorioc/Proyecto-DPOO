@@ -6,9 +6,6 @@ import java.time.LocalDate;
 public class Lote
 {	
 	
-	
-	
-	
 	//Atributos
 	/* Estructura CSV:
 	 * Producto	
