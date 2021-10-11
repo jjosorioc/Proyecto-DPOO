@@ -124,10 +124,17 @@ public class Lote
 	{
 		return this.esEmpacado;
 	}
-	public String unidadMedida()
+	public String getUnidadMedida()
 	{
 		return this.unidadMedida;
 	}
+	
+	
+	public Double getPeso()
+	{
+		return this.peso;
+	}
+	
 
 	/**
 	 * @param precioPublico the precioPublico to set

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class EncargadoInventario
 		// if encargado quiere agregar un lote
 		String pathCSV =  objEncargadoInventario.getCSVPath();
 		objEncargadoInventario.readCSV(pathCSV);
-		System.out.println(objEncargadoInventario.fechaVencimientoLote("manzana"));
+		
+		objEncargadoInventario.guardarYcerrar();
 		
 		
 		//objEncargadoInventario.ejecutarOpcion();
@@ -155,11 +157,11 @@ public class EncargadoInventario
 			
 			String categoria = elArray[1];
 			
-			String[] vencimientoString = (elArray[2]).split("/");
-			LocalDate vencimiento = LocalDate.of(Integer.parseInt(vencimientoString[2]), Integer.parseInt(vencimientoString[1]), Integer.parseInt(vencimientoString[0]));
+			String[] vencimientoString = (elArray[2]).split("-");
+			LocalDate vencimiento = LocalDate.of(Integer.parseInt(vencimientoString[0]), Integer.parseInt(vencimientoString[1]), Integer.parseInt(vencimientoString[2]));
 			
-			String[] ingresoString = (elArray[3]).split("/");
-			LocalDate ingreso = LocalDate.of(Integer.parseInt(ingresoString[2]), Integer.parseInt(ingresoString[1]), Integer.parseInt(ingresoString[0]));
+			String[] ingresoString = (elArray[3]).split("-");
+			LocalDate ingreso = LocalDate.of(Integer.parseInt(ingresoString[0]), Integer.parseInt(ingresoString[1]), Integer.parseInt(ingresoString[2]));
 			
 			double proveedor = Double.parseDouble(elArray[4]);
 			
@@ -324,7 +326,52 @@ public class EncargadoInventario
 	}
 	
 	
-	// private void cerrarYguardar()
+	private void guardarYcerrar() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data";
+		File csvfile = new File(dataDirectory + "/inventario.csv");
+		csvfile.createNewFile();
+		
+		FileWriter writeCSV = new FileWriter(csvfile);
+		
+		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad";
+		
+		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera linea
+		
+		// se va a agregar el contenido del Mapa de inventario
+		
+		Set<String> llaves = inventario.getLotes().keySet();
+		
+		for (String llave: llaves)
+		{
+			ArrayList<Lote> contenido = inventario.getLotes().get(llave);
+
+			for (Lote i: contenido)
+			{
+				String producto = i.getNameProducto();
+				String categoria = i.getCategoria();
+				
+				String vencimiento = i.getfechaDeVencimiento().toString(); // TODO yyyy-mm-dd
+				String ingreso = i.getfechaDeIngreso().toString(); // TODO yyyy-mm-dd
+				
+				String proveedor = i.getPrecioProveedor().toString();
+				String publico = i.getPrecioPublico().toString();
+				
+				String unidades = i.getCantidadUnidades().toString();
+				String peso = i.getPeso().toString();
+				
+				String empacado = i.getEsEmpacado().toString();
+				
+				String unidadPeso = i.getUnidadMedida();
+				
+				// Nueva linea
+				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso;
+				writeCSV.write(nuevaLinea + "\n");
+			}
+		}
+		writeCSV.close();
+		System.exit(0);// Successful
+	}
 
 
 }
