@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 import java.io.InputStreamReader;
 
 import javax.swing.JFileChooser;
@@ -17,7 +19,90 @@ import modelo.Lote;
 
 public class EncargadoInventario
 {
+	public static void main(String[] args) throws IOException
+	{
+		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
+		
+		
+		// if encargado quiere agregar un lote
+		String pathCSV =  objEncargadoInventario.getCSVPath();
+		objEncargadoInventario.readCSV(pathCSV);
+		System.out.println(objEncargadoInventario.fechaVencimientoLote("manzana"));
+		
+		
+		//objEncargadoInventario.ejecutarOpcion();
+		
+	}
+	
+	// Atributos
 	private Inventario inventario = new Inventario();
+	
+	
+	
+	
+	/**
+	 * @return the inventario
+	 */
+	public Inventario getInventario()
+	{
+		return inventario;
+	}
+	
+	
+	public void mostrarMenu()
+	{
+		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
+		System.out.println("\nBienvenido a la consola para el encargado de inventario");
+		System.out.println("\n0. Cargar lote.");
+		System.out.println("\n1. Consultar disponibilidad de un producto.");
+		System.out.println("\n2. Eliminar lotes vacíos.");
+		System.out.println("\n3. Consultar unidades disponibles en un lote.");
+		System.out.println("\n4. Consultar fecha de vencimiento de un lote.\n");
+		System.out.println("\n5. Consultar desempeño financiero de un producto.\n"); //TODO
+		
+		System.out.println("\n6. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
+		System.out.println("*********************************************************\n");
+	}
+	
+	public void ejecutarOpcion()
+	{
+		System.out.println("Iniciando programa...");
+
+		boolean continuar = true;
+
+		while (continuar)
+		{
+			try
+			{
+				mostrarMenu();
+				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
+			}
+			catch (NumberFormatException e)
+			{
+				System.out.println("Debe seleccionar uno de los números de las opciones.");
+
+			}
+	
+		}
+	}
+
+
+	// Método para poder usar input()
+	public String input(String mensaje)
+	{
+		try
+		{
+			System.out.print(mensaje + ": ");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			return reader.readLine();
+		} catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * 
@@ -43,7 +128,7 @@ public class EncargadoInventario
 	
 	
 	
-	private void readCSV(String pathCSV) throws IOException
+	private void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
 		
@@ -93,8 +178,15 @@ public class EncargadoInventario
 			// Poner lo de abajo en Inventario + camiar el precio
 			if (this.inventario.getLotes().containsKey(nombreProducto))
 			{
-				ArrayList arrayDelHash = this.inventario.getLotes().get(nombreProducto);
-				arrayDelHash.add(newLote); // TODO
+				ArrayList<Lote> arrayDelHash = this.inventario.getLotes().get(nombreProducto);
+				arrayDelHash.add(newLote);
+				
+				// Ajustar el nuevo precio
+				
+				for (Lote i: arrayDelHash)
+				{
+					i.setPrecioPublico(publico); //TODO cambiar el csv
+				}
 			}
 			else {
 				ArrayList<Lote> arrayDelHash = new ArrayList<Lote>();
@@ -108,77 +200,131 @@ public class EncargadoInventario
 	
 	
 	/**
-	 * @return the inventario
+	 * 
+	 * @param nombreProducto
+	 * @return Es 0 si no existe el producto
 	 */
-	public Inventario getInventario()
+	private int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
 	{
-		return inventario;
-	}
-	
-	
-	public static void main(String[] args) throws IOException
-	{
-		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
+		int cantidadTotal = 0;
 		
+		// Array de lotes según nombreProducto
 		
-		// if encargado quiere agregar un lote
-		String pathCSV =  objEncargadoInventario.getCSVPath();
-		objEncargadoInventario.readCSV(pathCSV);
-		objEncargadoInventario.ejecutarOpcion();
-		
-	}
-	
-	public void mostrarMenu()
-	{
-		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
-		System.out.println("\nBienvenido a la consola para el encargado de inventario");
-		System.out.println("\n0. Cargar lotes.");
-		System.out.println("\n1. Consultar disponibilidad de un producto.");
-		System.out.println("\n2. Eliminar lotes vacíos.");
-		System.out.println("\n3. Consultar unidades disponibles en un lote.");
-		System.out.println("\n4. Consultar fehca de vencimiento de un lote.\n");
-		System.out.println("\n5. Consultar desempeño financiero de un prodcuto.\n");
-		System.out.println("*********************************************************\n");
-	}
-	
-	public void ejecutarOpcion()
-	{
-		System.out.println("Iniciando programa...");
-
-		boolean continuar = true;
-
-		while (continuar)
+		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
+		if (!existeLote)
 		{
-			try
-			{
-				mostrarMenu();
-				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
-			}
-			catch (NumberFormatException e)
-			{
-				System.out.println("Debe seleccionar uno de los números de las opciones.");
-
-			}
-	
+			return cantidadTotal;
 		}
-	}
-
-
-	// Método para poder usar input()
-	public String input(String mensaje)
-	{
-		try
-		{
-			System.out.print(mensaje + ": ");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			return reader.readLine();
-		} catch (IOException e)
-		{
-			System.out.println("Error leyendo de la consola");
-			e.printStackTrace();
+		
+		else {
+			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
+			
+			for (Lote i: lotesDelProducto)
+			{
+				cantidadTotal += i.getCantidadUnidades();
+			}
 		}
-		return null;
+		
+		return cantidadTotal;
 	}
+	
+	
+	/**
+	 * 
+	 * @param nombreProducto
+	 * @return -1 si no existe.
+	 */
+	private int unidadesDisponiblesLote(String nombreProducto)
+	{
+		int cantidadTotal = 0;
+		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
+		if (!existeLote)
+		{
+			cantidadTotal = -1; // No existe
+		}
+		else {
+			
+			HashMap<String, Lote> opcionesLoteHashMap = new HashMap<>();
+			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
+			
+			int numOpcion = 0;
+			System.out.println("Seleccione una opción");
+			for (Lote i: lotesDelProducto)
+			{
+				System.out.println(numOpcion + " - Fecha de ingreso: " + i.getfechaDeIngreso() + " Fecha de vencimiento: " + i.getfechaDeVencimiento());
+				opcionesLoteHashMap.put(String.valueOf(numOpcion), i);
+				numOpcion ++;
+			}
+			
+			String opcion_seleccionada = input("~ ");
+			
+			cantidadTotal = opcionesLoteHashMap.get(opcion_seleccionada).getCantidadUnidades();
+		}
+		
+		return cantidadTotal;
+	}
+	
+	
+	/**
+	 * 
+	 * @param nombreProducto
+	 * @return null si no existe
+	 */
+	private LocalDate fechaVencimientoLote(String nombreProducto)
+	{
+		LocalDate fechaVencimiento = null;
+		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
+		if (!existeLote)
+		{
+			fechaVencimiento = null; // No existe
+		}
+		else {
+			
+			HashMap<String, Lote> opcionesLoteHashMap = new HashMap<>();
+			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
+			
+			int numOpcion = 0;
+			System.out.println("Seleccione una opción");
+			for (Lote i: lotesDelProducto)
+			{
+				System.out.println(numOpcion + " - Fecha de ingreso: " + i.getfechaDeIngreso() + " Cantidad de unidades: " + i.getCantidadUnidades());
+				opcionesLoteHashMap.put(String.valueOf(numOpcion), i);
+				numOpcion ++;
+			}
+			
+			String opcion_seleccionada = input("~ ");
+			
+			fechaVencimiento = opcionesLoteHashMap.get(opcion_seleccionada).getfechaDeVencimiento();
+		}
+		
+		return fechaVencimiento;
+		
+	}
+	
+	
+	private void eliminarLotesVacios()
+	{
+		Set<String> llaves = inventario.getLotes().keySet();
+		
+		for (String llave: llaves)
+		{
+			ArrayList<Lote> contenido = inventario.getLotes().get(llave);
+			
+			int indexArray = 0;
+			for (Lote i: contenido)
+			{
+				if (i.getCantidadUnidades() <= 0)
+				{
+					contenido.remove(indexArray);
+				}
+				indexArray ++;
+			}
+		}
+	
+	}
+	
+	
+	// private void cerrarYguardar()
 
 
 }

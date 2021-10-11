@@ -72,7 +72,7 @@ public class Lote
 	 * Fuera del constructor.
 	 */
 	
-	private int codigoDeBarras; // ver c[omo lo hacemos
+	private int codigoDeBarras; // TODO ver c[omo lo hacemos
 	
 		
 	// Métodos	
@@ -127,6 +127,14 @@ public class Lote
 	public String unidadMedida()
 	{
 		return this.unidadMedida;
+	}
+
+	/**
+	 * @param precioPublico the precioPublico to set
+	 */
+	public void setPrecioPublico(Double precioPublico)
+	{
+		this.precioPublico = precioPublico;
 	}
 
 
