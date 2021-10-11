@@ -23,11 +23,7 @@ public class EncargadoInventario
 	public static void main(String[] args) throws IOException
 	{
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
-		
-		
-		// if encargado quiere agregar un lote
-		String pathCSV =  objEncargadoInventario.getCSVPath();
-		objEncargadoInventario.readCSV(pathCSV);
+		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
 		
 		objEncargadoInventario.guardarYcerrar();
 		
@@ -120,7 +116,6 @@ public class EncargadoInventario
 		
 		if (result == JFileChooser.APPROVE_OPTION) {
 		    File selectedFile = fileChooser.getSelectedFile();
-		    // TODO Save to data folder
 		    
 		    return (selectedFile.getAbsolutePath());
 		}
@@ -144,7 +139,6 @@ public class EncargadoInventario
 		 * Unidades	
 		 * Peso  (g)	
 		 * Empacado 
-		 * TODO cosa de thais precio/peso unidad
 		 */
 		csvReader.readLine(); // Lee primera linea
 		String row;
@@ -187,7 +181,7 @@ public class EncargadoInventario
 				
 				for (Lote i: arrayDelHash)
 				{
-					i.setPrecioPublico(publico); //TODO cambiar el csv
+					i.setPrecioPublico(publico);
 				}
 			}
 			else {
@@ -351,8 +345,8 @@ public class EncargadoInventario
 				String producto = i.getNameProducto();
 				String categoria = i.getCategoria();
 				
-				String vencimiento = i.getfechaDeVencimiento().toString(); // TODO yyyy-mm-dd
-				String ingreso = i.getfechaDeIngreso().toString(); // TODO yyyy-mm-dd
+				String vencimiento = i.getfechaDeVencimiento().toString();
+				String ingreso = i.getfechaDeIngreso().toString();
 				
 				String proveedor = i.getPrecioProveedor().toString();
 				String publico = i.getPrecioPublico().toString();

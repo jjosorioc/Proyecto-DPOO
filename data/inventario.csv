@@ -1,4 +1,1 @@
 Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad
-manzana,Frutas,2021-09-21,2021-09-20,2000.0,2500.0,10,200.0,true,kg
-pera,Frutas,2021-12-31,2021-10-10,2000.0,3000.0,30,100.0,true,g
-frunas,Dulces,2021-10-31,2021-09-20,4000.0,5000.0,40,500.0,false,g
