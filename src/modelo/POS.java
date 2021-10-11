@@ -7,6 +7,7 @@ public class POS
 {
 	//Atributos 
 	
+	
 	private HashMap<String, Integer> clientes = new HashMap<String, Integer>();
 	
 	//Métodos 
