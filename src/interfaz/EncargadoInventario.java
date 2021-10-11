@@ -169,6 +169,10 @@ public class EncargadoInventario
 				ArrayList<Lote> arrayDelHash = new ArrayList<Lote>();
 				arrayDelHash.add(newLote);
 				this.inventario.getLotes().put(nombreProducto, arrayDelHash);
+				
+				// Agregar a Ganancias/Pérdidas
+				this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
+				this.inventario.getPerdidas().put(newLote.getNameProducto(),0.0);
 			}
 		}
 		csvReader.close();
@@ -307,7 +311,10 @@ public class EncargadoInventario
 			for (Lote i: porBorrar)
 			{
 				contenido.remove(i);
-				// TODO ganancias/pérdidas
+				
+				// Se agregan las pérdidas
+				double perdidas = (i.getPrecioProveedor() * i.getCantidadUnidades());
+				this.inventario.getPerdidas().replace(i.getNameProducto(), perdidas);
 			}
 		}
 

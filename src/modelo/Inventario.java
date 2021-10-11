@@ -10,7 +10,8 @@ public class Inventario
 	
 	private HashMap<String, ArrayList<Lote>> lotes = new HashMap<String, ArrayList<Lote>>();
 	
-	private HashMap<String, ArrayList<Integer>> gananciasPerdidas = new HashMap <String, ArrayList<Integer>>();
+	private HashMap<String, Double> ganancias = new HashMap <String, Double>();
+	private HashMap<String, Double> perdidas = new HashMap <String, Double>();
 	
 	
 	
@@ -25,13 +26,27 @@ public class Inventario
 		return lotes;
 	}
 
+
+
 	/**
-	 * @return the gananciasPerdidas
+	 * @return the ganancias
 	 */
-	public HashMap<String, ArrayList<Integer>> getGananciasPerdidas()
+	public HashMap<String, Double> getGanancias()
 	{
-		return gananciasPerdidas;
+		return ganancias;
 	}
+
+
+
+	/**
+	 * @return the perdidas
+	 */
+	public HashMap<String, Double> getPerdidas()
+	{
+		return perdidas;
+	}
+
+	
 
 	
 	
