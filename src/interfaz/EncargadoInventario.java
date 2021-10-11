@@ -26,8 +26,6 @@ public class EncargadoInventario
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
 		
-		objEncargadoInventario.eliminarLotesVacios();
-		objEncargadoInventario.guardarYcerrar();
 
 		// objEncargadoInventario.ejecutarOpcion();
 
@@ -50,7 +48,7 @@ public class EncargadoInventario
 		System.out.println("\nBienvenido a la consola para el encargado de inventario");
 		System.out.println("\n0. Cargar lote.");
 		System.out.println("\n1. Consultar disponibilidad de un producto.");
-		System.out.println("\n2. Eliminar lotes vacíos.");
+		System.out.println("\n2. Eliminar lotes vencidos.");
 		System.out.println("\n3. Consultar unidades disponibles en un lote.");
 		System.out.println("\n4. Consultar fecha de vencimiento de un lote.\n");
 		System.out.println("\n5. Consultar desempeño financiero de un producto.\n"); // TODO
@@ -278,8 +276,16 @@ public class EncargadoInventario
 
 	}
 
-	private void eliminarLotesVacios()
+	
+	/**
+	 * Se ingresa la fecha actual.
+	 * @param year
+	 * @param month
+	 * @param day
+	 */
+	private void eliminarLotesVencidos(int year, int month, int day) // YYYY-MM-DD
 	{
+		LocalDate fechaDate = LocalDate.of(year, month, day);
 		Set<String> llaves = inventario.getLotes().keySet();
 		
 		ArrayList<Lote> porBorrar = new ArrayList<>(); 
@@ -291,7 +297,7 @@ public class EncargadoInventario
 
 			for (Lote i : contenido)
 			{
-				if (i.getCantidadUnidades() <= 0)
+				if (i.getfechaDeVencimiento().isBefore(fechaDate))
 				{
 					porBorrar.add(i);
 				}
@@ -301,6 +307,7 @@ public class EncargadoInventario
 			for (Lote i: porBorrar)
 			{
 				contenido.remove(i);
+				// TODO ganancias/pérdidas
 			}
 		}
 
