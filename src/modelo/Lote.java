@@ -17,6 +17,7 @@ public class Lote
 	 * Unidades	
 	 * Peso por una unidad (g)	
 	 * Empacado 
+	 * Unidad de medida
 	 */
 
 	/**
@@ -31,7 +32,7 @@ public class Lote
 	 * @param esEmpacado
 	 */
 	public Lote(String nameProducto, String categoria, LocalDate fechaDeVencimiento, LocalDate fechaDeIngreso, Double precioProveedor, Double precioPublico, Integer cantidadUnidades, double peso,
-			boolean esEmpacado)
+			boolean esEmpacado, String unidadMedida)
 	{
 		this.nameProducto = nameProducto;
 		this.categoria = categoria;
@@ -42,6 +43,7 @@ public class Lote
 		this.cantidadUnidades = cantidadUnidades;
 		this.peso = peso;
 		this.esEmpacado = esEmpacado;
+		this.unidadMedida = unidadMedida;
 		
 		// method para codigo de barras 
 	}
@@ -63,6 +65,8 @@ public class Lote
 	private double peso;
 	
 	private boolean esEmpacado; // para el metodo de get precio
+	
+	private String unidadMedida;
 	
 	/*
 	 * Fuera del constructor.
@@ -114,6 +118,15 @@ public class Lote
 	public Integer getCantidadUnidades()
 	{
 		return this.cantidadUnidades;
+	}
+	
+	public Boolean getEsEmpacado()
+	{
+		return this.esEmpacado;
+	}
+	public String unidadMedida()
+	{
+		return this.unidadMedida;
 	}
 
 

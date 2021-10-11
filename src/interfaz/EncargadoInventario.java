@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.InputStreamReader;
 
 import javax.swing.JFileChooser;
 import javax.swing.RowFilter;
@@ -85,7 +86,9 @@ public class EncargadoInventario
 			
 			boolean empacado = Boolean.parseBoolean(elArray[8]);
 			
-			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado);
+			String unidad = elArray[9];
+			
+			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad);
 			
 			// Poner lo de abajo en Inventario + camiar el precio
 			if (this.inventario.getLotes().containsKey(nombreProducto))
@@ -121,7 +124,60 @@ public class EncargadoInventario
 		// if encargado quiere agregar un lote
 		String pathCSV =  objEncargadoInventario.getCSVPath();
 		objEncargadoInventario.readCSV(pathCSV);
+		objEncargadoInventario.ejecutarOpcion();
 		
+	}
+	
+	public void mostrarMenu()
+	{
+		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
+		System.out.println("\nBienvenido a la consola para el encargado de inventario");
+		System.out.println("\n0. Cargar lotes.");
+		System.out.println("\n1. Consultar disponibilidad de un producto.");
+		System.out.println("\n2. Eliminar lotes vacíos.");
+		System.out.println("\n3. Consultar unidades disponibles en un lote.");
+		System.out.println("\n4. Consultar fehca de vencimiento de un lote.\n");
+		System.out.println("\n5. Consultar desempeño financiero de un prodcuto.\n");
+		System.out.println("*********************************************************\n");
+	}
+	
+	public void ejecutarOpcion()
+	{
+		System.out.println("Iniciando programa...");
+
+		boolean continuar = true;
+
+		while (continuar)
+		{
+			try
+			{
+				mostrarMenu();
+				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
+			}
+			catch (NumberFormatException e)
+			{
+				System.out.println("Debe seleccionar uno de los números de las opciones.");
+
+			}
+	
+		}
+	}
+
+
+	// Método para poder usar input()
+	public String input(String mensaje)
+	{
+		try
+		{
+			System.out.print(mensaje + ": ");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			return reader.readLine();
+		} catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 
