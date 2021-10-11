@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.io.InputStreamReader;
 
+import javax.sound.sampled.Port;
 import javax.swing.JFileChooser;
 import javax.swing.RowFilter;
 
@@ -24,7 +25,8 @@ public class EncargadoInventario
 	{
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
-
+		
+		objEncargadoInventario.eliminarLotesVacios();
 		objEncargadoInventario.guardarYcerrar();
 
 		// objEncargadoInventario.ejecutarOpcion();
@@ -279,19 +281,26 @@ public class EncargadoInventario
 	private void eliminarLotesVacios()
 	{
 		Set<String> llaves = inventario.getLotes().keySet();
+		
+		ArrayList<Lote> porBorrar = new ArrayList<>(); 
 
 		for (String llave : llaves)
 		{
 			ArrayList<Lote> contenido = inventario.getLotes().get(llave);
 
-			int indexArray = 0;
+
 			for (Lote i : contenido)
 			{
 				if (i.getCantidadUnidades() <= 0)
 				{
-					contenido.remove(indexArray);
+					porBorrar.add(i);
 				}
-				indexArray++;
+
+			}
+			
+			for (Lote i: porBorrar)
+			{
+				contenido.remove(i);
 			}
 		}
 
