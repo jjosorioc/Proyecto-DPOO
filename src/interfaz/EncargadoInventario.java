@@ -24,6 +24,7 @@ public class EncargadoInventario
 	public static void main(String[] args) throws IOException
 	{
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
+		objEncargadoInventario.cargarGananciasPerdidas(); //TODO probarlo
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
 		
 
@@ -115,6 +116,7 @@ public class EncargadoInventario
 		return ("null");
 	}
 
+	
 	private void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
@@ -178,6 +180,32 @@ public class EncargadoInventario
 		csvReader.close();
 
 	}
+	
+	
+	private void cargarGananciasPerdidas() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data/gananciasYperdidas.csv";
+		BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
+		
+		// NombreProducto, Ganancias, Perdidas
+		
+		csvReader.readLine();
+		String row;
+		while ((row = csvReader.readLine()) != null)
+		{
+			String[] separada = row.split(",");
+			
+			String nombreProducto = separada[0];
+			Double gananciasDouble = Double.parseDouble(separada[1]);
+			Double perdidasDouble = Double.parseDouble(separada[2]);
+			
+			this.inventario.getGanancias().put(nombreProducto, gananciasDouble);
+			this.inventario.getPerdidas().put(nombreProducto, perdidasDouble);
+		}
+		csvReader.close();
+	}
+	
+	
 
 	/**
 	 * 
