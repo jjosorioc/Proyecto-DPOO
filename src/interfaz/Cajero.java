@@ -37,7 +37,7 @@ public class Cajero
 		System.out.println("\n2. Agregar un producto a la compra del cliente.");
 		System.out.println("\n3. Finalizar compra cliente.");
 		System.out.println("\n4. Eliminar compra cliente.");
-		System.out.println("\n5. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n"); // TODO
+		System.out.println("\n5. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
 		System.out.println("*********************************************************\n");
 	}
 
@@ -187,6 +187,15 @@ public class Cajero
 	{
 		this.compraActiva = null;
 		System.out.println("\nSe eliminó la compra.\n");
+	}
+	
+	private void guardarYcerrar() throws IOException
+	{
+		this.pos.guardarInventario();
+		this.pos.guardarClientes();
+		this.pos.guardarGananciasYPerdidas();
+		
+		System.exit(0);
 	}
 
 }

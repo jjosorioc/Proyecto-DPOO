@@ -1,11 +1,14 @@
 package modelo;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap; // import the HashMap class
+import java.util.Set;
 
 public class POS
 
@@ -24,12 +27,23 @@ public class POS
 	{
 		return clientes;
 	}
-
+	
+	
+	/**
+	 * Se agregan los puntos del clente
+	 * @param cedula
+	 * @param puntos
+	 */
 	public void agregarPuntosCliente(String cedula, Integer puntos)
 	{
 		this.clientes.replace(cedula, puntos);
 	}
-
+	
+	
+	/**
+	 * Se carga el inventario de inventario.csv
+	 * @throws IOException
+	 */
 	public void cargarInventario() throws IOException // Se carga el inventario
 	{
 		String pathCSV = System.getProperty("user.dir") + "/data/inventario.csv";
@@ -99,5 +113,119 @@ public class POS
 		}
 		csvReader.close();
 
+	}
+	
+	
+	/**
+	 * Guardar el inventario al csv
+	 * @throws IOException
+	 */
+	public void guardarInventario() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data";
+		File csvfile = new File(dataDirectory + "/inventario.csv");
+		csvfile.createNewFile();
+
+		FileWriter writeCSV = new FileWriter(csvfile);
+
+		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad";
+
+		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera linea
+
+		// se va a agregar el contenido del Mapa de inventario
+
+		Set<String> llaves = inventario.getLotes().keySet();
+
+		for (String llave : llaves)
+		{
+			ArrayList<Lote> contenido = inventario.getLotes().get(llave);
+
+			for (Lote i : contenido)
+			{
+				String producto = i.getNameProducto();
+				String categoria = i.getCategoria();
+
+				String vencimiento = i.getfechaDeVencimiento().toString();
+				String ingreso = i.getfechaDeIngreso().toString();
+
+				String proveedor = i.getPrecioProveedor().toString();
+				String publico = i.getPrecioPublico().toString();
+
+				String unidades = i.getCantidadUnidades().toString();
+				String peso = i.getPeso().toString();
+
+				String empacado = i.getEsEmpacado().toString();
+
+				String unidadPeso = i.getUnidadMedida();
+				
+				String codigoBarras = i.getCodigoBarras();
+
+				// Nueva linea
+				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras;
+				writeCSV.write(nuevaLinea + "\n");
+			}
+		}
+		writeCSV.close();
+	}
+	
+	
+	/**
+	 * Guardar clientes al csv
+	 * @throws IOException
+	 */
+	public void guardarClientes() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data";
+		File csvfile = new File(dataDirectory + "/clientes.csv");
+		csvfile.createNewFile();
+
+		FileWriter writeCSV = new FileWriter(csvfile);
+		
+		String primeraLineaString = "Cedula,Puntos";
+	
+		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
+	
+		Set<String> llaves = this.clientes.keySet();
+		
+		for (String cedula: llaves)
+		{
+			String puntos = this.clientes.get(cedula).toString();
+			
+			String nuevaLinea = cedula + "," + puntos; //TODO hacer que el archivo se separe por comas
+			writeCSV.write(nuevaLinea + "\n");
+		}
+		
+		writeCSV.close();
+	}
+	
+	
+	/**
+	 * Guarda las ganancias y perdidas en gananciasYperdidas.csv
+	 * @throws IOException
+	 */
+	public void guardarGananciasYPerdidas() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data";
+		File csvfile = new File(dataDirectory + "/gananciasYperdidas.csv");
+		csvfile.createNewFile();
+
+		FileWriter writeCSV = new FileWriter(csvfile);
+		
+		String primeraLineaString = "Producto,Ganancias,Perdidas";
+	
+		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
+		
+		
+		Set<String> llaves = inventario.getGanancias().keySet();
+		
+		for (String llave: llaves)
+		{
+			String ganancia = inventario.getGanancias().get(llave).toString();
+			String perdida = inventario.getPerdidas().get(llave).toString();
+			
+			String nuevaLinea = llave + "," + ganancia + "," + perdida;
+			writeCSV.write(nuevaLinea+"\n");
+		}
+		writeCSV.close();
 	}
 }

@@ -453,7 +453,38 @@ public class EncargadoInventario
 			}
 		}
 		writeCSV.close();
+		guardarGananciasYPerdidas();
 		System.exit(0);// Successful
+	}
+	
+	/**
+	 * Guarda las ganancias y perdidas en gananciasYperdidas.csv
+	 * @throws IOException
+	 */
+	private void guardarGananciasYPerdidas() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data";
+		File csvfile = new File(dataDirectory + "/gananciasYperdidas.csv");
+		csvfile.createNewFile();
+
+		FileWriter writeCSV = new FileWriter(csvfile);
+		
+		String primeraLineaString = "Producto,Ganancias,Perdidas";
+	
+		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
+		
+		
+		Set<String> llaves = inventario.getGanancias().keySet();
+		
+		for (String llave: llaves)
+		{
+			String ganancia = inventario.getGanancias().get(llave).toString();
+			String perdida = inventario.getPerdidas().get(llave).toString();
+			
+			String nuevaLinea = llave + "," + ganancia + "," + perdida;
+			writeCSV.write(nuevaLinea+"\n");
+		}
+		writeCSV.close();
 	}
 
 }
