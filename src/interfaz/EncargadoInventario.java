@@ -39,7 +39,10 @@ public class EncargadoInventario
 	{
 		return inventario;
 	}
-
+	
+	/**
+	 * Método para imprimir el menú en consola
+	 */
 	private void mostrarMenu()
 	{
 		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
@@ -54,7 +57,10 @@ public class EncargadoInventario
 		System.out.println("\n6. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
 		System.out.println("*********************************************************\n");
 	}
-
+	
+	/**
+	 * Método que interactúa con el usuario a través de la consola.
+	 */
 	public void ejecutarOpcion() throws IOException
 	{
 		System.out.println("Iniciando programa...");
@@ -137,7 +143,12 @@ public class EncargadoInventario
 		}
 	}
 
-	// Método para poder usar input()
+	/**
+	 * Método para obtener el input del usuario.
+	 * 
+	 * @param mensaje
+	 * @return String o null
+	 */
 	private String input(String mensaje)
 	{
 		try
@@ -174,7 +185,12 @@ public class EncargadoInventario
 		return ("null");
 	}
 
-	
+	/**
+	 * Método para leer un csv con el archivo con Lotes
+	 * 
+	 * @param pathCSV
+	 * @throws IOException
+	 */
 	private void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
@@ -244,7 +260,10 @@ public class EncargadoInventario
 
 	}
 	
-	
+	/**
+	 * Se carga el archivo de ganaciasYperdidas.csv
+	 * @throws IOException
+	 */
 	private void cargarGananciasPerdidas() throws IOException
 	{
 		String dataDirectory = System.getProperty("user.dir") + "/data/gananciasYperdidas.csv";
@@ -411,6 +430,11 @@ public class EncargadoInventario
 
 	}
 	
+	/**
+	 * Se consulta el desempeño financiero de un producto por su nombre.
+	 * @param nombreProducto
+	 * @return ArrayList<Double> [Ganancias, Perdidas]
+	 */
 	private ArrayList<Double> consultarDesempenoFinanciero(String nombreProducto)
 	{
 		ArrayList<Double> gananciasYperdidas = new ArrayList<Double>();
@@ -423,7 +447,12 @@ public class EncargadoInventario
 		return (gananciasYperdidas);
 		
 	}
-
+	
+	/**
+	 * Método para guardar toda la información en sus csv respectivos. Luego cierra la aplicación.
+	 * 
+	 * @throws IOException
+	 */
 	private void guardarYcerrar() throws IOException
 	{
 		String dataDirectory = System.getProperty("user.dir") + "/data";

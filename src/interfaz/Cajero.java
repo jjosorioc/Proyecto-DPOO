@@ -28,6 +28,10 @@ public class Cajero
 	private Compra compraActiva = null;
 
 	// Métodos
+	
+	/**
+	 * Método para imprimir el menú en consola
+	 */
 	private void mostrarMenu()
 	{
 		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
@@ -35,12 +39,15 @@ public class Cajero
 		System.out.println("\n0. Agregar un nuevo cliente al sistema.");
 		System.out.println("\n1. Iniciar una compra de un cliente.");
 		System.out.println("\n2. Agregar un producto a la compra del cliente.");
-		System.out.println("\n3. Finalizar compra cliente."); //TODO :)
+		System.out.println("\n3. Finalizar compra cliente."); // TODO :)
 		System.out.println("\n4. Eliminar compra cliente.");
 		System.out.println("\n5. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
 		System.out.println("*********************************************************\n");
 	}
 
+	/**
+	 * Método que interactúa con el usuario a través de la consola.
+	 */
 	private void ejecutarOpcion()
 	{
 		System.out.println("Iniciando programa...");
@@ -62,7 +69,12 @@ public class Cajero
 		}
 	}
 
-	// Método para poder usar input()
+	/**
+	 * Método para obtener el input del usuario.
+	 * 
+	 * @param mensaje
+	 * @return String o null
+	 */
 	private String input(String mensaje)
 	{
 		try
@@ -78,6 +90,12 @@ public class Cajero
 		return null;
 	}
 
+	/**
+	 * Método para leer un csv con el archivo con Lotes
+	 * 
+	 * @param pathCSV
+	 * @throws IOException
+	 */
 	private void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
@@ -173,6 +191,9 @@ public class Cajero
 		return cantidadTotal;
 	}
 
+	/**
+	 * Método para finalizar la compra del cliente
+	 */
 	private void finalizarCompra()
 	{
 		System.out.println(compraActiva.getFactura(this.pos.inventario));
@@ -182,19 +203,27 @@ public class Cajero
 		}
 		this.compraActiva = null;
 	}
-	
+
+	/**
+	 * Método para eliminar la compra del cliente activo.
+	 */
 	private void eliminarCompra()
 	{
 		this.compraActiva = null;
 		System.out.println("\nSe eliminó la compra.\n");
 	}
-	
+
+	/**
+	 * Método para guardar toda la información en sus csv respectivos. Luego cierra la aplicación.
+	 * 
+	 * @throws IOException
+	 */
 	private void guardarYcerrar() throws IOException
 	{
 		this.pos.guardarInventario();
 		this.pos.guardarClientes();
 		this.pos.guardarGananciasYPerdidas();
-		
+
 		System.exit(0);
 	}
 
