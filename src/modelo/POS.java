@@ -8,7 +8,7 @@ public class POS
 	//Atributos 
 	
 	
-	private HashMap<String, Integer> clientes = new HashMap<String, Integer>();
+	private HashMap<String, Integer> clientes = new HashMap<String, Integer>(); // Cédula y Puntos
 	
 	//Métodos 
 	

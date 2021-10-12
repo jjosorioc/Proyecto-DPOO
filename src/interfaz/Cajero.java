@@ -20,6 +20,8 @@ public class Cajero
 	// Atributos
 	private POS pos = new POS();
 
+	
+	// Métodos
 	public void mostrarMenu()
 	{
 		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
@@ -33,6 +35,7 @@ public class Cajero
 		System.out.println("*********************************************************\n");
 	}
 
+	
 	public void ejecutarOpcion()
 	{
 		System.out.println("Iniciando programa...");
@@ -54,6 +57,7 @@ public class Cajero
 		}
 	}
 
+	
 	// Método para poder usar input()
 	public String input(String mensaje)
 	{
@@ -70,6 +74,7 @@ public class Cajero
 		return null;
 	}
 
+	
 	private void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
@@ -91,7 +96,16 @@ public class Cajero
 
 		}
 		csvReader.close();
-
+	}
+	
+	
+	/**
+	 * Se agrega un cliente al HashMap de POS
+	 * @param cedula
+	 */
+	private void crearCliente(String cedula)
+	{
+		this.pos.getClientes().put(cedula, 0);
 	}
 
 }
