@@ -89,11 +89,11 @@ public class Cajero
 		String row;
 		while ((row = csvReader.readLine()) != null)
 		{
-			String[] elArray = row.split(";"); // Main array
+			String[] elArray = row.split(","); // Main array
 
-			String documento = elArray[1];
+			String documento = elArray[0];
 
-			Integer puntos = Integer.parseInt(elArray[2]);
+			Integer puntos = Integer.parseInt(elArray[1]);
 
 			pos.getClientes().put(documento, puntos);
 

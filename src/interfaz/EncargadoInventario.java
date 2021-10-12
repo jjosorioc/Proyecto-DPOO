@@ -49,7 +49,7 @@ public class EncargadoInventario
 		System.out.println("\n2. Eliminar lotes vencidos.");
 		System.out.println("\n3. Consultar unidades disponibles en un lote.");
 		System.out.println("\n4. Consultar fecha de vencimiento de un lote.");
-		System.out.println("\n5. Consultar desempeño financiero de un producto."); // TODO
+		System.out.println("\n5. Consultar desempeño financiero de un producto.");
 
 		System.out.println("\n6. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
 		System.out.println("*********************************************************\n");
@@ -121,7 +121,11 @@ public class EncargadoInventario
 			
 			else if (opcion_seleccionada == 5)
 			{
-				//TODO 
+				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su desempeño financiero");
+				ArrayList<Double> resultado = consultarDesempenoFinanciero(nombre);
+				System.out.println("\nEl desempeño financiero de " + nombre + " es el siguiente\n-Ganancias: $" + resultado.get(0) + "\n-Pérdidas: $" + resultado.get(1) + "\n");
+				
+				
 			}
 			
 			else if  (opcion_seleccionada == 6)
@@ -406,6 +410,19 @@ public class EncargadoInventario
 		}
 
 	}
+	
+	private ArrayList<Double> consultarDesempenoFinanciero(String nombreProducto)
+	{
+		ArrayList<Double> gananciasYperdidas = new ArrayList<Double>();
+		Double ganancias = inventario.getGanancias().get(nombreProducto);
+		Double perdidas = inventario.getPerdidas().get(nombreProducto);
+		
+		gananciasYperdidas.add(ganancias);
+		gananciasYperdidas.add(perdidas);
+		
+		return (gananciasYperdidas);
+		
+	}
 
 	private void guardarYcerrar() throws IOException
 	{
@@ -415,7 +432,7 @@ public class EncargadoInventario
 
 		FileWriter writeCSV = new FileWriter(csvfile);
 
-		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad";
+		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Codigo de barras";
 
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera linea
 
