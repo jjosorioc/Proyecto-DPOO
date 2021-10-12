@@ -5,34 +5,58 @@ import java.util.HashMap;
 
 public class Compra
 {
+	/**
+	 * @param cedula
+	 */
+	public Compra(String cedula)
+	{
+		this.cedula = cedula;
+	}
+	
+	
 	// Atributos
-	
-	
+
 	HashMap<String, ArrayList<Double>> productoCantidad = new HashMap<>(); //Producto: [Cantidad, Peso]
+	
 	private String factura = "";
 	
-	private double precio = 0;
+	private Double valorTotal = 0.0;
+	
+	public String cedula = null;
+	
+	public Integer puntos = 0;
 	
 	
 	// Methods
 
 
 	/**
-	 * @return the factura
+	 * 
+	 * @param inventario
+	 * @return Factura completa
 	 */
-	public String getFactura()
+	public String getFactura(Inventario inventario)
 	{
-		return factura;
+		
+		this.factura += "\nFACTURA";
+		for (String llave: this.productoCantidad.keySet())
+		{
+			this.factura += "\nProducto: " + llave + " Cantidad: " + this.productoCantidad.get(llave).get(0);
+			valorTotal += inventario.getPrecioProducto(llave, this.productoCantidad.get(llave).get(0), this.productoCantidad.get(llave).get(1));
+		}
+		
+		this.factura += "\nValor Total de la Compra: " + valorTotal;
+		
+		if (this.cedula != null)
+		{
+			this.puntos = (int) (this.valorTotal / 1000);
+			this.factura += "\nPuntos obtenidos: " + this.puntos;
+		}
+		
+		return this.factura;
 	}
 
 	
-	/**
-	 * @return the precio
-	 */
-	public double getPrecio()
-	{
-		return precio;
-	}
 	
 	
 	/**

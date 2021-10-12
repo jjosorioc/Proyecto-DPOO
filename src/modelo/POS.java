@@ -7,23 +7,29 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap; // import the HashMap class
 
-
 public class POS
 
 {
-	//Atributos 
+	// Atributos
 	public Inventario inventario = new Inventario();
-	
+
 	private HashMap<String, Integer> clientes = new HashMap<String, Integer>(); // Cédula y Puntos
-	
-	//Métodos 
-	
+
+	// Métodos
+
+	/**
+	 * @return the clientes
+	 */
 	public HashMap<String, Integer> getClientes()
 	{
-		return this.clientes;
+		return clientes;
 	}
-	
-	
+
+	public void agregarPuntosCliente(String cedula, Integer puntos)
+	{
+		this.clientes.replace(cedula, puntos);
+	}
+
 	public void cargarInventario() throws IOException // Se carga el inventario
 	{
 		String pathCSV = System.getProperty("user.dir") + "/data/inventario.csv";
@@ -79,10 +85,10 @@ public class POS
 				ArrayList<Lote> arrayDelHash = new ArrayList<Lote>();
 				arrayDelHash.add(newLote);
 				this.inventario.getLotes().put(nombreProducto, arrayDelHash);
-				
+
 				// Agregar a Ganancias/Pérdidas
 				this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
-				this.inventario.getPerdidas().put(newLote.getNameProducto(),0.0);
+				this.inventario.getPerdidas().put(newLote.getNameProducto(), 0.0);
 			}
 		}
 		csvReader.close();

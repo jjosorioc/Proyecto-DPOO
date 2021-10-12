@@ -2,22 +2,12 @@ package modelo;
 
 import java.time.LocalDate;
 
-
 public class Lote
-{	
-	
-	//Atributos
-	/* Estructura CSV:
-	 * Producto	
-	 * Categoría	
-	 * Vencimiento (D/M/A)	
-	 * Ingreso (D/M/A)	
-	 * Precio Proveedor	
-	 * Precio Público	
-	 * Unidades	
-	 * Peso por una unidad (g)	
-	 * Empacado 
-	 * Unidad de medida
+{
+
+	// Atributos
+	/*
+	 * Estructura CSV: Producto Categoría Vencimiento (D/M/A) Ingreso (D/M/A) Precio Proveedor Precio Público Unidades Peso por una unidad (g) Empacado Unidad de medida
 	 */
 
 	/**
@@ -44,41 +34,38 @@ public class Lote
 		this.peso = peso;
 		this.esEmpacado = esEmpacado;
 		this.unidadMedida = unidadMedida;
-		
-		// method para codigo de barras 
+
+		// method para codigo de barras
 	}
 
 	private String nameProducto;
-	
+
 	private String categoria;
 
 	private LocalDate fechaDeVencimiento;
-	
+
 	private LocalDate fechaDeIngreso;
-	
+
 	private Double precioProveedor;
-	
+
 	private Double precioPublico;
-	
+
 	private Integer cantidadUnidades;
-	
+
 	private double peso;
-	
-	private boolean esEmpacado; // para el metodo de get precio
-	
+
+	private boolean esEmpacado; // para saber cómo se debe obtener el precio
+
 	private String unidadMedida;
-	
+
 	/*
 	 * Fuera del constructor.
 	 */
-	
+
 	private int codigoDeBarras; // TODO ver c[omo lo hacemos
-	
-		
-	// Métodos	
-		
-	
-	
+
+	// Métodos
+
 	/**
 	 * @return the nameProducto
 	 */
@@ -99,42 +86,41 @@ public class Lote
 	{
 		return this.fechaDeVencimiento;
 	}
-	
+
 	public LocalDate getfechaDeIngreso()
 	{
 		return this.fechaDeIngreso;
 	}
-	
+
 	public Double getPrecioProveedor()
 	{
 		return this.precioProveedor;
 	}
-	
+
 	public Double getPrecioPublico()
 	{
 		return this.precioPublico;
 	}
-	
+
 	public Integer getCantidadUnidades()
 	{
 		return this.cantidadUnidades;
 	}
-	
+
 	public Boolean getEsEmpacado()
 	{
 		return this.esEmpacado;
 	}
+
 	public String getUnidadMedida()
 	{
 		return this.unidadMedida;
 	}
-	
-	
+
 	public Double getPeso()
 	{
 		return this.peso;
 	}
-	
 
 	/**
 	 * @param precioPublico the precioPublico to set
@@ -143,21 +129,5 @@ public class Lote
 	{
 		this.precioPublico = precioPublico;
 	}
-	
-	
-	public Double getPrecioTOTAL(Double cantidad, Double pesoCliente)
-	{
-		Double costoTotal = 0.0;
-		if (this.esEmpacado)
-		{
-			costoTotal = this.precioPublico * cantidad;
-		}
-		else {
-			costoTotal = this.precioPublico * pesoCliente;
-		}
-		
-		return costoTotal;
-	}
-
 
 }

@@ -21,7 +21,7 @@ public class EncargadoInventario
 	public static void main(String[] args) throws IOException
 	{
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
-		objEncargadoInventario.cargarGananciasPerdidas(); //TODO probarlo
+		objEncargadoInventario.cargarGananciasPerdidas(); // Cargar ganancias y pérdidas
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
 		
 

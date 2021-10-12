@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import modelo.Compra;
+import modelo.Inventario;
 import modelo.Lote;
 import modelo.POS;
 
@@ -21,11 +22,11 @@ public class Cajero
 	}
 
 	// Atributos
-	
+
 	private POS pos = new POS();
-	
+
 	private Compra compraActiva = null;
-	
+
 	// Métodos
 	private void mostrarMenu()
 	{
@@ -36,11 +37,10 @@ public class Cajero
 		System.out.println("\n2. Agregar un producto a la compra del cliente.");
 		System.out.println("\n3. Finalizar compra cliente.");
 		System.out.println("\n4. Eliminar compra cliente.");
-		System.out.println("\n5. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
+		System.out.println("\n5. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n"); // TODO
 		System.out.println("*********************************************************\n");
 	}
 
-	
 	private void ejecutarOpcion()
 	{
 		System.out.println("Iniciando programa...");
@@ -62,7 +62,6 @@ public class Cajero
 		}
 	}
 
-	
 	// Método para poder usar input()
 	private String input(String mensaje)
 	{
@@ -79,7 +78,6 @@ public class Cajero
 		return null;
 	}
 
-	
 	private void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
@@ -102,29 +100,26 @@ public class Cajero
 		}
 		csvReader.close();
 	}
-	
-	
+
 	/**
 	 * Se agrega un cliente al HashMap de POS
+	 * 
 	 * @param cedula
 	 */
 	private void crearCliente(String cedula)
 	{
 		this.pos.getClientes().put(cedula, 0);
 	}
-	
-	
-	
+
 	/**
 	 * 
 	 * @param cedula
 	 */
 	private void inicarCompraCliente(String cedula)
 	{
-		this.compraActiva = new Compra();
+		this.compraActiva = new Compra(cedula);
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param productoNombre
@@ -133,24 +128,21 @@ public class Cajero
 	 */
 	private void agregarProducto(String productoNombre, Double cantidad, Double peso) // el producto debe estar en minúsculas
 	{
-		if (this.compraActiva != null) 
+		if (this.compraActiva != null)
 		{
 			if (disponibilidadProducto(productoNombre) >= cantidad && disponibilidadProducto(productoNombre) != -1)
 			{
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
-			}
-			else
+			} else
 			{
 				System.out.println("\nEl producto no existe o la cantidad de unidades no alcanza.\n");
 			}
-		}
-		else {
+		} else
+		{
 			System.out.println("\nNo se agregó ningún producto... Inicie una compra.\n");
 		}
 	}
-	
-	
-	
+
 	/**
 	 * 
 	 * @param nombreProducto
@@ -180,14 +172,21 @@ public class Cajero
 
 		return cantidadTotal;
 	}
-	
-	
+
 	private void finalizarCompra()
 	{
-		// Imprimir factura
-		
+		System.out.println(compraActiva.getFactura(this.pos.inventario));
+		if (compraActiva.cedula != null)
+		{
+			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
+		}
 		this.compraActiva = null;
 	}
 	
+	private void eliminarCompra()
+	{
+		this.compraActiva = null;
+		System.out.println("\nSe eliminó la compra.\n");
+	}
 
 }
