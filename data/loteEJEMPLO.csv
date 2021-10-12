@@ -1,0 +1,4 @@
+Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Codigo de barras
+manzana,fruta,2021-05-13,2021-05-08,500,2000,500,25,false,g,3748291918
+pera,fruta,2021-05-13,2021-05-08,500,2000,0,25,false,g,3281947270
+fresa,fruta,2019-05-13,2019-05-08,500,2000,30,25,false,g,3281947270

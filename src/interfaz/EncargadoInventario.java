@@ -24,8 +24,8 @@ public class EncargadoInventario
 		objEncargadoInventario.cargarGananciasPerdidas(); // Cargar ganancias y pérdidas
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
 		
-
-		// objEncargadoInventario.ejecutarOpcion();
+		
+		objEncargadoInventario.ejecutarOpcion();
 
 	}
 
@@ -48,14 +48,14 @@ public class EncargadoInventario
 		System.out.println("\n1. Consultar disponibilidad de un producto.");
 		System.out.println("\n2. Eliminar lotes vencidos.");
 		System.out.println("\n3. Consultar unidades disponibles en un lote.");
-		System.out.println("\n4. Consultar fecha de vencimiento de un lote.\n");
-		System.out.println("\n5. Consultar desempeño financiero de un producto.\n"); // TODO
+		System.out.println("\n4. Consultar fecha de vencimiento de un lote.");
+		System.out.println("\n5. Consultar desempeño financiero de un producto."); // TODO
 
 		System.out.println("\n6. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
 		System.out.println("*********************************************************\n");
 	}
 
-	public void ejecutarOpcion()
+	public void ejecutarOpcion() throws IOException
 	{
 		System.out.println("Iniciando programa...");
 
@@ -63,14 +63,71 @@ public class EncargadoInventario
 
 		while (continuar)
 		{
-			try
+			mostrarMenu();
+			int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
+			
+			if (opcion_seleccionada == 0)
 			{
-				mostrarMenu();
-				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
-			} catch (NumberFormatException e)
+				String path = getCSVPath();
+				readCSV(path);
+				System.out.println("\nSe ha cargado el lote con éxito.\n");
+			}
+			else if (opcion_seleccionada == 1)
 			{
-				System.out.println("Debe seleccionar uno de los números de las opciones.");
-
+				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su disponibilidad");
+				Integer resultado = disponibilidadProducto(nombre);
+				if (resultado == -1)
+				{
+					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
+				}
+				else 
+				{
+					System.out.println("\nExisten un total de " + resultado + " unidades de " + nombre + ".\n");
+				}
+			}
+				
+			else if (opcion_seleccionada == 2)
+			{
+				Integer year = Integer.parseInt(input("\nIngrese el año actual (Ejemplo: 2021)"));
+				Integer month = Integer.parseInt(input("\nIngrese el mes actual (Ejemplo: 10)"));
+				Integer day = Integer.parseInt(input("\nIngrese el día actual (Ejemplo: 12)"));
+				
+				eliminarLotesVencidos(year, month, day);
+				
+				System.out.println("\nSolicitud recibida con éxito. Asegúrese de seleccionar la opción 6) para completar la solicitud.\n");
+			}
+			
+			else if (opcion_seleccionada == 3)
+			{
+				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su disponibilidad en TODOS los lotes");
+				Integer resultado = unidadesDisponiblesLote(nombre);
+				if (resultado == -1)
+				{
+					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
+				}
+				else 
+				{
+					System.out.println("\nExisten un total de  " + resultado + " unidades de " + nombre + ".\n");
+				}
+			}
+			
+			else if (opcion_seleccionada == 4)
+			{
+				String nombre = input("\nIngrese el nombre de un producto para encontrar el lote que desea consultar");
+				LocalDate fecha = fechaVencimientoLote(nombre);
+				System.out.println("\nLa fecha de vencimiento del lote seleccionado es el día " + fecha.getDayOfMonth() + " del mes " + fecha.getMonthValue() + " año " + fecha.getYear() + ".\n");
+				
+			}
+			
+			else if (opcion_seleccionada == 5)
+			{
+				//TODO 
+			}
+			
+			else if  (opcion_seleccionada == 6)
+			{
+				guardarYcerrar();
+				System.out.println("\nCambios de inventario guardados con éxito!\n");
 			}
 
 		}
@@ -212,7 +269,7 @@ public class EncargadoInventario
 	/**
 	 * 
 	 * @param nombreProducto
-	 * @return Es 0 si no existe el producto
+	 * @return Es -1 si no existe el producto
 	 */
 	private int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
 	{
@@ -223,7 +280,7 @@ public class EncargadoInventario
 		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
 		if (!existeLote)
 		{
-			return cantidadTotal;
+			cantidadTotal = -1;
 		}
 
 		else
@@ -387,9 +444,11 @@ public class EncargadoInventario
 				String empacado = i.getEsEmpacado().toString();
 
 				String unidadPeso = i.getUnidadMedida();
+				
+				String codigoBarras = i.getCodigoBarras();
 
 				// Nueva linea
-				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso;
+				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras;
 				writeCSV.write(nuevaLinea + "\n");
 			}
 		}
