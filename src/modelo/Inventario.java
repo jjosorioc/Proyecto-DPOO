@@ -8,7 +8,7 @@ public class Inventario
 {
 	//Atributos
 	
-	private HashMap<String, ArrayList<Lote>> lotes = new HashMap<String, ArrayList<Lote>>();
+	private HashMap<String, ArrayList<Lote>> lotes = new HashMap<String, ArrayList<Lote>>(); // TODO sort según fecha
 	
 	private HashMap<String, Double> ganancias = new HashMap <String, Double>();
 	private HashMap<String, Double> perdidas = new HashMap <String, Double>();

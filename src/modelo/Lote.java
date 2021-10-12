@@ -143,6 +143,21 @@ public class Lote
 	{
 		this.precioPublico = precioPublico;
 	}
+	
+	
+	public Double getPrecioTOTAL(Double cantidad, Double pesoCliente)
+	{
+		Double costoTotal = 0.0;
+		if (this.esEmpacado)
+		{
+			costoTotal = this.precioPublico * cantidad;
+		}
+		else {
+			costoTotal = this.precioPublico * pesoCliente;
+		}
+		
+		return costoTotal;
+	}
 
 
 }

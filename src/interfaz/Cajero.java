@@ -181,5 +181,13 @@ public class Cajero
 		return cantidadTotal;
 	}
 	
+	
+	private void finalizarCompra()
+	{
+		// Imprimir factura
+		
+		this.compraActiva = null;
+	}
+	
 
 }
