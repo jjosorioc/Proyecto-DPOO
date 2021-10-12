@@ -56,7 +56,7 @@ public class Inventario
 			costoTotal = this.lotes.get(nombre).get(0).getPrecioPublico() * pesoCliente;
 		}
 
-		// TODO eliminar unidades
+		// TODO eliminar unidades en el lote, después de venderse
 
 		this.ganancias.replace(nombre, costoTotal);
 		return costoTotal;
