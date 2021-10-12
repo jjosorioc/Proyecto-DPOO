@@ -65,8 +65,10 @@ public class POS
 			boolean empacado = Boolean.parseBoolean(elArray[8]);
 
 			String unidad = elArray[9];
+			
+			String codigoBarras = elArray[10];
 
-			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad);
+			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras);
 
 			// Poner lo de abajo en Inventario + camiar el precio
 			if (this.inventario.getLotes().containsKey(nombreProducto))
@@ -89,6 +91,10 @@ public class POS
 				// Agregar a Ganancias/Pérdidas
 				this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
 				this.inventario.getPerdidas().put(newLote.getNameProducto(), 0.0);
+				
+				
+				//Mapa para obtener el nombre del producto con el código de barras.
+				this.inventario.getCodigos().put(codigoBarras, nombreProducto);
 			}
 		}
 		csvReader.close();

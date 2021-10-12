@@ -20,9 +20,11 @@ public class Lote
 	 * @param cantidadUnidades
 	 * @param peso
 	 * @param esEmpacado
+	 * @param unidadMedida
+	 * @param codigoBarras
 	 */
 	public Lote(String nameProducto, String categoria, LocalDate fechaDeVencimiento, LocalDate fechaDeIngreso, Double precioProveedor, Double precioPublico, Integer cantidadUnidades, double peso,
-			boolean esEmpacado, String unidadMedida)
+			boolean esEmpacado, String unidadMedida, String codigoBarras)
 	{
 		this.nameProducto = nameProducto;
 		this.categoria = categoria;
@@ -34,6 +36,7 @@ public class Lote
 		this.peso = peso;
 		this.esEmpacado = esEmpacado;
 		this.unidadMedida = unidadMedida;
+		this.codigoBarras = codigoBarras;
 
 		// method para codigo de barras
 	}
@@ -57,18 +60,9 @@ public class Lote
 	private boolean esEmpacado; // para saber cómo se debe obtener el precio
 
 	private String unidadMedida;
+	
+	private String codigoBarras;
 
-	/*
-	 * Fuera del constructor.
-	 */
-
-	private int codigoDeBarras; // TODO ver c[omo lo hacemos
-
-	// Métodos
-
-	/**
-	 * @return the nameProducto
-	 */
 	public String getNameProducto()
 	{
 		return nameProducto;
@@ -112,14 +106,19 @@ public class Lote
 		return this.esEmpacado;
 	}
 
+	public Double getPeso()
+	{
+		return this.peso;
+	}
+
 	public String getUnidadMedida()
 	{
 		return this.unidadMedida;
 	}
-
-	public Double getPeso()
+	
+	public String getCodigoBarras()
 	{
-		return this.peso;
+		return this.codigoBarras;
 	}
 
 	/**
