@@ -191,7 +191,7 @@ public class POS
 		{
 			String puntos = this.clientes.get(cedula).toString();
 			
-			String nuevaLinea = cedula + "," + puntos; //TODO hacer que el archivo se separe por comas
+			String nuevaLinea = cedula + "," + puntos;
 			writeCSV.write(nuevaLinea + "\n");
 		}
 		
