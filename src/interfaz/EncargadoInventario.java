@@ -2,19 +2,16 @@ package interfaz;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-import java.io.InputStreamReader;
 
-import javax.sound.sampled.Port;
 import javax.swing.JFileChooser;
-import javax.swing.RowFilter;
 
 import modelo.Inventario;
 import modelo.Lote;
@@ -43,7 +40,7 @@ public class EncargadoInventario
 		return inventario;
 	}
 
-	public void mostrarMenu()
+	private void mostrarMenu()
 	{
 		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
 		System.out.println("\nBienvenido a la consola para el encargado de inventario");
@@ -80,7 +77,7 @@ public class EncargadoInventario
 	}
 
 	// Método para poder usar input()
-	public String input(String mensaje)
+	private String input(String mensaje)
 	{
 		try
 		{
