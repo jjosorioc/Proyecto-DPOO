@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import modelo.Inventario;
 import modelo.Lote;
@@ -170,19 +171,25 @@ public class EncargadoInventario
 	 */
 	private String getCSVPath()
 	{
-		// Tomado de https://mail.codejava.net/java-se/swing/show-simple-open-file-dialog-using-jfilechooser
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-		int result = fileChooser.showOpenDialog(fileChooser);
-
-		if (result == JFileChooser.APPROVE_OPTION)
+		String pathInbox = System.getProperty("user.dir") + "/inbox";
+		
+		File directorio = new File(pathInbox);
+		
+		File[] archivosInbox = directorio.listFiles();
+		
+		System.out.println("\n########## Archivos disponibles en inbox ##########");
+		for (File archivo: archivosInbox)
 		{
-			File selectedFile = fileChooser.getSelectedFile();
-
-			return (selectedFile.getAbsolutePath());
+			if (archivo.getName().endsWith("csv"))
+			{
+				System.out.println("\n- " + archivo.getName());
+			}
 		}
-
-		return ("null");
+		
+		String inputUsuario = input("\nIngrese el nombre (con la extensión csv) del archivo que desea (Ej. lote1.csv) ");
+		
+		return (pathInbox + "/"+ inputUsuario);
+		
 	}
 
 	/**
