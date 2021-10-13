@@ -255,9 +255,14 @@ public class EncargadoInventario
 				arrayDelHash.add(newLote);
 				this.inventario.getLotes().put(nombreProducto, arrayDelHash);
 				
-				// Agregar a Ganancias/Pérdidas
-				this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
-				this.inventario.getPerdidas().put(newLote.getNameProducto(),0.0);
+				if (!this.inventario.getGanancias().containsKey(nombreProducto) && !this.inventario.getPerdidas().containsKey(nombreProducto))
+				{
+					// Agregar a Ganancias/Pérdidas
+					this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
+					this.inventario.getPerdidas().put(newLote.getNameProducto(),0.0);
+				}
+				
+				
 				
 				//Mapa para obtener el nombre del producto con el código de barras.
 				this.inventario.getCodigos().put(codigoBarras, nombreProducto);
