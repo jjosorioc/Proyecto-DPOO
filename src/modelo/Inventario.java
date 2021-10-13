@@ -8,8 +8,10 @@ public class Inventario
 {
 	// Atributos
 
-	private HashMap<String, ArrayList<Lote>> lotes = new HashMap<String, ArrayList<Lote>>(); // TODO sort según fecha
-	private HashMap<String, String> codigos = new HashMap<String, String>();
+	private HashMap<String, ArrayList<Lote>> lotes = new HashMap<String, ArrayList<Lote>>();
+	
+	private HashMap<String, String> codigos = new HashMap<String, String>(); // Codigo - NombreProducto
+	
 	private HashMap<String, Double> ganancias = new HashMap<String, Double>(); //todo guardar en CSV
 	private HashMap<String, Double> perdidas = new HashMap<String, Double>();
 

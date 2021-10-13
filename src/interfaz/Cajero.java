@@ -74,16 +74,39 @@ public class Cajero
 			}
 			else if (opcion_seleccionada == 1)
 			{
+				//TODO preguntar si está registrado
 				String cedula = input("\nPor favor ingrese el número de cédula del cliente");
 				inicarCompraCliente(cedula);
 				System.out.println("\nCompra iniciada con éxito!\n");
 			}
 			else if (opcion_seleccionada == 2)
 			{
-				String nombreProducto = input("\nPor favor ingrese el nombre del producto que desea registrar");
-				Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
-				Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
-				agregarProducto(nombreProducto, cantidad, peso);
+				String codigoProducto = input("\nPor favor ingrese el código de barras del producto que desea registrar");
+				
+				String nombreProducto = this.pos.inventario.getCodigos().get(codigoProducto);
+				
+				if (nombreProducto == null) // Si el producto no se encontró
+				{
+					System.out.println("\nNo se encontró este produco :(");
+				}
+				else 
+				{	
+					String esEmpacado = input("\nEl producto es un producto empacado? Ingrese (Y o N)");
+					
+					if (esEmpacado.equals("Y")) // Si es empacado
+					{
+						Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
+						Double peso = -1.0;
+						agregarProducto(nombreProducto, cantidad, peso);
+					}
+					else
+					{
+						Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
+						Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
+						agregarProducto(nombreProducto, cantidad, peso);
+					}
+				}
+				
 			}
 			else if (opcion_seleccionada == 3)
 			{
