@@ -39,7 +39,7 @@ public class Cajero
 		System.out.println("\n0. Agregar un nuevo cliente al sistema.");
 		System.out.println("\n1. Iniciar una compra de un cliente.");
 		System.out.println("\n2. Agregar un producto a la compra del cliente.");
-		System.out.println("\n3. Finalizar compra cliente."); // TODO :)
+		System.out.println("\n3. Finalizar compra cliente.");
 		System.out.println("\n4. Eliminar compra cliente.");
 		System.out.println("\n5. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
 		System.out.println("*********************************************************\n");
@@ -156,7 +156,7 @@ public class Cajero
 	}
 
 	/**
-	 * Método para leer un csv con el archivo con Lotes
+	 * Método para leer un csv con la infromación de los clientes.
 	 * 
 	 * @param pathCSV
 	 * @throws IOException

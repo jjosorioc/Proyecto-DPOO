@@ -128,5 +128,14 @@ public class Lote
 	{
 		this.precioPublico = precioPublico;
 	}
+	
+	/**
+	 * Se restan unidades de este lote.
+	 * @param cantidadComprada
+	 */
+	public void restarCantidadUnidades(Double cantidadComprada)
+	{
+		this.cantidadUnidades = (int) (this.cantidadUnidades - cantidadComprada);
+	}
 
 }

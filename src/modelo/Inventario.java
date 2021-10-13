@@ -58,7 +58,18 @@ public class Inventario
 			costoTotal = this.lotes.get(nombre).get(0).getPrecioPublico() * pesoCliente;
 		}
 
-		// TODO eliminar unidades en el lote, después de venderse
+		// Se eliminan las unidades del lote más viejo
+		
+		ArrayList<Lote> lotesDelProducto = this.lotes.get(nombre);
+		
+		for (Lote l: lotesDelProducto)
+		{
+			if (l.getCantidadUnidades() >= cantidad && l.getCantidadUnidades() > 0) // Ocurre en el primer lote con una cantidad válida
+			{
+				l.restarCantidadUnidades(cantidad);
+				break; // No repetir en los demás lotes
+			}
+		}
 
 		this.ganancias.replace(nombre, costoTotal);
 		return costoTotal;

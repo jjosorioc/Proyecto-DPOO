@@ -129,7 +129,7 @@ public class EncargadoInventario
 			else if (opcion_seleccionada == 5)
 			{
 				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su desempeño financiero");
-				ArrayList<Double> resultado = consultarDesempenoFinanciero(nombre);
+				ArrayList<Double> resultado = consultarDesempenoFinanciero(nombre); //TODO
 				System.out.println("\nEl desempeño financiero de " + nombre + " es el siguiente\n-Ganancias: $" + resultado.get(0) + "\n-Pérdidas: $" + resultado.get(1) + "\n");
 				
 				

@@ -116,6 +116,7 @@ public class POS
 	}
 	
 	
+	
 	/**
 	 * Guardar el inventario al csv
 	 * @throws IOException
