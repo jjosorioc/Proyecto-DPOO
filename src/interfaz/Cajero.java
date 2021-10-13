@@ -47,8 +47,9 @@ public class Cajero
 
 	/**
 	 * Método que interactúa con el usuario a través de la consola.
+	 * @throws IOException 
 	 */
-	private void ejecutarOpcion()
+	private void ejecutarOpcion() throws IOException
 	{
 		System.out.println("Iniciando programa...");
 
@@ -74,9 +75,16 @@ public class Cajero
 			}
 			else if (opcion_seleccionada == 1)
 			{
-				//TODO preguntar si está registrado
 				String cedula = input("\nPor favor ingrese el número de cédula del cliente");
-				inicarCompraCliente(cedula);
+				Boolean existe = pos.getClientes().containsKey(cedula);
+				if (existe)
+				{
+					inicarCompraCliente(cedula);
+				}
+				else
+				{
+					inicarCompraCliente(null);
+				}
 				System.out.println("\nCompra iniciada con éxito!\n");
 			}
 			else if (opcion_seleccionada == 2)
@@ -116,6 +124,10 @@ public class Cajero
 			else if (opcion_seleccionada == 4)
 			{
 				eliminarCompra();
+			}
+			else if (opcion_seleccionada == 5)
+			{
+				guardarYcerrar();
 			}
 			
 
@@ -252,6 +264,7 @@ public class Cajero
 		System.out.println(compraActiva.getFactura(this.pos.inventario));
 		if (compraActiva.cedula != null)
 		{
+			System.out.println();
 			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
 		}
 		this.compraActiva = null;

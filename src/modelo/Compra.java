@@ -38,17 +38,18 @@ public class Compra
 	public String getFactura(Inventario inventario)
 	{
 		
-		this.factura += "\nFACTURA";
+		this.factura += "\nFACTURA\n";
 		for (String llave: this.productoCantidad.keySet())
 		{
-			this.factura += "\nProducto: " + llave + " Cantidad: " + this.productoCantidad.get(llave).get(0);
+			this.factura += "\nProducto: " + llave + " Cantidad: " + this.productoCantidad.get(llave).get(0) + "\n";
 			valorTotal += inventario.getPrecioProducto(llave, this.productoCantidad.get(llave).get(0), this.productoCantidad.get(llave).get(1));
 		}
 		
-		this.factura += "\nValor Total de la Compra: " + valorTotal;
+		this.factura += "\nValor Total de la Compra: " + valorTotal + "\n";
 		
 		if (this.cedula != null)
 		{
+			this.factura += "\nNúmero de cédula de usuario registrado: " + this.cedula + "\n";
 			this.puntos = (int) (this.valorTotal / 1000);
 			this.factura += "\nPuntos obtenidos: " + this.puntos;
 		}
