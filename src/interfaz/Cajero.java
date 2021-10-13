@@ -56,15 +56,45 @@ public class Cajero
 
 		while (continuar)
 		{
-			try
-			{
-				mostrarMenu();
-				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
-			} catch (NumberFormatException e)
-			{
-				System.out.println("Debe seleccionar uno de los números de las opciones.");
 
+			
+			mostrarMenu();
+			int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
+			
+			if (opcion_seleccionada == 0)
+			{
+				String cedula = input("\nPor favor ingrese el número de cédula del cliente");
+				int edad = Integer.parseInt(input("\nPor favor ingrese la edad del cliente"));
+				String sexo = input("\nIngrese el género del cliente");
+				String estadoCivil = input("\nIngrese el estado civil del cliente");
+				String situacionLaboral = input("\nIngrese la situación laboral del cliente");
+				crearCliente(cedula);
+				System.out.println("\nCliente agregado al sistema de puntos!\n");
+				
 			}
+			else if (opcion_seleccionada == 1)
+			{
+				String cedula = input("\nPor favor ingrese el número de cédula del cliente");
+				inicarCompraCliente(cedula);
+				System.out.println("\nCompra iniciada con éxito!\n");
+			}
+			else if (opcion_seleccionada == 2)
+			{
+				String nombreProducto = input("\nPor favor ingrese el nombre del producto que desea registrar");
+				Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
+				Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
+				agregarProducto(nombreProducto, cantidad, peso);
+			}
+			else if (opcion_seleccionada == 3)
+			{
+				finalizarCompra();
+				System.out.println("\nCompra finalizada!\n");
+			}
+			else if (opcion_seleccionada == 4)
+			{
+				eliminarCompra();
+			}
+			
 
 		}
 	}
