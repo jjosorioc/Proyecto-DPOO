@@ -95,7 +95,7 @@ public class Cajero
 				
 				if (nombreProducto == null) // Si el producto no se encontró
 				{
-					System.out.println("\nNo se encontró este produco :(");
+					System.out.println("\nEl producto con código " +  codigoProducto + " no forma parte de nuestro inventario.\n");
 				}
 				else 
 				{	

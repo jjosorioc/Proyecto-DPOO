@@ -121,8 +121,15 @@ public class EncargadoInventario
 			else if (opcion_seleccionada == 4)
 			{
 				String nombre = input("\nIngrese el nombre de un producto para encontrar el lote que desea consultar");
-				LocalDate fecha = fechaVencimientoLote(nombre);
-				System.out.println("\nLa fecha de vencimiento del lote seleccionado es el día " + fecha.getDayOfMonth() + " del mes " + fecha.getMonthValue() + " año " + fecha.getYear() + ".\n");
+				if (fechaVencimientoLote(nombre) != null)
+				{
+					LocalDate fecha = fechaVencimientoLote(nombre);
+					System.out.println("\nLa fecha de vencimiento del lote seleccionado es el día " + fecha.getDayOfMonth() + " del mes " + fecha.getMonthValue() + " año " + fecha.getYear() + ".\n");
+				}
+				else
+				{
+					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
+				}
 				
 			}
 			
@@ -130,7 +137,17 @@ public class EncargadoInventario
 			{
 				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su desempeño financiero");
 				ArrayList<Double> resultado = consultarDesempenoFinanciero(nombre); //TODO
-				System.out.println("\nEl desempeño financiero de " + nombre + " es el siguiente\n-Ganancias: $" + resultado.get(0) + "\n-Pérdidas: $" + resultado.get(1) + "\n");
+				Double ganancias = resultado.get(0);
+				Double perdidas = resultado.get(1);
+				if (ganancias != null & perdidas != null)
+				{
+					System.out.println("\nEl desempeño financiero de " + nombre + " es el siguiente\n-Ganancias: $" + ganancias + "\n-Pérdidas: $" + perdidas + "\n");
+				}
+				else 
+				{
+					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
+				}
+				
 				
 				
 			}
@@ -241,6 +258,7 @@ public class EncargadoInventario
 			if (this.inventario.getLotes().containsKey(nombreProducto))
 			{
 				ArrayList<Lote> arrayDelHash = this.inventario.getLotes().get(nombreProducto);
+				
 				arrayDelHash.add(newLote);
 
 				// Ajustar el nuevo precio
