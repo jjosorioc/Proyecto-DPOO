@@ -259,6 +259,16 @@ public class EncargadoInventario
 			{
 				ArrayList<Lote> arrayDelHash = this.inventario.getLotes().get(nombreProducto);
 				
+			      for (int counter = 0; counter < arrayDelHash.size(); counter++) //Se reemplaza la categoría de artículos previamente cargados si se ingresa un lote con un artículo que ya forma parte del inventario, pero que tiene una categoría distinta.
+			      { 
+			    	  Double precioProveedor = arrayDelHash.get(counter).getPrecioProveedor(); //Se mantiene el precio, unidades y fechas que se tenía antes, lo demás se mantiene igual al nuevo lote.
+			    	  Integer unidadesOtroLote = arrayDelHash.get(counter).getCantidadUnidades();
+			    	  LocalDate vencimientoOtroLote = arrayDelHash.get(counter).getfechaDeVencimiento();
+			    	  LocalDate ingresoOtroLote = arrayDelHash.get(counter).getfechaDeIngreso();
+			    	  Lote loteCambiado = new Lote(nombreProducto, categoria, vencimientoOtroLote, ingresoOtroLote, precioProveedor, publico, unidadesOtroLote, peso, empacado, unidad, codigoBarras);
+			          arrayDelHash.set(counter, loteCambiado);	
+			      }   
+				
 				arrayDelHash.add(newLote);
 
 				// Ajustar el nuevo precio
