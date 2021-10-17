@@ -136,7 +136,7 @@ public class EncargadoInventario
 			else if (opcion_seleccionada == 5)
 			{
 				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su desempeño financiero");
-				ArrayList<Double> resultado = consultarDesempenoFinanciero(nombre); //TODO
+				ArrayList<Double> resultado = consultarDesempenoFinanciero(nombre);
 				Double ganancias = resultado.get(0);
 				Double perdidas = resultado.get(1);
 				if (ganancias != null & perdidas != null)

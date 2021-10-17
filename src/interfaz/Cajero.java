@@ -99,18 +99,21 @@ public class Cajero
 				}
 				else 
 				{	
-					String esEmpacado = input("\nEl producto es un producto empacado? Ingrese (Y o N)");
+					boolean esEmpacado = this.pos.inventario.getLotes().get(nombreProducto).get(0).getEsEmpacado();
 					
-					if (esEmpacado.equals("Y")) // Si es empacado
+					if (esEmpacado) // Si es empacado
 					{
 						Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
 						Double peso = -1.0;
 						agregarProducto(nombreProducto, cantidad, peso);
 					}
-					else
+					else // Si es no empacado
 					{
-						Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
+						//Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
 						Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
+						Double cantidad = Math.ceil(peso / this.pos.inventario.getLotes().get(nombreProducto).get(0).getPeso());
+						
+						System.out.println("\nLa cantidad de " + nombreProducto + " según el peso ingresado es: " + cantidad);
 						agregarProducto(nombreProducto, cantidad, peso);
 					}
 				}

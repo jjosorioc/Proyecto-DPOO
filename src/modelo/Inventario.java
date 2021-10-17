@@ -46,18 +46,12 @@ public class Inventario
 		return perdidas;
 	}
 
-	public Double getPrecioProducto(String nombre, Double cantidad, Double pesoCliente)
+	public Double getPrecioProducto(String nombre, Double cantidad)
 	{
 		Double costoTotal = 0.0;
 
-		if (this.lotes.get(nombre).get(0).getEsEmpacado())
-		{
-			costoTotal = this.lotes.get(nombre).get(0).getPrecioPublico() * cantidad;
-		} else
-		{
-			costoTotal = this.lotes.get(nombre).get(0).getPrecioPublico() * pesoCliente;
-		}
-
+		costoTotal = this.lotes.get(nombre).get(0).getPrecioPublico() * cantidad;
+		
 		// Se eliminan las unidades del lote más viejo
 		
 		ArrayList<Lote> lotesDelProducto = this.lotes.get(nombre);

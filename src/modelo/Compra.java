@@ -42,7 +42,7 @@ public class Compra
 		for (String llave: this.productoCantidad.keySet())
 		{
 			this.factura += "\nProducto: " + llave + " Cantidad: " + this.productoCantidad.get(llave).get(0) + "\n";
-			valorTotal += inventario.getPrecioProducto(llave, this.productoCantidad.get(llave).get(0), this.productoCantidad.get(llave).get(1));
+			valorTotal += inventario.getPrecioProducto(llave, this.productoCantidad.get(llave).get(0));
 		}
 		
 		this.factura += "\nValor Total de la Compra: " + valorTotal + "\n";
