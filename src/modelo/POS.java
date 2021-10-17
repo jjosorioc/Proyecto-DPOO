@@ -81,8 +81,12 @@ public class POS
 			String unidad = elArray[9];
 			
 			String codigoBarras = elArray[10];
+			
+			String tipoProducto = elArray[11];
+			
+			String subCategorias = elArray[12];
 
-			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras);
+			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
 
 			// Poner lo de abajo en Inventario + camiar el precio
 			if (this.inventario.getLotes().containsKey(nombreProducto))
@@ -129,7 +133,7 @@ public class POS
 
 		FileWriter writeCSV = new FileWriter(csvfile);
 
-		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad";
+		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Tipo producto,subCategorias";
 
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera linea
 
@@ -160,9 +164,13 @@ public class POS
 				String unidadPeso = i.getUnidadMedida();
 				
 				String codigoBarras = i.getCodigoBarras();
+				
+				String tipoProducto = i.getTipoProducto();
+				
+				String subCategorias = i.getSubCategorias();
 
 				// Nueva linea
-				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras;
+				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras + "," + tipoProducto + "," + subCategorias;
 				writeCSV.write(nuevaLinea + "\n");
 			}
 		}

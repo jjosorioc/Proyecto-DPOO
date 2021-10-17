@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Lote
 {
@@ -22,9 +23,11 @@ public class Lote
 	 * @param esEmpacado
 	 * @param unidadMedida
 	 * @param codigoBarras
+	 * @param tipoProducto
+	 * @param subCategorías
 	 */
 	public Lote(String nameProducto, String categoria, LocalDate fechaDeVencimiento, LocalDate fechaDeIngreso, Double precioProveedor, Double precioPublico, Integer cantidadUnidades, double peso,
-			boolean esEmpacado, String unidadMedida, String codigoBarras)
+			boolean esEmpacado, String unidadMedida, String codigoBarras, String tipoProducto, String subCategorias)
 	{
 		this.nameProducto = nameProducto;
 		this.categoria = categoria;
@@ -37,6 +40,9 @@ public class Lote
 		this.esEmpacado = esEmpacado;
 		this.unidadMedida = unidadMedida;
 		this.codigoBarras = codigoBarras;
+		this.tipoProducto = tipoProducto;
+		this.subCategorias = subCategorias;
+		
 
 		// method para codigo de barras
 	}
@@ -62,6 +68,10 @@ public class Lote
 	private String unidadMedida;
 	
 	private String codigoBarras;
+	
+	private String tipoProducto;
+	
+	private String subCategorias;
 
 	public String getNameProducto()
 	{
@@ -120,7 +130,16 @@ public class Lote
 	{
 		return this.codigoBarras;
 	}
-
+	
+	public String getTipoProducto()
+	{
+		return this.tipoProducto;
+	}
+	
+	public String getSubCategorias()
+	{
+		return this.subCategorias;
+	}
 	/**
 	 * @param precioPublico the precioPublico to set
 	 */

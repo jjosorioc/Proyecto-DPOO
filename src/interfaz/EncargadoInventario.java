@@ -71,7 +71,7 @@ public class EncargadoInventario
 		while (continuar)
 		{
 			mostrarMenu();
-			int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
+			int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opción\n"));
 			
 			if (opcion_seleccionada == 0)
 			{
@@ -121,9 +121,9 @@ public class EncargadoInventario
 			else if (opcion_seleccionada == 4)
 			{
 				String nombre = input("\nIngrese el nombre de un producto para encontrar el lote que desea consultar");
-				if (fechaVencimientoLote(nombre) != null)
+				LocalDate fecha = fechaVencimientoLote(nombre);
+				if (fecha != null)
 				{
-					LocalDate fecha = fechaVencimientoLote(nombre);
 					System.out.println("\nLa fecha de vencimiento del lote seleccionado es el día " + fecha.getDayOfMonth() + " del mes " + fecha.getMonthValue() + " año " + fecha.getYear() + ".\n");
 				}
 				else
@@ -251,8 +251,12 @@ public class EncargadoInventario
 			String unidad = elArray[9];
 			
 			String codigoBarras = elArray[10];
+			
+			String tipoProducto = elArray[11];
+			
+			String subCategorias = elArray[12];
 
-			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras);
+			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
 
 			// Poner lo de abajo en Inventario + camiar el precio
 			if (this.inventario.getLotes().containsKey(nombreProducto))
@@ -265,7 +269,7 @@ public class EncargadoInventario
 			    	  Integer unidadesOtroLote = arrayDelHash.get(counter).getCantidadUnidades();
 			    	  LocalDate vencimientoOtroLote = arrayDelHash.get(counter).getfechaDeVencimiento();
 			    	  LocalDate ingresoOtroLote = arrayDelHash.get(counter).getfechaDeIngreso();
-			    	  Lote loteCambiado = new Lote(nombreProducto, categoria, vencimientoOtroLote, ingresoOtroLote, precioProveedor, publico, unidadesOtroLote, peso, empacado, unidad, codigoBarras);
+			    	  Lote loteCambiado = new Lote(nombreProducto, categoria, vencimientoOtroLote, ingresoOtroLote, precioProveedor, publico, unidadesOtroLote, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
 			          arrayDelHash.set(counter, loteCambiado);	
 			      }   
 				
@@ -378,7 +382,7 @@ public class EncargadoInventario
 			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
 
 			int numOpcion = 0;
-			System.out.println("Seleccione una opción");
+			System.out.println("\nSeleccione una opción\n");
 			for (Lote i : lotesDelProducto)
 			{
 				System.out.println(numOpcion + " - Fecha de ingreso: " + i.getfechaDeIngreso() + " Fecha de vencimiento: " + i.getfechaDeVencimiento());
@@ -413,7 +417,7 @@ public class EncargadoInventario
 			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
 
 			int numOpcion = 0;
-			System.out.println("Seleccione una opción");
+			System.out.println("\nSeleccione una opción\n");
 			for (Lote i : lotesDelProducto)
 			{
 				System.out.println(numOpcion + " - Fecha de ingreso: " + i.getfechaDeIngreso() + " Cantidad de unidades: " + i.getCantidadUnidades());
@@ -501,7 +505,7 @@ public class EncargadoInventario
 
 		FileWriter writeCSV = new FileWriter(csvfile);
 
-		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Codigo de barras";
+		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Codigo de barras,Tipo producto,subCategorias";
 
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera linea
 
@@ -532,9 +536,13 @@ public class EncargadoInventario
 				String unidadPeso = i.getUnidadMedida();
 				
 				String codigoBarras = i.getCodigoBarras();
+				
+				String tipoProducto = i.getTipoProducto();
+				
+				String subCategorias = i.getSubCategorias();
 
 				// Nueva linea
-				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras;
+				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras + "," + tipoProducto + "," + subCategorias;
 				writeCSV.write(nuevaLinea + "\n");
 			}
 		}
