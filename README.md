@@ -23,7 +23,7 @@ __0.__ Para cargar el lote ingrese el nombre completo del archivo en la carpeta 
 
 __1.__ Para consultar la disponibilidad de un producto, ingrese el nombre de este en minúsculas. Puede consultar la disponibilidad de varios productos, pero debe siempre ejecutar la opción 1.
 
-__2.__ Para eliminar lotes vencidos ingrese la fecha actual y POSTERIORMENTE ejecute la opción 6. de guardar y cerrar, ya que si no hace eso, no se guardarán los cambios en el inventario.
+__2.__ Para eliminar lotes vencidos ingrese la fecha actual y __POSTERIORMENTE ejecute la opción 6. de guardar y cerrar__, ya que si no hace eso, no se guardarán los cambios en el inventario.
 
 __3.__ Para consultar las unidades disponibles en un lote, ingrese  del producto que contiene el lote en minúsculas. Luego se desplegará un menú de todos los lotes que contienen ese producto. Para seleccionar el lote que desea contular escriba el número que aparece junto a ese lote. Puede consultar varios lotes, pero debe siempre ejecutar la opción 3. 
 
@@ -37,13 +37,13 @@ __6.__ La opción de guardar y cerrar sirve para actualizar el inventario despu�
 - Para el cajero:
 ```
 
-__0.__ Para agregar un nuevo cliente al sistema, ingresar la información que se solicita en la consola y POSTERIORMENTE ejecute la opción 5. de guardar y cerrar, ya que si no hace eso, no se guardará el nuevo cliente. 
+__0.__ Para agregar un nuevo cliente al sistema, ingresar la información que se solicita en la consola y __POSTERIORMENTE ejecute la opción 5. de guardar y cerrar__, ya que si no hace eso, no se guardará el nuevo cliente. 
 
 __1.__ Para iniciar una compra de un cliente, ingrese el número de cédula del cliente. Si el cliente no se encuentra registrado, igual lo dejará continuar con la compra. 
 
 __2.__ Para agregar un prodcuto a la compra del cliente, ingrese el CODIGO DE BARRAS del producto que se desea agregar. En caso de que el producto sea empeacado, se le pedirá también el peso total del producto que desea llevar el cliente. Si desea agregar otro producto, debe volver a ejecutar la opción 2. 
 
-__3.__ Para finalizar la compra de un cliente solo es necesario que ejecute la opción 3 y que POSTERIORMENTE ejecute la opción 5. para actualizar el inventario, las ganancias y las pérdidas de los productos adquiridos. 
+__3.__ Para finalizar la compra de un cliente solo es necesario que ejecute la opción 3 y que __POSTERIORMENTE ejecute la opción 5. para actualizar el inventario, las ganancias y las pérdidas de los productos adquiridos.__ 
 
 __4.__ Para finalizar la compra de un cliente solo es necesario que ejecute la opción 4.
 
