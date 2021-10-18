@@ -78,7 +78,7 @@ public class Cajero
 				String estadoCivil = input("\nIngrese el estado civil del cliente");
 				String situacionLaboral = input("\nIngrese la situación laboral del cliente");
 				crearCliente(cedula);
-				System.out.println("\nCliente agregado al sistema de puntos!\n");
+				System.out.println("\nCliente agregado al sistema de puntos! ATENCIÓN: Asegúrese de seleccionar la opción 5) para completar la solicitud.\n");
 				
 			}
 			else if (opcion_seleccionada == 1)
@@ -134,8 +134,16 @@ public class Cajero
 			}
 			else if (opcion_seleccionada == 3)
 			{
-				finalizarCompra();
-				System.out.println("\nCompra finalizada!\n");
+				if (this.compraActiva != null)
+				{
+					finalizarCompra();
+					System.out.println("\nCompra finalizada! ATENCIÓN: Asegúrese de seleccionar la opción 5) para completar la solicitud.\n");
+				}
+				else
+				{
+					System.out.println("\nINICIE UNA COMPRA");
+				}
+				
 			}
 			else if (opcion_seleccionada == 4)
 			{

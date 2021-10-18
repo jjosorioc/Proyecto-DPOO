@@ -105,7 +105,7 @@ public class EncargadoInventario
 
 				eliminarLotesVencidos(year, month, day);
 
-				System.out.println("\nSolicitud recibida con éxito. Asegúrese de seleccionar la opción 6) para completar la solicitud.\n");
+				System.out.println("\nSolicitud recibida con éxito. ATENCIÓN: Asegúrese de seleccionar la opción 6) para completar la solicitud.\n");
 			}
 
 			else if (opcion_seleccionada == 3)
@@ -115,7 +115,12 @@ public class EncargadoInventario
 				if (resultado == -1)
 				{
 					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
-				} else
+				} 
+				else if (resultado == -2)
+				{
+					System.out.println("\nOpción inválida, vuelva a intentar\n");
+				}
+				else
 				{
 					System.out.println("\nExisten un total de  " + resultado + " unidades de " + nombre + ".\n");
 				}
@@ -130,7 +135,7 @@ public class EncargadoInventario
 					System.out.println("\nLa fecha de vencimiento del lote seleccionado es el día " + fecha.getDayOfMonth() + " del mes " + fecha.getMonthValue() + " año " + fecha.getYear() + ".\n");
 				} else
 				{
-					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
+					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario o se ingresó una opción inválida.\n");
 				}
 
 			}
@@ -400,7 +405,7 @@ public class EncargadoInventario
 				cantidadTotal = opcionesLoteHashMap.get(opcion_seleccionada).getCantidadUnidades();
 			} else
 			{
-				cantidadTotal = -1;
+				cantidadTotal = -2;
 			}
 		}
 
