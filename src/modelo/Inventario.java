@@ -65,8 +65,9 @@ public class Inventario
 					break; // No repetir en los demás lotes
 				}
 				else {
-					Double cantidadDisponible = cantidad - l.getCantidadUnidades();
-					l.restarCantidadUnidades(cantidadDisponible);
+					Integer cantidadDisponible =  l.getCantidadUnidades();
+					
+					l.restarCantidadUnidades((double) cantidadDisponible);
 					cantidad = cantidad - cantidadDisponible;
 				}
 				
