@@ -17,6 +17,8 @@ public class POS
 	public Inventario inventario = new Inventario();
 
 	private HashMap<String, Integer> clientes = new HashMap<String, Integer>(); // Cédula y Puntos
+	
+	private HashMap<String, Integer> unidadesDuranteEjecucion = new HashMap<>();
 
 	// Métodos
 
@@ -236,5 +238,56 @@ public class POS
 			writeCSV.write(nuevaLinea+"\n");
 		}
 		writeCSV.close();
+	}
+	
+	
+	/**
+	 * 
+	 * @param nombreProducto
+	 * @return Es -1 si no existe el producto
+	 */
+	private int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
+	{
+		int cantidadTotal = 0;
+
+		// Array de lotes según nombreProducto
+
+		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
+		if (!existeLote)
+		{
+			cantidadTotal = -1;
+		}
+
+		else
+		{
+			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
+
+			for (Lote i : lotesDelProducto)
+			{
+				cantidadTotal += i.getCantidadUnidades();
+			}
+		}
+
+		return cantidadTotal;
+	}
+	
+	
+	
+	public void updateUnidadesDuranteEjecucion() {
+		Set<String> llaveSet = inventario.getLotes().keySet();
+		
+		for (String llave: llaveSet)
+		{
+			this.unidadesDuranteEjecucion.put(llave, disponibilidadProducto(llave));
+		}
+	}
+
+
+	/**
+	 * @return the unidadesDuranteEjecucion
+	 */
+	public HashMap<String, Integer> getUnidadesDuranteEjecucion()
+	{
+		return unidadesDuranteEjecucion;
 	}
 }

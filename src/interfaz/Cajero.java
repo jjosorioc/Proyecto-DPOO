@@ -218,6 +218,7 @@ public class Cajero
 	private void crearCliente(String cedula)
 	{
 		this.pos.getClientes().put(cedula, 0);
+		this.pos.updateUnidadesDuranteEjecucion();
 	}
 
 	/**
@@ -239,9 +240,10 @@ public class Cajero
 	{
 		if (this.compraActiva != null)
 		{
-			if (disponibilidadProducto(productoNombre) >= cantidad && disponibilidadProducto(productoNombre) != -1)
+			if (disponibilidadProducto(productoNombre) >= cantidad && disponibilidadProducto(productoNombre) != -1 && this.pos.getUnidadesDuranteEjecucion().get(productoNombre) >= cantidad)
 			{
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
+				this.pos.getUnidadesDuranteEjecucion().replace(productoNombre, (int) (disponibilidadProducto(productoNombre)-cantidad));
 			} else
 			{
 				System.out.println("\nEl producto no existe o la cantidad de unidades no alcanza.\n");
@@ -294,6 +296,7 @@ public class Cajero
 			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
 		}
 		this.compraActiva = null;
+		this.pos.updateUnidadesDuranteEjecucion();
 	}
 
 	/**
