@@ -243,7 +243,8 @@ public class Cajero
 			if (disponibilidadProducto(productoNombre) >= cantidad && disponibilidadProducto(productoNombre) != -1 && this.pos.getUnidadesDuranteEjecucion().get(productoNombre) >= cantidad)
 			{
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
-				this.pos.getUnidadesDuranteEjecucion().replace(productoNombre, (int) (disponibilidadProducto(productoNombre)-cantidad));
+				Integer cantidadActual = this.pos.getUnidadesDuranteEjecucion().get(productoNombre);
+				this.pos.getUnidadesDuranteEjecucion().replace(productoNombre, (int) (cantidadActual - cantidad));
 			} else
 			{
 				System.out.println("\nEl producto no existe o la cantidad de unidades no alcanza.\n");
