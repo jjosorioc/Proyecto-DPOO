@@ -24,8 +24,7 @@ public class EncargadoInventario
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
 		objEncargadoInventario.cargarGananciasPerdidas(); // Cargar ganancias y pérdidas
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
-		
-		
+
 		objEncargadoInventario.ejecutarOpcion();
 
 	}
@@ -40,7 +39,7 @@ public class EncargadoInventario
 	{
 		return inventario;
 	}
-	
+
 	/**
 	 * Método para imprimir el menú en consola
 	 */
@@ -58,7 +57,7 @@ public class EncargadoInventario
 		System.out.println("\n6. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
 		System.out.println("*********************************************************\n");
 	}
-	
+
 	/**
 	 * Método que interactúa con el usuario a través de la consola.
 	 */
@@ -79,53 +78,49 @@ public class EncargadoInventario
 			{
 				opcion_seleccionada = -1;
 			}
-			
-			
+
 			if (opcion_seleccionada == 0)
 			{
 				String path = getCSVPath();
 				readCSV(path);
 				System.out.println("\nSe ha cargado el lote con éxito.\n");
-			}
-			else if (opcion_seleccionada == 1)
+			} else if (opcion_seleccionada == 1)
 			{
 				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su disponibilidad");
 				Integer resultado = disponibilidadProducto(nombre);
 				if (resultado == -1)
 				{
-					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
-				}
-				else 
+					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
+				} else
 				{
 					System.out.println("\nExisten un total de " + resultado + " unidades de " + nombre + ".\n");
 				}
 			}
-				
+
 			else if (opcion_seleccionada == 2)
 			{
 				Integer year = Integer.parseInt(input("\nIngrese el año actual (Ejemplo: 2021)"));
 				Integer month = Integer.parseInt(input("\nIngrese el mes actual (Ejemplo: 10)"));
 				Integer day = Integer.parseInt(input("\nIngrese el día actual (Ejemplo: 12)"));
-				
+
 				eliminarLotesVencidos(year, month, day);
-				
+
 				System.out.println("\nSolicitud recibida con éxito. Asegúrese de seleccionar la opción 6) para completar la solicitud.\n");
 			}
-			
+
 			else if (opcion_seleccionada == 3)
 			{
 				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su disponibilidad en TODOS los lotes");
 				Integer resultado = unidadesDisponiblesLote(nombre);
 				if (resultado == -1)
 				{
-					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
-				}
-				else 
+					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
+				} else
 				{
 					System.out.println("\nExisten un total de  " + resultado + " unidades de " + nombre + ".\n");
 				}
 			}
-			
+
 			else if (opcion_seleccionada == 4)
 			{
 				String nombre = input("\nIngrese el nombre de un producto para encontrar el lote que desea consultar");
@@ -133,14 +128,13 @@ public class EncargadoInventario
 				if (fecha != null)
 				{
 					System.out.println("\nLa fecha de vencimiento del lote seleccionado es el día " + fecha.getDayOfMonth() + " del mes " + fecha.getMonthValue() + " año " + fecha.getYear() + ".\n");
-				}
-				else
+				} else
 				{
-					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
+					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
 				}
-				
+
 			}
-			
+
 			else if (opcion_seleccionada == 5)
 			{
 				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su desempeño financiero");
@@ -150,23 +144,21 @@ public class EncargadoInventario
 				if (ganancias != null & perdidas != null)
 				{
 					System.out.println("\nEl desempeño financiero de " + nombre + " es el siguiente\n-Ganancias: $" + ganancias + "\n-Pérdidas: $" + perdidas + "\n");
-				}
-				else 
+				} else
 				{
-					System.out.println("\nEl producto " +  nombre + " no forma parte de nuestro inventario.\n");
+					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
 				}
-				
-				
-				
+
 			}
-			
-			else if  (opcion_seleccionada == 6)
+
+			else if (opcion_seleccionada == 6)
 			{
 				guardarYcerrar();
 				System.out.println("\nCambios de inventario guardados con éxito!\n");
 			}
-			
-			else {
+
+			else
+			{
 				System.out.println("\n¡INGRESE UNA OPCIÓN VÁLIDA!");
 			}
 
@@ -201,24 +193,24 @@ public class EncargadoInventario
 	private String getCSVPath()
 	{
 		String pathInbox = System.getProperty("user.dir") + "/inbox";
-		
+
 		File directorio = new File(pathInbox);
-		
+
 		File[] archivosInbox = directorio.listFiles();
-		
+
 		System.out.println("\n########## Archivos disponibles en inbox ##########");
-		for (File archivo: archivosInbox)
+		for (File archivo : archivosInbox)
 		{
 			if (archivo.getName().endsWith("csv"))
 			{
 				System.out.println("\n- " + archivo.getName());
 			}
 		}
-		
+
 		String inputUsuario = input("\nIngrese el nombre (con la extensión csv) del archivo que desea (Ej. lote1.csv) ");
-		
-		return (pathInbox + "/"+ inputUsuario);
-		
+
+		return (pathInbox + "/" + inputUsuario);
+
 	}
 
 	/**
@@ -261,11 +253,11 @@ public class EncargadoInventario
 			boolean empacado = Boolean.parseBoolean(elArray[8]);
 
 			String unidad = elArray[9];
-			
+
 			String codigoBarras = elArray[10];
-			
+
 			String tipoProducto = elArray[11];
-			
+
 			String subCategorias = elArray[12];
 
 			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
@@ -274,17 +266,19 @@ public class EncargadoInventario
 			if (this.inventario.getLotes().containsKey(nombreProducto))
 			{
 				ArrayList<Lote> arrayDelHash = this.inventario.getLotes().get(nombreProducto);
-				
-			      for (int counter = 0; counter < arrayDelHash.size(); counter++) //Se reemplaza la categoría de artículos previamente cargados si se ingresa un lote con un artículo que ya forma parte del inventario, pero que tiene una categoría distinta.
-			      { 
-			    	  Double precioProveedor = arrayDelHash.get(counter).getPrecioProveedor(); //Se mantiene el precio, unidades y fechas que se tenía antes, lo demás se mantiene igual al nuevo lote.
-			    	  Integer unidadesOtroLote = arrayDelHash.get(counter).getCantidadUnidades();
-			    	  LocalDate vencimientoOtroLote = arrayDelHash.get(counter).getfechaDeVencimiento();
-			    	  LocalDate ingresoOtroLote = arrayDelHash.get(counter).getfechaDeIngreso();
-			    	  Lote loteCambiado = new Lote(nombreProducto, categoria, vencimientoOtroLote, ingresoOtroLote, precioProveedor, publico, unidadesOtroLote, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
-			          arrayDelHash.set(counter, loteCambiado);	
-			      }   
-				
+
+				for (int counter = 0; counter < arrayDelHash.size(); counter++) // Se reemplaza la categoría de artículos previamente cargados si se ingresa un lote con un artículo que ya forma parte
+																				// del inventario, pero que tiene una categoría distinta.
+				{
+					Double precioProveedor = arrayDelHash.get(counter).getPrecioProveedor(); // Se mantiene el precio, unidades y fechas que se tenía antes, lo demás se mantiene igual al nuevo lote.
+					Integer unidadesOtroLote = arrayDelHash.get(counter).getCantidadUnidades();
+					LocalDate vencimientoOtroLote = arrayDelHash.get(counter).getfechaDeVencimiento();
+					LocalDate ingresoOtroLote = arrayDelHash.get(counter).getfechaDeIngreso();
+					Lote loteCambiado = new Lote(nombreProducto, categoria, vencimientoOtroLote, ingresoOtroLote, precioProveedor, publico, unidadesOtroLote, peso, empacado, unidad, codigoBarras,
+							tipoProducto, subCategorias);
+					arrayDelHash.set(counter, loteCambiado);
+				}
+
 				arrayDelHash.add(newLote);
 
 				// Ajustar el nuevo precio
@@ -298,52 +292,49 @@ public class EncargadoInventario
 				ArrayList<Lote> arrayDelHash = new ArrayList<Lote>();
 				arrayDelHash.add(newLote);
 				this.inventario.getLotes().put(nombreProducto, arrayDelHash);
-				
+
 				if (!this.inventario.getGanancias().containsKey(nombreProducto) && !this.inventario.getPerdidas().containsKey(nombreProducto))
 				{
 					// Agregar a Ganancias/Pérdidas
 					this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
-					this.inventario.getPerdidas().put(newLote.getNameProducto(),0.0);
+					this.inventario.getPerdidas().put(newLote.getNameProducto(), 0.0);
 				}
-				
-				
-				
-				//Mapa para obtener el nombre del producto con el código de barras.
+
+				// Mapa para obtener el nombre del producto con el código de barras.
 				this.inventario.getCodigos().put(codigoBarras, nombreProducto);
 			}
 		}
 		csvReader.close();
 
 	}
-	
+
 	/**
 	 * Se carga el archivo de ganaciasYperdidas.csv
+	 * 
 	 * @throws IOException
 	 */
 	private void cargarGananciasPerdidas() throws IOException
 	{
 		String dataDirectory = System.getProperty("user.dir") + "/data/gananciasYperdidas.csv";
 		BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
-		
+
 		// NombreProducto, Ganancias, Perdidas
-		
+
 		csvReader.readLine();
 		String row;
 		while ((row = csvReader.readLine()) != null)
 		{
 			String[] separada = row.split(",");
-			
+
 			String nombreProducto = separada[0];
 			Double gananciasDouble = Double.parseDouble(separada[1]);
 			Double perdidasDouble = Double.parseDouble(separada[2]);
-			
+
 			this.inventario.getGanancias().put(nombreProducto, gananciasDouble);
 			this.inventario.getPerdidas().put(nombreProducto, perdidasDouble);
 		}
 		csvReader.close();
 	}
-	
-	
 
 	/**
 	 * 
@@ -404,7 +395,13 @@ public class EncargadoInventario
 
 			String opcion_seleccionada = input("~ ");
 
-			cantidadTotal = opcionesLoteHashMap.get(opcion_seleccionada).getCantidadUnidades();
+			if (opcionesLoteHashMap.containsKey(opcion_seleccionada))
+			{
+				cantidadTotal = opcionesLoteHashMap.get(opcion_seleccionada).getCantidadUnidades();
+			} else
+			{
+				cantidadTotal = -1;
+			}
 		}
 
 		return cantidadTotal;
@@ -438,17 +435,22 @@ public class EncargadoInventario
 			}
 
 			String opcion_seleccionada = input("~ ");
-
-			fechaVencimiento = opcionesLoteHashMap.get(opcion_seleccionada).getfechaDeVencimiento();
+			if (opcionesLoteHashMap.containsKey(opcion_seleccionada))
+			{
+				fechaVencimiento = opcionesLoteHashMap.get(opcion_seleccionada).getfechaDeVencimiento();
+			} else
+			{
+				fechaVencimiento = null;
+			}
 		}
 
 		return fechaVencimiento;
 
 	}
 
-	
 	/**
 	 * Se ingresa la fecha actual.
+	 * 
 	 * @param year
 	 * @param month
 	 * @param day
@@ -457,13 +459,12 @@ public class EncargadoInventario
 	{
 		LocalDate fechaDate = LocalDate.of(year, month, day);
 		Set<String> llaves = inventario.getLotes().keySet();
-		
-		ArrayList<Lote> porBorrar = new ArrayList<>(); 
+
+		ArrayList<Lote> porBorrar = new ArrayList<>();
 
 		for (String llave : llaves)
 		{
 			ArrayList<Lote> contenido = inventario.getLotes().get(llave);
-
 
 			for (Lote i : contenido)
 			{
@@ -473,11 +474,11 @@ public class EncargadoInventario
 				}
 
 			}
-			
-			for (Lote i: porBorrar)
+
+			for (Lote i : porBorrar)
 			{
 				contenido.remove(i);
-				
+
 				// Se agregan las pérdidas
 				double perdidas = (i.getPrecioProveedor() * i.getCantidadUnidades());
 				this.inventario.getPerdidas().replace(i.getNameProducto(), perdidas);
@@ -485,9 +486,10 @@ public class EncargadoInventario
 		}
 
 	}
-	
+
 	/**
 	 * Se consulta el desempeño financiero de un producto por su nombre.
+	 * 
 	 * @param nombreProducto
 	 * @return ArrayList<Double> [Ganancias, Perdidas]
 	 */
@@ -496,14 +498,14 @@ public class EncargadoInventario
 		ArrayList<Double> gananciasYperdidas = new ArrayList<Double>();
 		Double ganancias = inventario.getGanancias().get(nombreProducto);
 		Double perdidas = inventario.getPerdidas().get(nombreProducto);
-		
+
 		gananciasYperdidas.add(ganancias);
 		gananciasYperdidas.add(perdidas);
-		
+
 		return (gananciasYperdidas);
-		
+
 	}
-	
+
 	/**
 	 * Método para guardar toda la información en sus csv respectivos. Luego cierra la aplicación.
 	 * 
@@ -546,15 +548,16 @@ public class EncargadoInventario
 				String empacado = i.getEsEmpacado().toString();
 
 				String unidadPeso = i.getUnidadMedida();
-				
+
 				String codigoBarras = i.getCodigoBarras();
-				
+
 				String tipoProducto = i.getTipoProducto();
-				
+
 				String subCategorias = i.getSubCategorias();
 
 				// Nueva linea
-				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras + "," + tipoProducto + "," + subCategorias;
+				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso
+						+ "," + codigoBarras + "," + tipoProducto + "," + subCategorias;
 				writeCSV.write(nuevaLinea + "\n");
 			}
 		}
@@ -562,9 +565,10 @@ public class EncargadoInventario
 		guardarGananciasYPerdidas();
 		System.exit(0);// Successful
 	}
-	
+
 	/**
 	 * Guarda las ganancias y perdidas en gananciasYperdidas.csv
+	 * 
 	 * @throws IOException
 	 */
 	private void guardarGananciasYPerdidas() throws IOException
@@ -574,21 +578,20 @@ public class EncargadoInventario
 		csvfile.createNewFile();
 
 		FileWriter writeCSV = new FileWriter(csvfile);
-		
+
 		String primeraLineaString = "Producto,Ganancias,Perdidas";
-	
+
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
-		
-		
+
 		Set<String> llaves = inventario.getGanancias().keySet();
-		
-		for (String llave: llaves)
+
+		for (String llave : llaves)
 		{
 			String ganancia = inventario.getGanancias().get(llave).toString();
 			String perdida = inventario.getPerdidas().get(llave).toString();
-			
+
 			String nuevaLinea = llave + "," + ganancia + "," + perdida;
-			writeCSV.write(nuevaLinea+"\n");
+			writeCSV.write(nuevaLinea + "\n");
 		}
 		writeCSV.close();
 	}

@@ -83,7 +83,7 @@ public class Cajero
 			}
 			else if (opcion_seleccionada == 1)
 			{
-				String cedula = input("\nPor favor ingrese el número de cédula del cliente");
+				String cedula = input("\nPor favor ingrese el número de cédula del cliente (Espiche enter si no está registrado)");
 				Boolean existe = pos.getClientes().containsKey(cedula);
 				if (existe)
 				{
@@ -97,34 +97,39 @@ public class Cajero
 			}
 			else if (opcion_seleccionada == 2)
 			{
-				String codigoProducto = input("\nPor favor ingrese el código de barras del producto que desea registrar");
-				
-				String nombreProducto = this.pos.inventario.getCodigos().get(codigoProducto);
-				
-				if (nombreProducto == null) // Si el producto no se encontró
+				if (this.compraActiva != null)
 				{
-					System.out.println("\nEl producto con código " +  codigoProducto + " no forma parte de nuestro inventario.\n");
-				}
-				else 
-				{	
-					boolean esEmpacado = this.pos.inventario.getLotes().get(nombreProducto).get(0).getEsEmpacado();
+					String codigoProducto = input("\nPor favor ingrese el código de barras del producto que desea registrar");
 					
-					if (esEmpacado) // Si es empacado
+					String nombreProducto = this.pos.inventario.getCodigos().get(codigoProducto);
+					
+					if (nombreProducto == null) // Si el producto no se encontró
 					{
-						Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
-						Double peso = -1.0;
-						agregarProducto(nombreProducto, cantidad, peso);
+						System.out.println("\nEl producto con código " +  codigoProducto + " no forma parte de nuestro inventario.\n");
 					}
-					else // Si es no empacado
-					{
-						//Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
-						Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
-						Double cantidad = Math.ceil(peso / this.pos.inventario.getLotes().get(nombreProducto).get(0).getPeso());
+					else 
+					{	
+						boolean esEmpacado = this.pos.inventario.getLotes().get(nombreProducto).get(0).getEsEmpacado();
 						
-						System.out.println("\nLa cantidad de " + nombreProducto + " según el peso ingresado es: " + cantidad);
-						agregarProducto(nombreProducto, cantidad, peso);
-					}
+						if (esEmpacado) // Si es empacado
+						{
+							Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
+							Double peso = -1.0;
+							agregarProducto(nombreProducto, cantidad, peso);
+						}
+						else // Si es no empacado
+						{
+							//Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
+							Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
+							Double cantidad = Math.ceil(peso / this.pos.inventario.getLotes().get(nombreProducto).get(0).getPeso());
+							
+							System.out.println("\nLa cantidad de " + nombreProducto + " según el peso ingresado es: " + cantidad);
+							agregarProducto(nombreProducto, cantidad, peso);
+						}
 				}
+			}else {
+				System.out.println("\nINICIE UNA COMPRA");
+			}
 				
 			}
 			else if (opcion_seleccionada == 3)
