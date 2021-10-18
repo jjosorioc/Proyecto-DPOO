@@ -73,10 +73,19 @@ public class Compra
 		{
 			pesoFinal = peso;
 		}
-		
 		ArrayList<Double> porIngesar = new ArrayList<>();
-		porIngesar.add(cantidad);
-		porIngesar.add(pesoFinal);
+		if (!productoCantidad.containsKey(nombreProducto))
+		{
+			porIngesar.add(cantidad);
+			porIngesar.add(pesoFinal);
+		}
+		else {
+			
+			Double nuevaCantidad = productoCantidad.get(nombreProducto).get(0) + cantidad;
+			porIngesar.add(nuevaCantidad);
+			porIngesar.add(pesoFinal);
+		}
+		
 		
 		this.productoCantidad.put(nombreProducto, porIngesar);
 	}
