@@ -71,7 +71,15 @@ public class EncargadoInventario
 		while (continuar)
 		{
 			mostrarMenu();
-			int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opción\n"));
+			int opcion_seleccionada = -1;
+			try
+			{
+				opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opción\n"));
+			} catch (NumberFormatException e)
+			{
+				opcion_seleccionada = -1;
+			}
+			
 			
 			if (opcion_seleccionada == 0)
 			{
@@ -156,6 +164,10 @@ public class EncargadoInventario
 			{
 				guardarYcerrar();
 				System.out.println("\nCambios de inventario guardados con éxito!\n");
+			}
+			
+			else {
+				System.out.println("\n¡INGRESE UNA OPCIÓN VÁLIDA!");
 			}
 
 		}
