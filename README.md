@@ -16,6 +16,12 @@ y Thais Tamaio (2020222213)
 - Los archivos de los lotes deben estar dentro de la carpeta "inbox". Dentro de esta carpeta se encuentran dos ejemplos de archivos con su respectivo formato. Si se desean agregar lotes distintos a los de los ejemplos, se pueden modificar los archivos existentes (conservando el formato mostrado) o se puede crear un nuevo archivo con el mismo formato de los archivos de ejemplo. 
 
 ```diff
+- Para consultar resulatdos:
+```
+
+Si desea consultar si se está actualizando correctamente el inventario, los clientes y las ganancias y pérdidas. Puede obvservar esta información en la carpeta "data" donde encontrará los archivos que se actualizan cada vez que se ejecutan las opciones de guardar y cerrar.
+
+```diff
 - Para encargado de inventario:
 ```
 
