@@ -38,9 +38,15 @@ public class POS
 	 */
 	public void agregarPuntosCliente(String cedula, Integer puntos)
 	{
-		this.clientes.replace(cedula, puntos);
+		if (this.clientes.containsKey(cedula))
+		{
+			Integer nuevosPuntos = this.clientes.get(cedula) + puntos;
+			this.clientes.replace(cedula, nuevosPuntos);
+		}
+		else {
+			this.clientes.put(cedula, puntos);
+		}
 	}
-	
 	
 	/**
 	 * Se carga el inventario de inventario.csv

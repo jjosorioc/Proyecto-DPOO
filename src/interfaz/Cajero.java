@@ -293,7 +293,6 @@ public class Cajero
 		System.out.println(compraActiva.getFactura(this.pos.inventario));
 		if (compraActiva.cedula != null)
 		{
-			System.out.println();
 			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
 		}
 		this.compraActiva = null;
