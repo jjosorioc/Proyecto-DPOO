@@ -58,10 +58,23 @@ public class Inventario
 		
 		for (Lote l: lotesDelProducto)
 		{
-			if (l.getCantidadUnidades() >= cantidad && l.getCantidadUnidades() > 0) // Ocurre en el primer lote con una cantidad válida
+			if (l.getCantidadUnidades() > 0) // Ocurre en el primer lote con una cantidad válida
 			{
-				l.restarCantidadUnidades(cantidad);
-				break; // No repetir en los demás lotes
+				if (l.getCantidadUnidades() >= cantidad) {
+					l.restarCantidadUnidades(cantidad);
+					break; // No repetir en los demás lotes
+				}
+				else {
+					Double cantidadDisponible = cantidad - l.getCantidadUnidades();
+					l.restarCantidadUnidades(cantidadDisponible);
+					cantidad = cantidad - cantidadDisponible;
+				}
+				
+				if (cantidad == 0)
+				{
+					break;
+				}
+				
 			}
 		}
 
