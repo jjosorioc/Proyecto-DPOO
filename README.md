@@ -29,7 +29,7 @@ __0.__ Para cargar el lote ingrese el nombre completo del archivo en la carpeta 
 
 __1.__ Para consultar la disponibilidad de un producto, ingrese el nombre de este en minúsculas. Puede consultar la disponibilidad de varios productos, pero debe siempre ejecutar la opción 1.
 
-__2.__ Para eliminar lotes vencidos ingrese la fecha actual y __POSTERIORMENTE ejecute la opción 6. de guardar y cerrar__, ya que si no hace eso, no se guardarán los cambios en el inventario.
+__2.__ Para eliminar lotes vencidos ingrese la fecha actual (decidimos que el encargado de inventario es el que debe ingresar la fecha actual para que se pueden hacer distintas pruebas de eliminar lotes vencidos) y __POSTERIORMENTE ejecute la opción 6. de guardar y cerrar__, ya que si no hace eso, no se guardarán los cambios en el inventario.
 
 __3.__ Para consultar las unidades disponibles en un lote, ingrese  del producto que contiene el lote en minúsculas. Luego se desplegará un menú de todos los lotes que contienen ese producto. Para seleccionar el lote que desea contular escriba el número que aparece junto a ese lote. Puede consultar varios lotes, pero debe siempre ejecutar la opción 3. 
 
