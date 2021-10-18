@@ -218,7 +218,6 @@ public class Cajero
 	private void crearCliente(String cedula)
 	{
 		this.pos.getClientes().put(cedula, 0);
-		this.pos.updateUnidadesDuranteEjecucion();
 	}
 
 	/**
@@ -228,6 +227,7 @@ public class Cajero
 	private void inicarCompraCliente(String cedula)
 	{
 		this.compraActiva = new Compra(cedula);
+		this.pos.updateUnidadesDuranteEjecucion();
 	}
 
 	/**
