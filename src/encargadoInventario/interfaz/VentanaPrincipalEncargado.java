@@ -6,35 +6,44 @@ package encargadoInventario.interfaz;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-
+import com.formdev.flatlaf.FlatLightLaf;
 
 import controlador.EncargadoInventario;
 import encargadoInventario.paneles.ArribaPanel;
 import encargadoInventario.paneles.BotonesPanel;
 
-@SuppressWarnings({ "unused", "serial" })
+@SuppressWarnings("serial")
 public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 {
 	/**
 	 * @param args
 	 * @throws IOException
 	 */
+
 	public static void main(String[] args) throws IOException
 	{
-		
+		FlatLightLaf.setup();
+		FlatLightLaf.installLafInfo();
+		// FlatLightLaf.install();
 		VentanaPrincipalEncargado objEncargado = new VentanaPrincipalEncargado();
+
+		// Carga de datos
+		objEncargado.encargado.cargarGananciasPerdidas();
+		objEncargado.encargado.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
 
 	}
 
 	/*
 	 * ###################### ATRIBUTOS #########################
 	 */
-	public static EncargadoInventario encargado = new EncargadoInventario();
+	public EncargadoInventario encargado;
 
 	public ArribaPanel panelDeArriba;
 	public BotonesPanel botonesPanel;
@@ -42,7 +51,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 	/*
 	 * ############## BOTONES #################
 	 */
-	
+
 	// Primera fila
 	public JButton cargarLote;
 
@@ -62,6 +71,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 
 	public VentanaPrincipalEncargado() throws IOException
 	{
+		encargado = new EncargadoInventario();
 		// Nombre de la ventana
 		this.setTitle("Encargado del Inventario");
 
@@ -77,10 +87,28 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		this.add(panelDeArriba, BorderLayout.NORTH);
 
 		/*
-		 * Panel centro
+		 * Panel centro (El de los botones)
 		 */
 		botonesPanel = new BotonesPanel(this);
 		this.add(botonesPanel, BorderLayout.CENTER);
+
+		/*
+		 * Guardar y cerrar si se cierra la ventana
+		 */
+		addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
+				try
+				{
+					encargado.guardarYcerrar();
+				} catch (IOException e1)
+				{
+					System.err.println("\n¡No se encontró el archivo!\n");
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -97,20 +125,35 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		this.fechaVencimientoLote = botonesPanel.fechaVencimientoLote;
 		this.desempenhoFinancieroProducto = botonesPanel.desempenhoFinancieroProducto;
 		this.guardarYCerrar = botonesPanel.guardarYCerrar;
-		
+
 		/*
 		 * Cargar un lote
 		 */
 		if (e.getSource() == this.cargarLote)
 		{
 			String pathAlCsvString = encargado.getCSVPath();
-			
+
 			try
 			{
 				encargado.readCSV(pathAlCsvString);
 			} catch (IOException e1)
 			{
 				System.err.println("\n¡No se encontró el archivo!\n");
+				e1.printStackTrace();
+			}
+		}
+
+		/*
+		 * Guardar y Cerrar
+		 */
+		if (e.getSource() == this.guardarYCerrar)
+		{
+			try
+			{
+				this.encargado.guardarYcerrar();
+			} catch (IOException e1)
+			{
+				System.err.println("¡No se logró guardar y cerrar!");
 				e1.printStackTrace();
 			}
 		}

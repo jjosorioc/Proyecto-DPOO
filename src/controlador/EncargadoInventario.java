@@ -187,7 +187,7 @@ public class EncargadoInventario
 	 * 
 	 * @throws IOException
 	 */
-	private void cargarGananciasPerdidas() throws IOException
+	public void cargarGananciasPerdidas() throws IOException
 	{
 		String dataDirectory = System.getProperty("user.dir") + "/data/gananciasYperdidas.csv";
 		BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
@@ -215,7 +215,7 @@ public class EncargadoInventario
 	 * @param nombreProducto
 	 * @return Es -1 si no existe el producto
 	 */
-	private int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
+	public int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
 	{
 		int cantidadTotal = 0;
 
@@ -245,7 +245,7 @@ public class EncargadoInventario
 	 * @param nombreProducto
 	 * @return -1 si no existe.
 	 */
-	private int unidadesDisponiblesLote(String nombreProducto)
+	public int unidadesDisponiblesLote(String nombreProducto)
 	{
 		int cantidadTotal = 0;
 		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
@@ -285,7 +285,7 @@ public class EncargadoInventario
 	 * @param nombreProducto
 	 * @return null si no existe
 	 */
-	private LocalDate fechaVencimientoLote(String nombreProducto)
+	public LocalDate fechaVencimientoLote(String nombreProducto)
 	{
 		LocalDate fechaVencimiento = null;
 		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
@@ -327,7 +327,7 @@ public class EncargadoInventario
 	 * @param month
 	 * @param day
 	 */
-	private void eliminarLotesVencidos(int year, int month, int day) // YYYY-MM-DD
+	public void eliminarLotesVencidos(int year, int month, int day) // YYYY-MM-DD
 	{
 		LocalDate fechaDate = LocalDate.of(year, month, day);
 		Set<String> llaves = inventario.getLotes().keySet();
@@ -365,7 +365,7 @@ public class EncargadoInventario
 	 * @param nombreProducto
 	 * @return ArrayList<Double> [Ganancias, Perdidas]
 	 */
-	private ArrayList<Double> consultarDesempenoFinanciero(String nombreProducto)
+	public ArrayList<Double> consultarDesempenoFinanciero(String nombreProducto)
 	{
 		ArrayList<Double> gananciasYperdidas = new ArrayList<Double>();
 		Double ganancias = inventario.getGanancias().get(nombreProducto);
@@ -383,7 +383,7 @@ public class EncargadoInventario
 	 * 
 	 * @throws IOException
 	 */
-	private void guardarYcerrar() throws IOException
+	public void guardarYcerrar() throws IOException
 	{
 		String dataDirectory = System.getProperty("user.dir") + "/data";
 		File csvfile = new File(dataDirectory + "/inventario.csv");
