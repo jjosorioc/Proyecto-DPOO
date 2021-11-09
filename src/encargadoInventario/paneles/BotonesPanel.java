@@ -149,7 +149,16 @@ public class BotonesPanel extends JPanel
 		
 		this.add(guardarYCerrar);
 		
-		
+		/*
+		 *  ACTION LISTENERS
+		 */
+		this.cargarLote.addActionListener(padrEncargado);
+		this.disponibilidadProducto.addActionListener(padrEncargado);
+		this.eliminarLotesVencidos.addActionListener(padrEncargado);
+		this.unidadesEnUnLote.addActionListener(padrEncargado);
+		this.fechaVencimientoLote.addActionListener(padrEncargado);
+		this.desempenhoFinancieroProducto.addActionListener(padre);
+		this.guardarYCerrar.addActionListener(padre);
 		
 	}
 }

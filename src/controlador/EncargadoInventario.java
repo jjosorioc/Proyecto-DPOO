@@ -1,4 +1,4 @@
-package interfaz;
+package controlador;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import modelo.Inventario;
@@ -24,8 +25,6 @@ public class EncargadoInventario
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
 		objEncargadoInventario.cargarGananciasPerdidas(); // Cargar ganancias y pérdidas
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
-
-		objEncargadoInventario.ejecutarOpcion();
 
 	}
 
@@ -58,163 +57,33 @@ public class EncargadoInventario
 		System.out.println("*********************************************************\n");
 	}
 
-	/**
-	 * Método que interactúa con el usuario a través de la consola.
-	 */
-	public void ejecutarOpcion() throws IOException
-	{
-		System.out.println("Iniciando programa...");
-
-		boolean continuar = true;
-
-		while (continuar)
-		{
-			mostrarMenu();
-			int opcion_seleccionada = -1;
-			try
-			{
-				opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opción\n"));
-			} catch (NumberFormatException e)
-			{
-				opcion_seleccionada = -1;
-			}
-
-			if (opcion_seleccionada == 0)
-			{
-				String path = getCSVPath();
-				readCSV(path);
-				System.out.println("\nSe ha cargado el lote con éxito.\n");
-			} else if (opcion_seleccionada == 1)
-			{
-				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su disponibilidad");
-				Integer resultado = disponibilidadProducto(nombre);
-				if (resultado == -1)
-				{
-					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
-				} else
-				{
-					System.out.println("\nExisten un total de " + resultado + " unidades de " + nombre + ".\n");
-				}
-			}
-
-			else if (opcion_seleccionada == 2)
-			{
-				Integer year = Integer.parseInt(input("\nIngrese el año actual (Ejemplo: 2021)"));
-				Integer month = Integer.parseInt(input("\nIngrese el mes actual (Ejemplo: 10)"));
-				Integer day = Integer.parseInt(input("\nIngrese el día actual (Ejemplo: 12)"));
-
-				eliminarLotesVencidos(year, month, day);
-
-				System.out.println("\nSolicitud recibida con éxito. ATENCIÓN: Asegúrese de seleccionar la opción 6) para completar la solicitud.\n");
-			}
-
-			else if (opcion_seleccionada == 3)
-			{
-				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su disponibilidad en TODOS los lotes");
-				Integer resultado = unidadesDisponiblesLote(nombre);
-				if (resultado == -1)
-				{
-					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
-				} 
-				else if (resultado == -2)
-				{
-					System.out.println("\nOpción inválida, vuelva a intentar\n");
-				}
-				else
-				{
-					System.out.println("\nExisten un total de  " + resultado + " unidades de " + nombre + ".\n");
-				}
-			}
-
-			else if (opcion_seleccionada == 4)
-			{
-				String nombre = input("\nIngrese el nombre de un producto para encontrar el lote que desea consultar");
-				LocalDate fecha = fechaVencimientoLote(nombre);
-				if (fecha != null)
-				{
-					System.out.println("\nLa fecha de vencimiento del lote seleccionado es el día " + fecha.getDayOfMonth() + " del mes " + fecha.getMonthValue() + " año " + fecha.getYear() + ".\n");
-				} else
-				{
-					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario o se ingresó una opción inválida.\n");
-				}
-
-			}
-
-			else if (opcion_seleccionada == 5)
-			{
-				String nombre = input("\nIngrese el nombre del producto del cuál desea consultar su desempeño financiero");
-				ArrayList<Double> resultado = consultarDesempenoFinanciero(nombre);
-				Double ganancias = resultado.get(0);
-				Double perdidas = resultado.get(1);
-				if (ganancias != null & perdidas != null)
-				{
-					System.out.println("\nEl desempeño financiero de " + nombre + " es el siguiente\n-Ganancias: $" + ganancias + "\n-Pérdidas: $" + perdidas + "\n");
-				} else
-				{
-					System.out.println("\nEl producto " + nombre + " no forma parte de nuestro inventario.\n");
-				}
-
-			}
-
-			else if (opcion_seleccionada == 6)
-			{
-				guardarYcerrar();
-				System.out.println("\nCambios de inventario guardados con éxito!\n");
-			}
-
-			else
-			{
-				System.out.println("\n¡INGRESE UNA OPCIÓN VÁLIDA!");
-			}
-
-		}
-	}
-
-	/**
-	 * Método para obtener el input del usuario.
-	 * 
-	 * @param mensaje
-	 * @return String o null
-	 */
-	private String input(String mensaje)
-	{
-		try
-		{
-			System.out.print(mensaje + ": ");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			return reader.readLine();
-		} catch (IOException e)
-		{
-			System.out.println("Error leyendo de la consola");
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	/**
 	 * 
 	 * @return el path del archivo o null si no es valido
 	 */
-	private String getCSVPath()
+	public String getCSVPath()
 	{
 		String pathInbox = System.getProperty("user.dir") + "/inbox";
 
-		File directorio = new File(pathInbox);
-
-		File[] archivosInbox = directorio.listFiles();
-
-		System.out.println("\n########## Archivos disponibles en inbox ##########");
-		for (File archivo : archivosInbox)
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Seleccione el archivo con los lotes");
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		fileChooser.setCurrentDirectory(new File(pathInbox));
+		
+		FileNameExtensionFilter restringirExtensionFilter = new FileNameExtensionFilter("Solo archivos CSV con la estructura de los lotes", "csv");
+		fileChooser.addChoosableFileFilter(restringirExtensionFilter);
+		int result = fileChooser.showOpenDialog(fileChooser);
+		
+		if (result == JFileChooser.APPROVE_OPTION)
 		{
-			if (archivo.getName().endsWith("csv"))
-			{
-				System.out.println("\n- " + archivo.getName());
-			}
+		
+			File selectedFile = fileChooser.getSelectedFile();
+			
+			return selectedFile.getAbsolutePath();
 		}
-
-		String inputUsuario = input("\nIngrese el nombre (con la extensión csv) del archivo que desea (Ej. lote1.csv) ");
-
-		return (pathInbox + "/" + inputUsuario);
+		
+		return null;
 
 	}
 
@@ -224,7 +93,7 @@ public class EncargadoInventario
 	 * @param pathCSV
 	 * @throws IOException
 	 */
-	private void readCSV(String pathCSV) throws IOException // Opción 1
+	public void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
 
@@ -398,8 +267,7 @@ public class EncargadoInventario
 				numOpcion++;
 			}
 
-			String opcion_seleccionada = input("~ ");
-
+			String opcion_seleccionada = "";
 			if (opcionesLoteHashMap.containsKey(opcion_seleccionada))
 			{
 				cantidadTotal = opcionesLoteHashMap.get(opcion_seleccionada).getCantidadUnidades();
@@ -438,8 +306,7 @@ public class EncargadoInventario
 				opcionesLoteHashMap.put(String.valueOf(numOpcion), i);
 				numOpcion++;
 			}
-
-			String opcion_seleccionada = input("~ ");
+			String opcion_seleccionada = "";
 			if (opcionesLoteHashMap.containsKey(opcion_seleccionada))
 			{
 				fechaVencimiento = opcionesLoteHashMap.get(opcion_seleccionada).getfechaDeVencimiento();

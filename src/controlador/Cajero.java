@@ -1,4 +1,4 @@
-package interfaz;
+package controlador;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
