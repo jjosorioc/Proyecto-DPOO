@@ -12,7 +12,9 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
+import static javax.swing.JOptionPane.showMessageDialog;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import controlador.EncargadoInventario;
@@ -135,10 +137,10 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			try
 			{
 				encargado.readCSV(pathAlCsvString);
+				JOptionPane.showMessageDialog(this, "¡Se cargó el Lote al sistema!", "Nice",JOptionPane.PLAIN_MESSAGE);
 			} catch (IOException e1)
 			{
 				System.err.println("\n¡No se encontró el archivo!\n");
-				e1.printStackTrace();
 			}
 		}
 
