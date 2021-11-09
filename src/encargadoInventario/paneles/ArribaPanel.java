@@ -22,9 +22,14 @@ public class ArribaPanel extends JPanel
 	{
 		this.padre = padre;
 		
-		BufferedImage myPicture = ImageIO.read(new File(System.getProperty("user.dir") + "/images/encInv/encargadoInventario2.png"));
+		BufferedImage myPicture = ImageIO.read(new File(System.getProperty("user.dir") + "/images/encInv/logoEncargadoInventario.png"));
 		
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+		ImageIcon mpAsIcon = new ImageIcon(myPicture);
+		Image img1 = mpAsIcon.getImage();
+		Image newPictureImage = img1.getScaledInstance(padre.getWidth(),350,java.awt.Image.SCALE_SMOOTH);
+		
+		
+		JLabel picLabel = new JLabel(new ImageIcon(newPictureImage));
 		this.add(picLabel);
 	}
 	

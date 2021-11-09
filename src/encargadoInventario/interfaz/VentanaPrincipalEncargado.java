@@ -6,6 +6,7 @@ package encargadoInventario.interfaz;
 import javax.swing.JFrame;
 
 import encargadoInventario.paneles.ArribaPanel;
+import encargadoInventario.paneles.BotonesPanel;
 
 import javax.swing.*;
 
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 {
 	public ArribaPanel panelDeArriba;
+	public BotonesPanel botonesPanel;
 	
 	public VentanaPrincipalEncargado() throws IOException
 	{
@@ -35,6 +37,15 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		 */
 		panelDeArriba = new ArribaPanel(this);
 		this.add(panelDeArriba, BorderLayout.NORTH);
+		
+		
+		/*
+		 * Panel centro
+		 */
+		botonesPanel = new BotonesPanel(this);
+		this.add(botonesPanel, BorderLayout.CENTER);
+		
+		
 		
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
