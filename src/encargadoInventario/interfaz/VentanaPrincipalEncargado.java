@@ -31,7 +31,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 	{
 		FlatLightLaf.setup();
 		FlatLightLaf.installLafInfo();
-		// FlatLightLaf.install();
+		//FlatLightLaf.install();
 		VentanaPrincipalEncargado objEncargado = new VentanaPrincipalEncargado();
 
 		// Carga de datos
