@@ -30,7 +30,6 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 	public static void main(String[] args) throws IOException
 	{
 		FlatLightLaf.setup();
-		FlatLightLaf.installLafInfo();
 		//FlatLightLaf.install();
 		VentanaPrincipalEncargado objEncargado = new VentanaPrincipalEncargado();
 
