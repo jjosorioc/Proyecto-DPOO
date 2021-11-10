@@ -33,7 +33,7 @@ public class AbajoPanel extends JPanel
 		
 		JLabel text = new JLabel("Cliente registrado: "); //TODO si el cliente no está registrado, esto no debe salir.
 		
-		numeroCliente = new JLabel(""); //TODO dependiendo de lo que entre por parámetro debe cambiar.
+		numeroCliente = new JLabel(""); //TODO dependiendo de lo que entre por parámetro debe cambiar :)
 		
 		Font f = new Font("TimesRoman",Font.BOLD,25);
 	    text.setForeground(Color.BLUE);
