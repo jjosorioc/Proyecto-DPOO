@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -203,6 +204,35 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 
 				mensaje = "Info del lote: " + loteStringEscogido + "\n- Cantidad de Unidades en el lote: " + cantidadUnidadesLote;
 				JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
+			}
+		}
+
+		/*
+		 * FECHA DE VENCIMIENTO DE UN LOTE
+		 */
+		if (e.getSource() == this.fechaVencimientoLote)
+		{
+			String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:", "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE);
+
+			String mensaje = "";
+			if (!this.ENCARGADO.existeElLote(nombreProducto)) // No existen lotes que contienen ese producto
+			{
+				mensaje = "¡No hay lotes con ese producto!";
+				JOptionPane.showMessageDialog(this, mensaje, "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE);
+			} else
+			{
+				ArrayList<Lote> arregloDeLotes = this.ENCARGADO.lotesDeUnProducto(nombreProducto); // Arreglo con los lotes del producto.
+
+				String[] lotesComoStrings = this.ENCARGADO.lotesDeUnProductoIngresoCantidad(arregloDeLotes);
+
+				// Opción que el usuario selecciona en el menú
+				String loteStringEscogido = (String) JOptionPane.showInputDialog(this, "Escoja un Lote según su información:", "Fecha de Vencimiento de un Lote", JOptionPane.QUESTION_MESSAGE, null,
+						lotesComoStrings, lotesComoStrings[0]);
+
+				LocalDate fechaDeVencimientoLote = this.ENCARGADO.fechaVencimientoLote(loteStringEscogido, lotesComoStrings, arregloDeLotes);
+
+				mensaje = "Info del lote: " + loteStringEscogido + "\n- Fecha de Vencimiento del Lote (YYYY-MM-DD): " + fechaDeVencimientoLote;
+				JOptionPane.showMessageDialog(this, mensaje, "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 

@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
@@ -35,24 +34,6 @@ public class EncargadoInventario
 	public Inventario getInventario()
 	{
 		return inventario;
-	}
-
-	/**
-	 * Método para imprimir el menú en consola
-	 */
-	private void mostrarMenu()
-	{
-		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
-		System.out.println("\nBienvenido a la consola para el encargado de inventario");
-		System.out.println("\n0. Cargar lote.");
-		System.out.println("\n1. Consultar disponibilidad de un producto.");
-		System.out.println("\n2. Eliminar lotes vencidos.");
-		System.out.println("\n3. Consultar unidades disponibles en un lote.");
-		System.out.println("\n4. Consultar fecha de vencimiento de un lote.");
-		System.out.println("\n5. Consultar desempeño financiero de un producto.");
-
-		System.out.println("\n6. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
-		System.out.println("*********************************************************\n");
 	}
 
 	/**
@@ -281,6 +262,26 @@ public class EncargadoInventario
 	}
 
 	/**
+	 * Retorna un String[] con los lotes como Strings según la fecha de ingreso y la cantidad de unidades.
+	 * 
+	 * @param lotesDelProducto
+	 * @return
+	 */
+	public String[] lotesDeUnProductoIngresoCantidad(ArrayList<Lote> lotesDelProducto)
+	{
+		ArrayList<String> ordenadosSegunNombre = new ArrayList<String>();
+
+		for (Lote i : lotesDelProducto)
+		{
+			String loteEspecifico = "Fecha de ingreso: " + i.getfechaDeIngreso() + " | Cantidad de unidades: " + i.getCantidadUnidades();
+
+			ordenadosSegunNombre.add(loteEspecifico);
+		}
+
+		return ordenadosSegunNombre.toArray(new String[0]); // String[]
+	}
+
+	/**
 	 * Retorna la cantidad de unidades del lote seleccionado.
 	 * 
 	 * @param loteElegido
@@ -311,42 +312,33 @@ public class EncargadoInventario
 	}
 
 	/**
+	 * Retorna la fecha de vencimiento del Lote seleccionado.
 	 * 
-	 * @param nombreProducto
-	 * @return null si no existe
+	 * @param loteElegido
+	 * @param lotesComoStrings
+	 * @param arrayConLotes
+	 * @return
 	 */
-	public LocalDate fechaVencimientoLote(String nombreProducto)
+	public LocalDate fechaVencimientoLote(String loteElegido, String[] lotesComoStrings, ArrayList<Lote> arrayConLotes)
 	{
-		LocalDate fechaVencimiento = null;
-		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
-		if (!existeLote)
-		{
-			fechaVencimiento = null; // No existe
-		} else
-		{
+		Integer indiceDelLote = null;
 
-			HashMap<String, Lote> opcionesLoteHashMap = new HashMap<>();
-			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
+		int sizeArray = lotesComoStrings.length;
 
-			int numOpcion = 0;
-			System.out.println("\nSeleccione una opción\n");
-			for (Lote i : lotesDelProducto)
+		int iterador = 0;
+
+		// Ciclo para encontrar el índice en el que se encuentra en lote elegido
+		while (iterador < sizeArray && indiceDelLote == null)
+		{
+			if (loteElegido.equals(lotesComoStrings[iterador]))
 			{
-				System.out.println(numOpcion + " - Fecha de ingreso: " + i.getfechaDeIngreso() + " Cantidad de unidades: " + i.getCantidadUnidades());
-				opcionesLoteHashMap.put(String.valueOf(numOpcion), i);
-				numOpcion++;
+				indiceDelLote = iterador;
 			}
-			String opcion_seleccionada = "";
-			if (opcionesLoteHashMap.containsKey(opcion_seleccionada))
-			{
-				fechaVencimiento = opcionesLoteHashMap.get(opcion_seleccionada).getfechaDeVencimiento();
-			} else
-			{
-				fechaVencimiento = null;
-			}
+
+			iterador++;
 		}
 
-		return fechaVencimiento;
+		return arrayConLotes.get(indiceDelLote).getfechaDeVencimiento();
 
 	}
 
