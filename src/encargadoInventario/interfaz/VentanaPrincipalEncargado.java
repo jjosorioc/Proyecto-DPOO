@@ -20,6 +20,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import controlador.EncargadoInventario;
 import encargadoInventario.paneles.ArribaPanel;
 import encargadoInventario.paneles.BotonesPanel;
+import modelo.Lote;
 
 @SuppressWarnings("serial")
 public class VentanaPrincipalEncargado extends JFrame implements ActionListener
@@ -173,6 +174,36 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		{
 			this.ENCARGADO.eliminarLotesVencidos();
 			JOptionPane.showMessageDialog(this, "¡Los lotes vencidos fueron eliminados con éxito!", "Lotes Vencidos", JOptionPane.PLAIN_MESSAGE);
+		}
+
+		/*
+		 * UNIDADES EN UN LOTE
+		 */
+		if (e.getSource() == this.unidadesEnUnLote)
+		{
+			String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:", "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
+
+			String mensaje = "";
+			if (!this.ENCARGADO.existeElLote(nombreProducto)) // No existen lotes que contienen ese producto
+			{
+				mensaje = "¡No hay lotes con ese producto!";
+				JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
+			} else
+			{
+				ArrayList<Lote> arregloDeLotes = this.ENCARGADO.lotesDeUnProducto(nombreProducto); // Arreglo con los lotes del producto.
+
+				String[] lotesComoStrings = this.ENCARGADO.lotesDeUnProductoIngresoVencimientoStrings(arregloDeLotes); // Lotes como strings
+
+				// Opción que el usuario selecciona en el menú
+				String loteStringEscogido = (String) JOptionPane.showInputDialog(this, "Escoja un Lote según su información:", "Unidades en un Lote", JOptionPane.QUESTION_MESSAGE, null,
+						lotesComoStrings, lotesComoStrings[0]);
+
+				// Cantidad de unidades en el lote que seleccionó el usuario.
+				int cantidadUnidadesLote = this.ENCARGADO.unidadesDisponibles(loteStringEscogido, lotesComoStrings, arregloDeLotes);
+
+				mensaje = "Info del lote: " + loteStringEscogido + "\n- Cantidad de Unidades en el lote: " + cantidadUnidadesLote;
+				JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
+			}
 		}
 
 		/*

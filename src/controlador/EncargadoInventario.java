@@ -55,7 +55,6 @@ public class EncargadoInventario
 		System.out.println("*********************************************************\n");
 	}
 
-
 	/**
 	 * 
 	 * @return el path del archivo o null si no es valido
@@ -68,19 +67,19 @@ public class EncargadoInventario
 		fileChooser.setDialogTitle("Seleccione el archivo con los lotes");
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setCurrentDirectory(new File(pathInbox));
-		
+
 		FileNameExtensionFilter restringirExtensionFilter = new FileNameExtensionFilter("Solo archivos CSV con la estructura de los lotes", "csv");
 		fileChooser.addChoosableFileFilter(restringirExtensionFilter);
 		int result = fileChooser.showOpenDialog(fileChooser);
-		
+
 		if (result == JFileChooser.APPROVE_OPTION)
 		{
-		
+
 			File selectedFile = fileChooser.getSelectedFile();
-			
+
 			return selectedFile.getAbsolutePath();
 		}
-		
+
 		return null;
 
 	}
@@ -239,43 +238,76 @@ public class EncargadoInventario
 	}
 
 	/**
+	 * Retorna *true* si existe el lote con el nombre del producto ingresado.
 	 * 
 	 * @param nombreProducto
-	 * @return -1 si no existe.
+	 * @return
 	 */
-	public int unidadesDisponiblesLote(String nombreProducto)
+	public boolean existeElLote(String nombreProducto)
 	{
-		int cantidadTotal = 0;
-		boolean existeLote = this.inventario.getLotes().containsKey(nombreProducto);
-		if (!existeLote)
+		return this.inventario.getLotes().containsKey(nombreProducto);
+	}
+
+	/**
+	 * Retorna un ArrayList con los lotes de un producto, sabiendo que este ya existe
+	 * 
+	 * @param nombreProducto
+	 * @return
+	 */
+	public ArrayList<Lote> lotesDeUnProducto(String nombreProducto)
+	{
+		return this.inventario.getLotes().get(nombreProducto);
+	}
+
+	/**
+	 * Retorna un String[] con los lotes como Strings según la fecha de ingreso y vencimiento
+	 * 
+	 * @param lotesDelProducto
+	 * @return
+	 */
+	public String[] lotesDeUnProductoIngresoVencimientoStrings(ArrayList<Lote> lotesDelProducto)
+	{
+
+		ArrayList<String> ordenadosSegunNombre = new ArrayList<String>();
+
+		for (Lote i : lotesDelProducto)
 		{
-			cantidadTotal = -1; // No existe
-		} else
-		{
+			String loteEspecifico = "Fecha de ingreso: " + i.getfechaDeIngreso() + " | Fecha de vencimiento: " + i.getfechaDeVencimiento();
 
-			HashMap<String, Lote> opcionesLoteHashMap = new HashMap<>();
-			ArrayList<Lote> lotesDelProducto = this.inventario.getLotes().get(nombreProducto);
-
-			int numOpcion = 0;
-			System.out.println("\nSeleccione una opción\n");
-			for (Lote i : lotesDelProducto)
-			{
-				System.out.println(numOpcion + " - Fecha de ingreso: " + i.getfechaDeIngreso() + " Fecha de vencimiento: " + i.getfechaDeVencimiento());
-				opcionesLoteHashMap.put(String.valueOf(numOpcion), i);
-				numOpcion++;
-			}
-
-			String opcion_seleccionada = "";
-			if (opcionesLoteHashMap.containsKey(opcion_seleccionada))
-			{
-				cantidadTotal = opcionesLoteHashMap.get(opcion_seleccionada).getCantidadUnidades();
-			} else
-			{
-				cantidadTotal = -2;
-			}
+			ordenadosSegunNombre.add(loteEspecifico);
 		}
 
-		return cantidadTotal;
+		return ordenadosSegunNombre.toArray(new String[0]); // String[]
+	}
+
+	/**
+	 * Retorna la cantidad de unidades del lote seleccionado.
+	 * 
+	 * @param loteElegido
+	 * @param lotesComoStrings
+	 * @param arrayConLotes
+	 * @return
+	 */
+	public int unidadesDisponibles(String loteElegido, String[] lotesComoStrings, ArrayList<Lote> arrayConLotes)
+	{
+		Integer indiceDelLote = null;
+
+		int sizeArray = lotesComoStrings.length;
+
+		int iterador = 0;
+
+		// Ciclo para encontrar el índice en el que se encuentra en lote elegido
+		while (iterador < sizeArray && indiceDelLote == null)
+		{
+			if (loteElegido.equals(lotesComoStrings[iterador]))
+			{
+				indiceDelLote = iterador;
+			}
+
+			iterador++;
+		}
+
+		return arrayConLotes.get(indiceDelLote).getCantidadUnidades();
 	}
 
 	/**
