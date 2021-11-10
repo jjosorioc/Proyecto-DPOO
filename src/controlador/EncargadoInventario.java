@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +12,6 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import modelo.Inventario;
 import modelo.Lote;
@@ -321,15 +319,15 @@ public class EncargadoInventario
 	}
 
 	/**
-	 * Se ingresa la fecha actual.
+	 * Elimina los Lotes vencidos. Se toma la fecha actual.
 	 * 
 	 * @param year
 	 * @param month
 	 * @param day
 	 */
-	public void eliminarLotesVencidos(int year, int month, int day) // YYYY-MM-DD
+	public void eliminarLotesVencidos() // YYYY-MM-DD
 	{
-		LocalDate fechaDate = LocalDate.of(year, month, day);
+		LocalDate fechaDate = LocalDate.now();
 		Set<String> llaves = inventario.getLotes().keySet();
 
 		ArrayList<Lote> porBorrar = new ArrayList<>();

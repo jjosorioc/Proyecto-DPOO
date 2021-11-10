@@ -142,6 +142,16 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 				System.err.println("\n¡No se encontró el archivo!\n");
 			}
 		}
+		
+		
+		/*
+		 * ELIMINAR LOTES VENCIDOS
+		 */
+		if (e.getSource() == this.eliminarLotesVencidos)
+		{
+			this.encargado.eliminarLotesVencidos();
+			JOptionPane.showMessageDialog(this, "¡Los lotes vencidos fueron eliminados con éxito!", "Lotes Vencidos",JOptionPane.PLAIN_MESSAGE);
+		}
 
 		/*
 		 * Guardar y Cerrar
