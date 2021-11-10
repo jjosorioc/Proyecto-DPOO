@@ -196,14 +196,21 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 				String[] lotesComoStrings = this.ENCARGADO.lotesDeUnProductoIngresoVencimientoStrings(arregloDeLotes); // Lotes como strings
 
 				// Opción que el usuario selecciona en el menú
-				String loteStringEscogido = (String) JOptionPane.showInputDialog(this, "Escoja un Lote según su información:", "Unidades en un Lote", JOptionPane.QUESTION_MESSAGE, null,
-						lotesComoStrings, lotesComoStrings[0]);
+				try
+				{
+					String loteStringEscogido = (String) JOptionPane.showInputDialog(this, "Escoja un Lote según su información:", "Unidades en un Lote", JOptionPane.QUESTION_MESSAGE, null,
+							lotesComoStrings, lotesComoStrings[0]);
 
-				// Cantidad de unidades en el lote que seleccionó el usuario.
-				int cantidadUnidadesLote = this.ENCARGADO.unidadesDisponibles(loteStringEscogido, lotesComoStrings, arregloDeLotes);
+					// Cantidad de unidades en el lote que seleccionó el usuario.
+					int cantidadUnidadesLote = this.ENCARGADO.unidadesDisponibles(loteStringEscogido, lotesComoStrings, arregloDeLotes);
 
-				mensaje = "Info del lote: " + loteStringEscogido + "\n- Cantidad de Unidades en el lote: " + cantidadUnidadesLote;
-				JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
+					mensaje = "Info del lote: " + loteStringEscogido + "\n- Cantidad de Unidades en el lote: " + cantidadUnidadesLote;
+					JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
+				} catch (IndexOutOfBoundsException e2)
+				{
+					JOptionPane.showMessageDialog(this, "El producto no tiene Lotes disponibles", "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE, null);
+				}
+
 			}
 		}
 
@@ -224,15 +231,21 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 				ArrayList<Lote> arregloDeLotes = this.ENCARGADO.lotesDeUnProducto(nombreProducto); // Arreglo con los lotes del producto.
 
 				String[] lotesComoStrings = this.ENCARGADO.lotesDeUnProductoIngresoCantidad(arregloDeLotes);
+				try
+				{
+					// Opción que el usuario selecciona en el menú
+					String loteStringEscogido = (String) JOptionPane.showInputDialog(this, "Escoja un Lote según su información:", "Fecha de Vencimiento de un Lote", JOptionPane.QUESTION_MESSAGE,
+							null, lotesComoStrings, lotesComoStrings[0]);
 
-				// Opción que el usuario selecciona en el menú
-				String loteStringEscogido = (String) JOptionPane.showInputDialog(this, "Escoja un Lote según su información:", "Fecha de Vencimiento de un Lote", JOptionPane.QUESTION_MESSAGE, null,
-						lotesComoStrings, lotesComoStrings[0]);
+					LocalDate fechaDeVencimientoLote = this.ENCARGADO.fechaVencimientoLote(loteStringEscogido, lotesComoStrings, arregloDeLotes);
 
-				LocalDate fechaDeVencimientoLote = this.ENCARGADO.fechaVencimientoLote(loteStringEscogido, lotesComoStrings, arregloDeLotes);
+					mensaje = "Info del lote: " + loteStringEscogido + "\n- Fecha de Vencimiento del Lote (YYYY-MM-DD): " + fechaDeVencimientoLote;
+					JOptionPane.showMessageDialog(this, mensaje, "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE);
+				} catch (ArrayIndexOutOfBoundsException e2)
+				{
+					JOptionPane.showMessageDialog(this, "El producto no tiene Lotes disponibles", "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE, null);
+				}
 
-				mensaje = "Info del lote: " + loteStringEscogido + "\n- Fecha de Vencimiento del Lote (YYYY-MM-DD): " + fechaDeVencimientoLote;
-				JOptionPane.showMessageDialog(this, mensaje, "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 
