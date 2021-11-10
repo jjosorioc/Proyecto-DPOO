@@ -26,7 +26,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		CajeroVentana subVentanaCajero = new CajeroVentana();
+		CajeroVentana subVentanaCajero = new CajeroVentana("");
 
 	}
 	
@@ -39,7 +39,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 	public JButton guardarYCerrar;
 	public JButton finalizarCompra;
 	
-	public CajeroVentana() throws IOException
+	public CajeroVentana(String cedula) throws IOException
 	{
 		this.setTitle("Cajero");
 
@@ -58,7 +58,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 		botonesPanel = new BotonesPanel(this);
 		this.add(botonesPanel, BorderLayout.CENTER);
 		
-		panelDeAbajo = new AbajoPanel(this);
+		panelDeAbajo = new AbajoPanel(this,cedula);
 		this.add(panelDeAbajo, BorderLayout.SOUTH);
 
 		this.setLocationRelativeTo(null);
