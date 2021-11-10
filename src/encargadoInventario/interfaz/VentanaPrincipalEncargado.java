@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,19 +32,19 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 	public static void main(String[] args) throws IOException
 	{
 		FlatLightLaf.setup();
-		//FlatLightLaf.install();
+		// FlatLightLaf.install();
 		VentanaPrincipalEncargado objEncargado = new VentanaPrincipalEncargado();
 
 		// Carga de datos
-		objEncargado.encargado.cargarGananciasPerdidas();
-		objEncargado.encargado.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
+		objEncargado.ENCARGADO.cargarGananciasPerdidas();
+		objEncargado.ENCARGADO.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
 
 	}
 
 	/*
 	 * ###################### ATRIBUTOS #########################
 	 */
-	public EncargadoInventario encargado;
+	public EncargadoInventario ENCARGADO;
 
 	public ArribaPanel panelDeArriba;
 	public BotonesPanel botonesPanel;
@@ -71,7 +72,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 
 	public VentanaPrincipalEncargado() throws IOException
 	{
-		encargado = new EncargadoInventario();
+		ENCARGADO = new EncargadoInventario();
 		// Nombre de la ventana
 		this.setTitle("Encargado del Inventario");
 
@@ -101,7 +102,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			{
 				try
 				{
-					encargado.guardarYcerrar();
+					ENCARGADO.guardarYcerrar();
 				} catch (IOException e1)
 				{
 					System.err.println("\n¡No se encontró el archivo!\n");
@@ -131,26 +132,72 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		 */
 		if (e.getSource() == this.cargarLote)
 		{
-			String pathAlCsvString = encargado.getCSVPath();
+			String pathAlCsvString = ENCARGADO.getCSVPath();
 
 			try
 			{
-				encargado.readCSV(pathAlCsvString);
-				JOptionPane.showMessageDialog(this, "¡Se cargó el Lote al sistema!", "Nice",JOptionPane.PLAIN_MESSAGE);
+				ENCARGADO.readCSV(pathAlCsvString);
+				JOptionPane.showMessageDialog(this, "¡Se cargó el Lote al sistema!", "Nice", JOptionPane.PLAIN_MESSAGE);
 			} catch (IOException e1)
 			{
 				System.err.println("\n¡No se encontró el archivo!\n");
 			}
 		}
-		
-		
+
+		/*
+		 * DISPONIBILIDAD DE UN PRODUCTO
+		 */
+		if (e.getSource() == this.disponibilidadProducto)
+		{
+			String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:");
+
+			Integer cantidadDelProductoInteger = this.ENCARGADO.disponibilidadProducto(nombreProducto); // Cantidad de unidades de ese producto
+
+			String mensaje = "";
+			if (cantidadDelProductoInteger == -1) // Si no se encontraron
+			{
+				mensaje = "¡No se encontró el producto que ingresó!: " + nombreProducto;
+				JOptionPane.showMessageDialog(this, mensaje, "Disponibilidad de un Producto", JOptionPane.PLAIN_MESSAGE);
+			} else
+			{
+				mensaje = "Nombre del producto: " + nombreProducto + "\n- Cantidad: " + cantidadDelProductoInteger;
+				JOptionPane.showMessageDialog(this, mensaje, "Disponibilidad de un Producto", JOptionPane.PLAIN_MESSAGE);
+			}
+
+		}
+
 		/*
 		 * ELIMINAR LOTES VENCIDOS
 		 */
 		if (e.getSource() == this.eliminarLotesVencidos)
 		{
-			this.encargado.eliminarLotesVencidos();
-			JOptionPane.showMessageDialog(this, "¡Los lotes vencidos fueron eliminados con éxito!", "Lotes Vencidos",JOptionPane.PLAIN_MESSAGE);
+			this.ENCARGADO.eliminarLotesVencidos();
+			JOptionPane.showMessageDialog(this, "¡Los lotes vencidos fueron eliminados con éxito!", "Lotes Vencidos", JOptionPane.PLAIN_MESSAGE);
+		}
+
+		/*
+		 * DESEMPEÑO FINANCIERO
+		 */
+		if (e.getSource() == this.desempenhoFinancieroProducto)
+		{
+			String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:");
+			ArrayList<Double> gananciasPerdidas = this.ENCARGADO.consultarDesempenoFinanciero(nombreProducto); // [ganancias, perdidas]
+
+			Double ganancias = gananciasPerdidas.get(0);
+			Double perdidas = gananciasPerdidas.get(1);
+
+			String mensaje;
+			if (ganancias != null && perdidas != null)
+			{
+				mensaje = "Nombre del producto: " + nombreProducto + "\n-Ganancias: $" + ganancias + "\n-Pérdidas: $" + perdidas;
+
+				JOptionPane.showMessageDialog(this, mensaje, "Desempeño Financiero", JOptionPane.PLAIN_MESSAGE);
+			} else
+			{
+				mensaje = "¡No se encontró el producto que ingresó!";
+				JOptionPane.showMessageDialog(this, mensaje, "Desempeño Financiero", JOptionPane.PLAIN_MESSAGE);
+			}
+
 		}
 
 		/*
@@ -160,7 +207,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		{
 			try
 			{
-				this.encargado.guardarYcerrar();
+				this.ENCARGADO.guardarYcerrar();
 			} catch (IOException e1)
 			{
 				System.err.println("¡No se logró guardar y cerrar!");
