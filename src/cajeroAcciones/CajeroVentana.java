@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 
 import cajero.paneles.ArribaPanel;
 import cajero.paneles.BotonesPanel;
+import cajero.paneles.AbajoPanel;
 import controlador.Cajero;
 import controlador.EncargadoInventario;
 
@@ -31,6 +32,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 	
 	public ArribaPanel panelDeArriba;
 	public BotonesPanel botonesPanel;
+	public AbajoPanel panelDeAbajo;
 	
 	public JButton agregarProducto;
 	public JButton eliminarCompra;
@@ -55,6 +57,9 @@ public class CajeroVentana extends JFrame implements ActionListener
 		 */
 		botonesPanel = new BotonesPanel(this);
 		this.add(botonesPanel, BorderLayout.CENTER);
+		
+		panelDeAbajo = new AbajoPanel(this);
+		this.add(panelDeAbajo, BorderLayout.SOUTH);
 
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import static javax.swing.JOptionPane.showMessageDialog;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import controlador.EncargadoInventario;
