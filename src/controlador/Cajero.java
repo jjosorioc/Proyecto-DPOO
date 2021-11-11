@@ -23,7 +23,7 @@ public class Cajero
 
 	// Atributos
 
-	private POS pos = new POS();
+	public POS pos = new POS();
 
 	private Compra compraActiva = null;
 
@@ -215,7 +215,7 @@ public class Cajero
 	 * 
 	 * @param cedula
 	 */
-	private void crearCliente(String cedula)
+	public void crearCliente(String cedula)
 	{
 		this.pos.getClientes().put(cedula, 0);
 	}
@@ -224,7 +224,7 @@ public class Cajero
 	 * 
 	 * @param cedula
 	 */
-	private void inicarCompraCliente(String cedula)
+	public void inicarCompraCliente(String cedula)
 	{
 		this.compraActiva = new Compra(cedula);
 		this.pos.updateUnidadesDuranteEjecucion();
@@ -236,7 +236,7 @@ public class Cajero
 	 * @param cantidad
 	 * @param peso
 	 */
-	private void agregarProducto(String productoNombre, Double cantidad, Double peso) // el producto debe estar en minúsculas
+	public void agregarProducto(String productoNombre, Double cantidad, Double peso) // el producto debe estar en minúsculas
 	{
 		if (this.compraActiva != null)
 		{
@@ -313,7 +313,7 @@ public class Cajero
 	 * 
 	 * @throws IOException
 	 */
-	private void guardarYcerrar() throws IOException
+	public void guardarYcerrar() throws IOException
 	{
 		this.pos.guardarInventario();
 		this.pos.guardarClientes();

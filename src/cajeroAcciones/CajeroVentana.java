@@ -10,12 +10,14 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import cajero.paneles.ArribaPanel;
 import cajero.paneles.BotonesPanel;
 import cajero.paneles.AbajoPanel;
 import controlador.Cajero;
 import controlador.EncargadoInventario;
+import modelo.POS;
 
 
 public class CajeroVentana extends JFrame implements ActionListener
@@ -26,7 +28,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		CajeroVentana subVentanaCajero = new CajeroVentana("");
+		new CajeroVentana("");
 
 	}
 	
@@ -39,8 +41,20 @@ public class CajeroVentana extends JFrame implements ActionListener
 	public JButton guardarYCerrar;
 	public JButton finalizarCompra;
 	
+	public Cajero CAJERO;
+	public POS pos;
+	
 	public CajeroVentana(String cedula) throws IOException
 	{
+		
+		CAJERO = new Cajero();
+		
+		pos = new POS();
+		
+		CAJERO.inicarCompraCliente(cedula);
+		
+		CAJERO.crearCliente(cedula);
+		
 		this.setTitle("Cajero");
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -73,6 +87,46 @@ public class CajeroVentana extends JFrame implements ActionListener
 		this.eliminarCompra = botonesPanel.eliminarCompra;
 		this.guardarYCerrar = botonesPanel.guardarYCerrar;
 		this.finalizarCompra = botonesPanel.finalizarCompra;
+		
+		if (e.getSource() == agregarProducto)
+		{
+//			String codigoProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:", "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE);
+//			
+//			String nombreProducto = pos.inventario.getCodigos().get(codigoProducto);
+//			
+//			System.out.println(nombreProducto);
+//			
+//			boolean esEmpacado = pos.inventario.getLotes().get(nombreProducto).get(0).getEsEmpacado();
+//			
+//			if (esEmpacado) //Para agregar producto se debe confirmar si el producto es empacado o no, para saber que información pedirle al cajero.
+//			{
+//				String cantidadString = JOptionPane.showInputDialog(this, "\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente", JOptionPane.PLAIN_MESSAGE);
+//				double cantidad = Double.parseDouble(cantidadString);
+//				Double peso = -1.0;
+//				CAJERO.agregarProducto(nombreProducto, cantidad, peso);
+//			}
+//			
+//			else
+//			{
+//				String pesoString = JOptionPane.showInputDialog(this, "\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente", JOptionPane.PLAIN_MESSAGE);
+//				double peso = Double.parseDouble(pesoString);
+//				Double cantidad = Math.ceil(peso / CAJERO.pos.inventario.getLotes().get(nombreProducto).get(0).getPeso());
+//				System.out.println("\nLa cantidad de " + nombreProducto + " según el peso ingresado es: " + cantidad);
+//				CAJERO.agregarProducto(nombreProducto, cantidad, peso);
+//			}
+		}
+		
+		if (e.getSource() == guardarYCerrar)
+		{
+			try
+			{
+				this.CAJERO.guardarYcerrar();
+			} catch (IOException e1)
+			{
+				System.err.println("¡No se logró guardar y cerrar!");
+				e1.printStackTrace();
+			}
+		}
 		
 	}
 
