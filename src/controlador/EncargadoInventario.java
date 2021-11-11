@@ -71,8 +71,9 @@ public class EncargadoInventario
 	 * @param pathCSV
 	 * @throws IOException
 	 */
-	public void readCSV(String pathCSV) throws IOException // Opción 1
+	public void readCSV(String pathCSV) throws IOException, NullPointerException // Opción 1
 	{
+		try {
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
 
 		/*
@@ -157,7 +158,9 @@ public class EncargadoInventario
 			}
 		}
 		csvReader.close();
-
+		}catch (NullPointerException e) {
+			throw new NullPointerException("No se ingresó un archivo");
+		}
 	}
 
 	/**

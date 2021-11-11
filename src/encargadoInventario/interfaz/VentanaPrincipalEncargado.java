@@ -107,7 +107,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 					ENCARGADO.guardarYcerrar();
 				} catch (IOException e1)
 				{
-					//TODO: Exception
+
 				}
 			}
 		});
@@ -141,7 +141,10 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this, "¡Se cargó el Lote al sistema!", "Nice", JOptionPane.PLAIN_MESSAGE);
 			} catch (IOException e1)
 			{
-				//TODO: Exception
+
+			} catch (NullPointerException e2)
+			{
+				JOptionPane.showMessageDialog(this, "¡No se ingresó un archivo!", ":(", JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 
@@ -282,8 +285,8 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			{
 				this.ENCARGADO.guardarYcerrar();
 			} catch (IOException e1)
-			{//TODO: Exception
-			
+			{
+
 			}
 		}
 	}
