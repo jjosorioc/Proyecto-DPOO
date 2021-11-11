@@ -107,8 +107,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 					ENCARGADO.guardarYcerrar();
 				} catch (IOException e1)
 				{
-					System.err.println("\n¡No se encontró el archivo!\n");
-					e1.printStackTrace();
+					//TODO: Exception
 				}
 			}
 		});
@@ -142,7 +141,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this, "¡Se cargó el Lote al sistema!", "Nice", JOptionPane.PLAIN_MESSAGE);
 			} catch (IOException e1)
 			{
-				System.err.println("\n¡No se encontró el archivo!\n");
+				//TODO: Exception
 			}
 		}
 
@@ -283,9 +282,8 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			{
 				this.ENCARGADO.guardarYcerrar();
 			} catch (IOException e1)
-			{
-				System.err.println("¡No se logró guardar y cerrar!");
-				e1.printStackTrace();
+			{//TODO: Exception
+			
 			}
 		}
 	}
