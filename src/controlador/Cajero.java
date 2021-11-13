@@ -25,7 +25,7 @@ public class Cajero
 
 	public POS pos = new POS();
 
-	private Compra compraActiva = null;
+	public Compra compraActiva = null;
 
 	// Métodos
 	
@@ -132,6 +132,7 @@ public class Cajero
 			}
 				
 			}
+			
 			else if (opcion_seleccionada == 3)
 			{
 				if (this.compraActiva != null)
@@ -187,7 +188,7 @@ public class Cajero
 	 * @param pathCSV
 	 * @throws IOException
 	 */
-	private void readCSV(String pathCSV) throws IOException // Opción 1
+	public void readCSV(String pathCSV) throws IOException // Opción 1
 	{
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
 
@@ -239,7 +240,11 @@ public class Cajero
 	public void agregarProducto(String productoNombre, Double cantidad, Double peso) // el producto debe estar en minúsculas
 	{
 		if (this.compraActiva != null)
-		{
+		{	
+			System.out.println(productoNombre);
+			System.out.println(cantidad);
+			System.out.println(peso);
+			System.out.println(this.pos.getUnidadesDuranteEjecucion().get(productoNombre));
 			if (disponibilidadProducto(productoNombre) >= cantidad && disponibilidadProducto(productoNombre) != -1 && this.pos.getUnidadesDuranteEjecucion().get(productoNombre) >= cantidad)
 			{
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
@@ -288,7 +293,7 @@ public class Cajero
 	/**
 	 * Método para finalizar la compra del cliente
 	 */
-	private void finalizarCompra()
+	public void finalizarCompra()
 	{
 		System.out.println(compraActiva.getFactura(this.pos.inventario));
 		if (compraActiva.cedula != null)
@@ -302,7 +307,7 @@ public class Cajero
 	/**
 	 * Método para eliminar la compra del cliente activo.
 	 */
-	private void eliminarCompra()
+	public void eliminarCompra()
 	{
 		this.compraActiva = null;
 		System.out.println("\nSe eliminó la compra.\n");
