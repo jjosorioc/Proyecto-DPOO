@@ -79,7 +79,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 		{
 			try {
 				//Se obtiene la cedula del cliente
-				String cedulaCliente = JOptionPane.showInputDialog(this, "Ingrese el número de cédula del cliente registrado:");
+				String cedulaCliente = JOptionPane.showInputDialog(this, "Ingrese el número de cédula del cliente registrado (No ingrese nada y oprima OK si el cliente no está registrado)");
 				new CajeroVentana(cedulaCliente); //Se abre la ventana de agregar productos (con el numero de cedula incluido)
 			} catch (IOException e1) {
 				e1.printStackTrace(); //Se cierra la ventana actual

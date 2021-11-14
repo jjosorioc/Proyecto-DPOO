@@ -50,7 +50,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 	
 	public CajeroVentana(String cedula) throws IOException
 	{
-		if (cedula == (""))
+		if (cedula.length() == 0) //Si el cliente no está registrado
 		{
 			cedula = null;
 		}
