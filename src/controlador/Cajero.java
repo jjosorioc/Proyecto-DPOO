@@ -49,7 +49,7 @@ public class Cajero
 	 * Método que interactúa con el usuario a través de la consola.
 	 * @throws IOException 
 	 */
-	private void ejecutarOpcion() throws IOException
+	public void ejecutarOpcion() throws IOException
 	{
 		System.out.println("Iniciando programa...");
 
@@ -122,7 +122,6 @@ public class Cajero
 							//Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
 							Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
 							Double cantidad = Math.ceil(peso / this.pos.inventario.getLotes().get(nombreProducto).get(0).getPeso());
-							
 							System.out.println("\nLa cantidad de " + nombreProducto + " según el peso ingresado es: " + cantidad);
 							agregarProducto(nombreProducto, cantidad, peso);
 						}
@@ -167,7 +166,7 @@ public class Cajero
 	 * @param mensaje
 	 * @return String o null
 	 */
-	private String input(String mensaje)
+	public String input(String mensaje)
 	{
 		try
 		{
@@ -237,26 +236,25 @@ public class Cajero
 	 * @param cantidad
 	 * @param peso
 	 */
-	public void agregarProducto(String productoNombre, Double cantidad, Double peso) // el producto debe estar en minúsculas
+	public int agregarProducto(String productoNombre, Double cantidad, Double peso) // el producto debe estar en minúsculas
 	{
 		if (this.compraActiva != null)
 		{	
-			System.out.println(productoNombre);
-			System.out.println(cantidad);
-			System.out.println(peso);
-			System.out.println(this.pos.getUnidadesDuranteEjecucion().get(productoNombre));
 			if (disponibilidadProducto(productoNombre) >= cantidad && disponibilidadProducto(productoNombre) != -1 && this.pos.getUnidadesDuranteEjecucion().get(productoNombre) >= cantidad)
 			{
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
 				Integer cantidadActual = this.pos.getUnidadesDuranteEjecucion().get(productoNombre);
 				this.pos.getUnidadesDuranteEjecucion().replace(productoNombre, (int) (cantidadActual - cantidad));
+				return (1);
 			} else
 			{
-				System.out.println("\nEl producto no existe o la cantidad de unidades no alcanza.\n");
+				//El producto no existe o la cantidad de unidades no alcanza.
+				return(2);
 			}
 		} else
 		{
-			System.out.println("\nNo se agregó ningún producto... Inicie una compra.\n");
+			//No se agregó ningún producto... Inicie una compra.
+			return(3);
 		}
 	}
 
@@ -265,7 +263,7 @@ public class Cajero
 	 * @param nombreProducto
 	 * @return Es -1 si no existe el producto
 	 */
-	private int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
+	public int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
 	{
 		int cantidadTotal = 0;
 
@@ -292,16 +290,18 @@ public class Cajero
 
 	/**
 	 * Método para finalizar la compra del cliente
+	 * @return 
 	 */
-	public void finalizarCompra()
+	public String finalizarCompra()
 	{
-		System.out.println(compraActiva.getFactura(this.pos.inventario));
+		String resultado = compraActiva.getFactura(this.pos.inventario);
 		if (compraActiva.cedula != null)
 		{
 			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
 		}
 		this.compraActiva = null;
 		this.pos.updateUnidadesDuranteEjecucion();
+		return resultado;
 	}
 
 	/**
@@ -323,8 +323,6 @@ public class Cajero
 		this.pos.guardarInventario();
 		this.pos.guardarClientes();
 		this.pos.guardarGananciasYPerdidas();
-
-		System.exit(0);
 	}
 
 }

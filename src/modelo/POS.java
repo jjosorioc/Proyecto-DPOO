@@ -16,9 +16,9 @@ public class POS
 	// Atributos
 	public Inventario inventario = new Inventario();
 
-	private HashMap<String, Integer> clientes = new HashMap<String, Integer>(); // Cédula y Puntos
+	public HashMap<String, Integer> clientes = new HashMap<String, Integer>(); // Cédula y Puntos
 	
-	private HashMap<String, Integer> unidadesDuranteEjecucion = new HashMap<>();
+	public HashMap<String, Integer> unidadesDuranteEjecucion = new HashMap<>();
 
 	// Métodos
 
@@ -252,7 +252,7 @@ public class POS
 	 * @param nombreProducto
 	 * @return Es -1 si no existe el producto
 	 */
-	private int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
+	public int disponibilidadProducto(String nombreProducto) // nombreProducto debe estar en minúsculas
 	{
 		int cantidadTotal = 0;
 

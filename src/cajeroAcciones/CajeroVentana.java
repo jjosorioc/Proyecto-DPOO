@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +15,8 @@ import javax.swing.JOptionPane;
 
 import cajero.paneles.ArribaPanel;
 import cajero.paneles.BotonesPanel;
+import cajeroPrincipal.VentanaPrincipal;
+import cajero.VentanaAgregarCliente;
 import cajero.paneles.AbajoPanel;
 import controlador.Cajero;
 import controlador.EncargadoInventario;
@@ -42,19 +45,27 @@ public class CajeroVentana extends JFrame implements ActionListener
 	public JButton finalizarCompra;
 	
 	public Cajero CAJERO;
-
+	public POS pos;
+	
 	
 	public CajeroVentana(String cedula) throws IOException
 	{
-		
+		if (cedula == (""))
+		{
+			cedula = null;
+		}
+
 		CAJERO = new Cajero();
-		
-		CAJERO.inicarCompraCliente(cedula);
-		
-		CAJERO.crearCliente(cedula);
 		
 		CAJERO.readCSV(System.getProperty("user.dir") + "/data/clientes.csv"); // se cargan los clientes
 		CAJERO.pos.cargarInventario(); // Se carga inventario.csv
+		
+		CAJERO.inicarCompraCliente(cedula);
+		
+		if (cedula != null)
+		{
+			CAJERO.crearCliente(cedula);
+		}
 		
 		this.setTitle("Cajero");
 
@@ -97,7 +108,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 			{
 			String codigoProducto = JOptionPane.showInputDialog(this, "Ingrese el codigo de barras del producto:");		
 			String nombreProducto = CAJERO.pos.inventario.getCodigos().get(codigoProducto);
-
+			int resultado;
 			
 			if (nombreProducto == null) // Si el producto no se encontró
 			{
@@ -113,17 +124,26 @@ public class CajeroVentana extends JFrame implements ActionListener
 					String cantidadString = JOptionPane.showInputDialog(this, "\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente", JOptionPane.PLAIN_MESSAGE);
 					double cantidad = Double.parseDouble(cantidadString);
 					double peso = -1.0;
-					CAJERO.agregarProducto(nombreProducto, cantidad, peso);
+					resultado = CAJERO.agregarProducto(nombreProducto, cantidad, peso);
 				}
 				else // Si es no empacado
 				{
 					String pesoString = JOptionPane.showInputDialog(this, "\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente");
-					System.out.println(nombreProducto);
 					double peso = Double.parseDouble(pesoString);
-					System.out.println(peso);
 					double cantidad = Math.ceil(peso / CAJERO.pos.inventario.getLotes().get(nombreProducto).get(0).getPeso());
-					System.out.println(cantidad);
-					CAJERO.agregarProducto(nombreProducto, cantidad, peso);
+					resultado = CAJERO.agregarProducto(nombreProducto, cantidad, peso);
+				}
+				if (resultado == 1) //Se logró agregar el producto
+				{
+					JOptionPane.showMessageDialog(this, "El producto se agregó con éxito.", "Producto Agregado", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if (resultado == 2) //No hay suficientes unidades del producto
+				{
+					JOptionPane.showMessageDialog(this, "El producto no existe o la cantidad de unidades no alcanza.", "Producto Agregado", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if (resultado == 3) //El producto no se pudo agregar
+				{
+					JOptionPane.showMessageDialog(this, "No se agregó ningún producto... Inicie una compra.", "Producto Agregado", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 			}
@@ -132,11 +152,13 @@ public class CajeroVentana extends JFrame implements ActionListener
 		
 		if (e.getSource() == finalizarCompra)
 		{
+
+
 			if (CAJERO.compraActiva != null)
 			{
-				CAJERO.finalizarCompra();
-				JOptionPane.showMessageDialog(this, "Compra finalizada!");
 
+			JOptionPane.showMessageDialog(this, CAJERO.finalizarCompra(), "Compra finalizada!", JOptionPane.PLAIN_MESSAGE);
+		
 			}
 			else
 			{
@@ -147,18 +169,35 @@ public class CajeroVentana extends JFrame implements ActionListener
 		if (e.getSource() == eliminarCompra)
 		{
 			CAJERO.eliminarCompra();
+			JOptionPane.showMessageDialog(this, "La compra se ha eliminado con éxtio!", "Compra eliminada", JOptionPane.PLAIN_MESSAGE);
+			try {
+				new VentanaPrincipal(); //Se abre la ventana principal
+			} catch (IOException e1) {
+				e1.printStackTrace(); //Se cierra la ventana actual
+			}
+			this.dispose();
 		}
 		
 		if (e.getSource() == guardarYCerrar)
 		{
-			try
-			{
-				this.CAJERO.guardarYcerrar();
-			} catch (IOException e1)
-			{
-				System.err.println("¡No se logró guardar y cerrar!");
+
+			try {
+				this.CAJERO.guardarYcerrar(); //Se guarda y se cierra la compra realizada.
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			try {
+				JOptionPane.showMessageDialog(this, "La compra se ha guardado con éxito!", "Compra guardada", JOptionPane.PLAIN_MESSAGE);
+				new VentanaPrincipal(); //Se abre de nuevo la ventana principal.
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			this.dispose(); //Se cierra la ventana actual.
+
 		}
 		
 	}
