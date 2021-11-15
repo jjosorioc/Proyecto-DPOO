@@ -67,6 +67,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 		
 		if (e.getSource() == nuevoCliente) //Si se selecciona el botón de nuevo cliente
 		{
+			
 			try {
 				new VentanaAgregarCliente(); //Se abre la ventana de agregar un nuevo cliente
 			} catch (IOException e1) {
@@ -77,14 +78,20 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 		
 		if (e.getSource() == iniciarCompra) //Si se selecciona el botón de iniciar compra
 		{
-			try {
-				//Se obtiene la cedula del cliente
+		
 				String cedulaCliente = JOptionPane.showInputDialog(this, "Ingrese el número de cédula del cliente registrado (No ingrese nada y oprima OK si el cliente no está registrado)");
-				new CajeroVentana(cedulaCliente); //Se abre la ventana de agregar productos (con el numero de cedula incluido)
-			} catch (IOException e1) {
-				e1.printStackTrace(); //Se cierra la ventana actual
-			}
-			this.dispose();
+				if (cedulaCliente != null)
+				{
+					try {
+						new CajeroVentana(cedulaCliente);
+						this.dispose();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					} //Se abre la ventana de agregar productos (con el numero de cedula incluido)
+					
+				}
+		
+			
 		}
 		
 		

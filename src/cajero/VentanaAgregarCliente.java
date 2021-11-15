@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -105,11 +106,13 @@ public class VentanaAgregarCliente extends JFrame implements ActionListener{
 		{
 			numeroCedula = panelMedio.cedula.cuadro.getText();
 			try {
+				JOptionPane.showMessageDialog(this, "El cliente ha sido agregado con exito.", "Cliente Agregado", JOptionPane.PLAIN_MESSAGE);
 				new CajeroVentana(numeroCedula);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
 			this.dispose();
 		}
 		
