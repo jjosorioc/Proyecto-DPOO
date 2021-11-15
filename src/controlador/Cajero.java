@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import java.time.LocalDate;
+
 import modelo.Compra;
 import modelo.Inventario;
 import modelo.Lote;
@@ -192,19 +194,71 @@ public class Cajero
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
 
 		/*
-		 * Estructura CSV: Nombre cliente Numero de cedula Puntos totales Edad Sexo Estado civil Situacion laboral
+		 * Estructura CSV: Cedula Puntos PuntosEnero PuntosFebrero PuntosMarzo PuntosAbril PuntosMayo PuntosJunio PuntosJulio PuntosAgosto PuntosSeptiembre PuntosOctubre PuntosNoviembre PuntosDiciembre
 		 */
 		csvReader.readLine(); // Lee primera linea
 		String row;
 		while ((row = csvReader.readLine()) != null)
 		{
+			ArrayList<Integer> puntosMes = new ArrayList<Integer>();
+			
 			String[] elArray = row.split(","); // Main array
 
 			String documento = elArray[0];
 
 			Integer puntos = Integer.parseInt(elArray[1]);
-
+			
 			pos.getClientes().put(documento, puntos);
+			
+			Integer puntosEnero = Integer.parseInt(elArray[2]);
+			
+			puntosMes.add(puntosEnero);
+			
+			Integer puntosFebrero = Integer.parseInt(elArray[3]);
+			
+			puntosMes.add(puntosFebrero);
+			
+			Integer puntosMarzo = Integer.parseInt(elArray[4]);
+			
+			puntosMes.add(puntosMarzo);
+			
+			Integer puntosAbril = Integer.parseInt(elArray[5]);
+			
+			puntosMes.add(puntosAbril);
+			
+			Integer puntosMayo = Integer.parseInt(elArray[6]);
+			
+			puntosMes.add(puntosMayo);
+			
+			Integer puntosJunio = Integer.parseInt(elArray[7]);
+			
+			puntosMes.add(puntosJunio);
+			
+			Integer puntosJulio = Integer.parseInt(elArray[8]);
+			
+			puntosMes.add(puntosJulio);
+			
+			Integer puntosAgosto = Integer.parseInt(elArray[9]);
+			
+			puntosMes.add(puntosAgosto);
+			
+			Integer puntosSeptiembre = Integer.parseInt(elArray[10]);
+			
+			puntosMes.add(puntosSeptiembre);
+			
+			Integer puntosOctubre = Integer.parseInt(elArray[11]);
+			
+			puntosMes.add(puntosOctubre);
+			
+			Integer puntosNoviembre = Integer.parseInt(elArray[12]);
+			
+			puntosMes.add(puntosNoviembre);
+			
+			Integer puntosDiciembre = Integer.parseInt(elArray[13]);
+			
+			puntosMes.add(puntosDiciembre);
+			
+			pos.getPuntos().put(documento, puntosMes);
 
 		}
 		csvReader.close();
@@ -298,6 +352,7 @@ public class Cajero
 		if (compraActiva.cedula != null)
 		{
 			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
+			this.pos.agregarPuntosClienteMes(compraActiva.cedula, compraActiva.puntos, compraActiva.mes);
 		}
 		this.compraActiva = null;
 		this.pos.updateUnidadesDuranteEjecucion();

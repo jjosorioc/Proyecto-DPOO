@@ -18,6 +18,8 @@ public class POS
 
 	public HashMap<String, Integer> clientes = new HashMap<String, Integer>(); // Cédula y Puntos
 	
+	public HashMap<String, ArrayList<Integer>> puntos = new HashMap<String, ArrayList<Integer>>(); //Puntos por mes
+	
 	public HashMap<String, Integer> unidadesDuranteEjecucion = new HashMap<>();
 
 	// Métodos
@@ -30,22 +32,62 @@ public class POS
 		return clientes;
 	}
 	
+	public HashMap<String, ArrayList<Integer>> getPuntos()
+	{
+		return puntos;
+	}
+	
 	
 	/**
 	 * Se agregan los puntos del clente
 	 * @param cedula
 	 * @param puntos
 	 */
-	public void agregarPuntosCliente(String cedula, Integer puntos)
+	public void agregarPuntosCliente(String cedula, Integer puntosActuales)
 	{
 		if (this.clientes.containsKey(cedula))
 		{
-			Integer nuevosPuntos = this.clientes.get(cedula) + puntos;
+			Integer nuevosPuntos = this.clientes.get(cedula) + puntosActuales;
 			this.clientes.replace(cedula, nuevosPuntos);
 		}
 		else {
-			this.clientes.put(cedula, puntos);
+			this.clientes.put(cedula, puntosActuales);
 		}
+	}
+	
+	
+	public void agregarPuntosClienteMes(String cedula, Integer puntosActuales, Integer mes)
+	{
+		if (this.puntos.containsKey(cedula))
+		{
+			Integer nuevosPuntosMes = this.puntos.get(cedula).get(mes-1) + puntosActuales;
+			this.puntos.get(cedula).set(mes-1, nuevosPuntosMes);
+			
+		}
+		else {
+			ArrayList<Integer> puntosMes = new ArrayList<Integer>();
+			
+			for (int i = 0; i < 12; i++) 
+			{
+			    puntosMes.add(0);
+			}
+			    
+		    for (int j = 0; j < 12; j++) 
+		    {
+			    if (j != mes-1)
+			    {
+			    	puntosMes.set(j, 0);
+			    }
+			    else
+			    {
+			    	puntosMes.set(j, puntosActuales);
+			    }
+			}
+		    
+		    this.puntos.put(cedula, puntosMes);
+		}
+		
+		
 	}
 	
 	/**
@@ -198,7 +240,7 @@ public class POS
 
 		FileWriter writeCSV = new FileWriter(csvfile);
 		
-		String primeraLineaString = "Cedula,Puntos";
+		String primeraLineaString = "Cedula,Puntos,PuntosEnero,PuntosFebrero,PuntosMarzo,PuntosAbril,PuntosMayo,PuntosJunio,PuntosJulio,PuntosAgosto,PuntosSeptiembre,PuntosOctubre,PuntosNoviembre,PuntosDiciembre";
 	
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
 	
@@ -206,9 +248,11 @@ public class POS
 		
 		for (String cedula: llaves)
 		{
-			String puntos = this.clientes.get(cedula).toString();
+			String puntosActuales = this.clientes.get(cedula).toString();
 			
-			String nuevaLinea = cedula + "," + puntos;
+			ArrayList<Integer> puntosMes = this.puntos.get(cedula);
+			
+			String nuevaLinea = cedula + "," + puntosActuales + "," + puntosMes.get(0)+ "," + puntosMes.get(1)+ "," + puntosMes.get(2)+ "," + puntosMes.get(3)+ "," + puntosMes.get(4)+ "," + puntosMes.get(5)+ "," + puntosMes.get(6)+ "," + puntosMes.get(7)+ "," + puntosMes.get(8)+ "," + puntosMes.get(9)+ "," + puntosMes.get(10)+ "," + puntosMes.get(11);
 			writeCSV.write(nuevaLinea + "\n");
 		}
 		

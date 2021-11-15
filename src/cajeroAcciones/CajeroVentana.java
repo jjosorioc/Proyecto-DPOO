@@ -67,7 +67,11 @@ public class CajeroVentana extends JFrame implements ActionListener
 		
 		if (cedula != null)
 		{
-			CAJERO.crearCliente(cedula);
+			if (!CAJERO.pos.clientes.containsKey(cedula))
+			{
+				CAJERO.crearCliente(cedula);
+			}
+			
 		}
 		
 		this.setTitle("Cajero");

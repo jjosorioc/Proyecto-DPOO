@@ -1,7 +1,14 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+
+import java.time.ZoneId;
+import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.Month;
 
 public class Compra
 {
@@ -26,6 +33,32 @@ public class Compra
 	
 	public Integer puntos = 0;
 	
+	public Integer puntosEnero = 0;
+	
+	public Integer puntosFebrero = 0;
+	
+	public Integer puntosMarzo = 0;
+	
+	public Integer puntosAbril = 0;
+	
+	public Integer puntosMayo = 0;
+	
+	public Integer puntosJunio = 0;
+	
+	public Integer puntosJulio = 0;
+	
+	public Integer puntosAgosto = 0;
+	
+	public Integer puntosSeptiembre = 0;
+	
+	public Integer puntosOctubre = 0;
+	
+	public Integer puntosNoviembre = 0;
+	
+	public Integer puntosDiciembre = 0;
+	
+	public Integer mes = 0;
+	
 	
 	// Methods
 
@@ -49,9 +82,71 @@ public class Compra
 		
 		if (this.cedula != null)
 		{
+			//TODO Agregar puntos por mes...
 			this.factura += "\nNúmero de cédula de usuario registrado: " + this.cedula + "\n";
 			this.puntos = (int) (this.valorTotal / 1000);
 			this.factura += "\nPuntos obtenidos: " + this.puntos;
+			this.mes = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
+
+			if (this.mes == 0)
+			{
+				puntosEnero = this.puntos;
+			}
+			
+			else if (this.mes == 1)
+			{
+				puntosFebrero = this.puntos;
+			}
+			
+			else if (this.mes == 2)
+			{
+				puntosMarzo = this.puntos;
+			}
+			
+			else if (this.mes == 3)
+			{
+				puntosAbril = this.puntos;
+			}
+			
+			else if (this.mes == 4)
+			{
+				puntosMayo = this.puntos;
+			}
+			
+			else if (this.mes == 5)
+			{
+				puntosJunio = this.puntos;
+			}
+			
+			else if (this.mes == 6)
+			{
+				puntosJulio = this.puntos;
+			}
+			
+			else if (this.mes == 7)
+			{
+				puntosAgosto = this.puntos;
+			}
+			
+			else if (this.mes == 8)
+			{
+				puntosSeptiembre = this.puntos;
+			}
+			
+			else if (this.mes == 9)
+			{
+				puntosOctubre = this.puntos;
+			}
+			
+			else if (this.mes == 10)
+			{
+				puntosNoviembre = this.puntos;
+			}
+			
+			else if (this.mes == 11)
+			{
+				puntosDiciembre = this.puntos;
+			}
 		}
 		
 		return this.factura;
