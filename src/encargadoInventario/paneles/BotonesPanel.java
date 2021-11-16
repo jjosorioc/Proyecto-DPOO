@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import encargadoInventario.interfaz.VentanaPrincipalEncargado;
@@ -37,7 +36,10 @@ public class BotonesPanel extends JPanel
 	public JButton desempenhoFinancieroProducto;
 
 	// Last
+
 	public JButton guardarYCerrar;
+	
+	public JButton agregarImagen;	
 
 	public BotonesPanel(VentanaPrincipalEncargado padre) throws IOException
 	{
@@ -123,10 +125,6 @@ public class BotonesPanel extends JPanel
 
 		this.add(desempenhoFinancieroProducto);
 
-		// JLabel para el espacio
-
-		this.add(new JLabel(" "));
-
 		// Guardar y cerrar guardarYCerrar : JButton
 
 		BufferedImage gc = ImageIO.read(new File(pathImagenes + "/GuardarYCerrar3.png"));
@@ -140,6 +138,18 @@ public class BotonesPanel extends JPanel
 
 		this.add(guardarYCerrar);
 
+		// AGREGAR IMAGEN
+		BufferedImage ai = ImageIO.read(new File(pathImagenes + "/botonAgregarImagen.png"));
+		ImageIcon aiAsIcon = new ImageIcon(ai);
+		Image img8 = aiAsIcon.getImage();
+		Image newImg8 = img8.getScaledInstance(300, 102, java.awt.Image.SCALE_SMOOTH);
+
+		agregarImagen = new JButton(new ImageIcon(newImg8));
+		agregarImagen.setBorder(BorderFactory.createEmptyBorder());
+		agregarImagen.setContentAreaFilled(false);
+
+		this.add(agregarImagen);
+
 		/*
 		 * ACTION LISTENERS
 		 */
@@ -150,6 +160,7 @@ public class BotonesPanel extends JPanel
 		this.fechaVencimientoLote.addActionListener(padrEncargado);
 		this.desempenhoFinancieroProducto.addActionListener(padre);
 		this.guardarYCerrar.addActionListener(padre);
+		this.agregarImagen.addActionListener(padre);
 
 	}
 }

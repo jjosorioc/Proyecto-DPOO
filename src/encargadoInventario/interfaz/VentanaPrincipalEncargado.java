@@ -8,7 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -72,6 +79,8 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 	// Last
 	public JButton guardarYCerrar;
 
+	public JButton agregarImagen;
+
 	public VentanaPrincipalEncargado() throws IOException
 	{
 		ENCARGADO = new EncargadoInventario();
@@ -127,6 +136,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		this.fechaVencimientoLote = botonesPanel.fechaVencimientoLote;
 		this.desempenhoFinancieroProducto = botonesPanel.desempenhoFinancieroProducto;
 		this.guardarYCerrar = botonesPanel.guardarYCerrar;
+		this.agregarImagen = botonesPanel.agregarImagen;
 
 		/*
 		 * Cargar un lote
@@ -277,7 +287,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		}
 
 		/*
-		 * Guardar y Cerrar
+		 * GUARDAR Y CERRAR
 		 */
 		if (e.getSource() == this.guardarYCerrar)
 		{
@@ -288,6 +298,52 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			{
 
 			}
+		}
+
+		/*
+		 * AGREGAR IMAGEN PARA UN PRODUCTO
+		 */
+		if (e.getSource() == this.agregarImagen)
+		{
+			try
+			{
+				String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:");
+				String pathAImagen = this.ENCARGADO.getImagePath();
+
+				File source = new File(pathAImagen);
+				File destination = new File("./images/cajero/productos/" + nombreProducto + ".png");
+
+				copyFileUsingIO(source, destination);
+			} catch (NullPointerException | IOException e2)
+			{
+				String mensaje = "¡No se logró agregar la imagen!";
+				JOptionPane.showMessageDialog(this, mensaje, "Agregar Imagen", JOptionPane.PLAIN_MESSAGE);
+			}
+
+		}
+	}
+
+	// https://tutorial.eyehunts.com/java/java-copy-file-directory-name-example/
+	private static void copyFileUsingIO(File sourceFile, File destinationFile) throws IOException
+	{
+		InputStream inputStreamData = null;
+		OutputStream outputStreamData = null;
+
+		try
+		{
+			inputStreamData = new BufferedInputStream(new FileInputStream(sourceFile));
+			outputStreamData = new BufferedOutputStream(new FileOutputStream(destinationFile));
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = inputStreamData.read(buffer)) > 0)
+			{
+				outputStreamData.write(buffer, 0, length);
+			}
+
+		} finally
+		{
+			inputStreamData.close();
+			outputStreamData.close();
 		}
 	}
 

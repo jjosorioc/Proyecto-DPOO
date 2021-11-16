@@ -64,6 +64,36 @@ public class EncargadoInventario
 		return null;
 
 	}
+	
+	
+	/**
+	 * 
+	 * @return el path del archivo o null si no es valido
+	 */
+	public String getImagePath()
+	{
+		String pathInbox = System.getProperty("user.dir") + "/images/cajero/productos";
+
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Seleccione una imagen");
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		fileChooser.setCurrentDirectory(new File(pathInbox));
+
+		FileNameExtensionFilter restringirExtensionFilter = new FileNameExtensionFilter("Imagen de un producto", "png");
+		fileChooser.addChoosableFileFilter(restringirExtensionFilter);
+		int result = fileChooser.showOpenDialog(fileChooser);
+
+		if (result == JFileChooser.APPROVE_OPTION)
+		{
+
+			File selectedFile = fileChooser.getSelectedFile();
+
+			return selectedFile.getAbsolutePath();
+		}
+
+		return null;
+
+	}
 
 	/**
 	 * Método para leer un csv con el archivo con Lotes
