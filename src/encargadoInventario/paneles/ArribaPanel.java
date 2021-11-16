@@ -32,8 +32,4 @@ public class ArribaPanel extends JPanel
 		this.add(picLabel);
 	}
 
-	public static void main(String[] args)
-	{
-
-	}
 }

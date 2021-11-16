@@ -89,11 +89,7 @@ public class VentanaAgregarCliente extends JFrame implements ActionListener
 		this.setLocationRelativeTo(null);
 	}
 
-	public static void main(String[] args) throws IOException
-	{
-		new VentanaAgregarCliente();
 
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)

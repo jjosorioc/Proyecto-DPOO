@@ -26,14 +26,7 @@ import controlador.Cajero;
 public class CajeroVentana extends JFrame implements ActionListener
 {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) throws IOException
-	{
-		new CajeroVentana("");
 
-	}
 
 	public ArribaPanel panelDeArriba;
 	public BotonesPanel botonesPanel;

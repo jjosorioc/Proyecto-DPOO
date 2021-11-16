@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import cajero.VentanaAgregarCliente;
 import cajeroAcciones.CajeroVentana;
 import cajeroPrincipal.paneles.ArribaPanel;
@@ -24,6 +26,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 	 */
 	public static void main(String[] args) throws IOException
 	{
+		FlatLightLaf.setup();
 		@SuppressWarnings("unused")
 		VentanaPrincipal ventanaCajero = new VentanaPrincipal();
 
