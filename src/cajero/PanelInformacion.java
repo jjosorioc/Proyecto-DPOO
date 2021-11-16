@@ -1,13 +1,13 @@
 package cajero;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class PanelInformacion  extends JPanel{
 	
 	public JLabel nombre ;

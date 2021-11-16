@@ -15,6 +15,7 @@ import encargadoInventario.interfaz.VentanaPrincipalEncargado;
 @SuppressWarnings("serial")
 public class ArribaPanel extends JPanel
 {
+	@SuppressWarnings("unused")
 	private VentanaPrincipalEncargado padre;
 
 	public ArribaPanel(VentanaPrincipalEncargado padre) throws IOException

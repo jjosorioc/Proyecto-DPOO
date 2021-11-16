@@ -63,8 +63,10 @@ public class CajeroVentana extends JFrame implements ActionListener
 		} else
 		{
 			ArrayList<Integer> listaMeses = this.CAJERO.pos.puntos.get(cedula);
-
-			new ChartFrame(listaMeses, cedula);
+			if (listaMeses != null)
+			{
+				new ChartFrame(listaMeses, cedula);
+			}
 		}
 
 		if (cedula != null)
@@ -78,7 +80,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 
 		this.setTitle("Cajero");
 
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(true);
 		this.setSize(1000, 800);
 		this.setLayout(new BorderLayout());
@@ -203,7 +205,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 				new VentanaPrincipal(); // Se abre la ventana principal
 			} catch (IOException e1)
 			{
-				e1.printStackTrace(); // Se cierra la ventana actual
+
 			}
 			this.dispose();
 		}
@@ -213,24 +215,15 @@ public class CajeroVentana extends JFrame implements ActionListener
 
 			try
 			{
-				this.CAJERO.guardarYcerrar(); // Se guarda y se cierra la compra realizada.
-			} catch (IOException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			try
-			{
+				this.CAJERO.guardarYcerrar();
 				JOptionPane.showMessageDialog(this, "La compra se ha guardado con éxito!", "Compra guardada", JOptionPane.PLAIN_MESSAGE);
 				new VentanaPrincipal(); // Se abre de nuevo la ventana principal.
+
+				this.dispose(); // Se cierra la ventana actual.
 			} catch (IOException e1)
 			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 
-			this.dispose(); // Se cierra la ventana actual.
+			} // Se guarda y se cierra la compra realizada.
 
 		}
 

@@ -1,25 +1,20 @@
 package cajero.paneles;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import cajeroAcciones.CajeroVentana;
-import cajeroPrincipal.*;
-
-import java.awt.image.BufferedImage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import cajeroAcciones.CajeroVentana;
+
+@SuppressWarnings("serial")
 public class AbajoPanel extends JPanel
 {
+	@SuppressWarnings("unused")
 	private CajeroVentana padre;
 	
 	public JLabel numeroCliente;
@@ -31,9 +26,9 @@ public class AbajoPanel extends JPanel
 		FlowLayout layout = new FlowLayout();
 		this.setLayout(layout);
 		
-		JLabel text = new JLabel("Cliente registrado: "); //TODO si el cliente no está registrado, esto no debe salir.
+		JLabel text = new JLabel("Cliente registrado: ");
 		
-		numeroCliente = new JLabel(cedula); //TODO dependiendo de lo que entre por parámetro debe cambiar :)
+		numeroCliente = new JLabel(cedula);
 		
 		Font f = new Font("TimesRoman",Font.BOLD,25);
 	    text.setForeground(Color.BLUE);

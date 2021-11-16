@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import java.time.LocalDate;
-
 import modelo.Compra;
-import modelo.Inventario;
 import modelo.Lote;
 import modelo.POS;
 
@@ -51,6 +48,7 @@ public class Cajero
 	 * Método que interactúa con el usuario a través de la consola.
 	 * @throws IOException 
 	 */
+	@SuppressWarnings("unused")
 	public void ejecutarOpcion() throws IOException
 	{
 		System.out.println("Iniciando programa...");

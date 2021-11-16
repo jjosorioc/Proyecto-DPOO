@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class ChartPanel extends JPanel
 {
+	@SuppressWarnings("unused")
 	private JFrame padre;
 
 	private Integer[] valoresEnOrden;

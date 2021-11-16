@@ -23,6 +23,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 	 */
 	public static void main(String[] args) throws IOException
 	{
+		@SuppressWarnings("unused")
 		VentanaPrincipal ventanaCajero = new VentanaPrincipal();
 
 	}
@@ -37,7 +38,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 	{
 		this.setTitle("Cajero");
 
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(true);
 		this.setSize(1000, 800);
 		this.setLayout(new BorderLayout());

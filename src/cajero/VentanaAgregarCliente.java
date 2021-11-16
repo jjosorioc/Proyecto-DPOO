@@ -1,7 +1,6 @@
 package cajero;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,18 +19,19 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cajeroAcciones.CajeroVentana;
-import cajeroPrincipal.paneles.ArribaPanel;
 
-public class VentanaAgregarCliente extends JFrame implements ActionListener{
-	
+@SuppressWarnings("serial")
+public class VentanaAgregarCliente extends JFrame implements ActionListener
+{
+
 	private String pathImagenes = System.getProperty("user.dir") + "/images/cajero";
-	
-	public JPanel panel ;
+
+	public JPanel panel;
 	public PanelMedio panelMedio;
 	JButton guardarYCerrar = new JButton();
-	
+
 	private String numeroCedula;
-	
+
 	public VentanaAgregarCliente() throws IOException
 	{
 		this.setTitle("Agregar Cliente");
@@ -40,59 +40,55 @@ public class VentanaAgregarCliente extends JFrame implements ActionListener{
 		this.setResizable(true);
 		this.setSize(900, 700);
 		this.setLayout(new BorderLayout());
-		
+
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		
-		//IMAGEN ARRIBA
-		
+
+		// IMAGEN ARRIBA
+
 		BufferedImage myPicture = ImageIO.read(new File(System.getProperty("user.dir") + "/images/cajero/logoCajero.png"));
-		
+
 		ImageIcon mpAsIcon = new ImageIcon(myPicture);
 		Image img1 = mpAsIcon.getImage();
-		Image newPictureImage = img1.getScaledInstance(572,278,java.awt.Image.SCALE_SMOOTH);
-		
-		
+		Image newPictureImage = img1.getScaledInstance(572, 278, java.awt.Image.SCALE_SMOOTH);
+
 		JLabel picLabel = new JLabel(new ImageIcon(newPictureImage));
 		panel.add(picLabel, BorderLayout.NORTH);
-		
+
 		//
-		
-		
+
 		// PANEL MEDIO CON INFORMACION
-		
+
 		panelMedio = new PanelMedio(this);
-		panel.add(panelMedio,BorderLayout.CENTER);
-		
+		panel.add(panelMedio, BorderLayout.CENTER);
+
 		//
-		
+
 		// BOTON GUARDAR Y CERRAR
-		
+
 		BufferedImage gc = ImageIO.read(new File(pathImagenes + "/botonGuardaryCerrar2.png"));
-		ImageIcon gcAsIcon = new ImageIcon(gc); 
+		ImageIcon gcAsIcon = new ImageIcon(gc);
 		Image img3 = gcAsIcon.getImage();
 		Image newImg3 = img3.getScaledInstance(200, 69, java.awt.Image.SCALE_SMOOTH);
-		
+
 		guardarYCerrar.setIcon(new ImageIcon(newImg3));
 		guardarYCerrar.setBorder(BorderFactory.createEmptyBorder());
 		guardarYCerrar.setContentAreaFilled(false);
-		
+
 		guardarYCerrar.addActionListener(this);
-	
-		
-		panel.add(guardarYCerrar,BorderLayout.SOUTH);
-		
+
+		panel.add(guardarYCerrar, BorderLayout.SOUTH);
+
 		//
-		 
-		panel.setBorder(new EmptyBorder(0,0,40,0));
-		
-		this.add(panel,BorderLayout.CENTER);
-		
-		
+
+		panel.setBorder(new EmptyBorder(0, 0, 40, 0));
+
+		this.add(panel, BorderLayout.CENTER);
+
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 	}
-	
+
 	public static void main(String[] args) throws IOException
 	{
 		new VentanaAgregarCliente();
@@ -100,22 +96,23 @@ public class VentanaAgregarCliente extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == guardarYCerrar)
 		{
 			numeroCedula = panelMedio.cedula.cuadro.getText();
-			try {
+			try
+			{
 				JOptionPane.showMessageDialog(this, "El cliente ha sido agregado con exito.", "Cliente Agregado", JOptionPane.PLAIN_MESSAGE);
 				new CajeroVentana(numeroCedula);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (IOException e1)
+			{
+
 			}
-			
+
 			this.dispose();
 		}
-		
+
 	}
 
 }

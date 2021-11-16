@@ -1,13 +1,15 @@
 package cajero.paneles;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.awt.GridBagConstraints;  
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.GridLayout;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import cajeroAcciones.CajeroVentana;
 

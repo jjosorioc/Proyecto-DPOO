@@ -15,6 +15,7 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class ArribaPanel extends JPanel
 {
+	@SuppressWarnings("unused")
 	private VentanaPrincipal padre;
 	
 	
