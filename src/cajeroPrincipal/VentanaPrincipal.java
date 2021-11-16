@@ -13,6 +13,7 @@ import cajero.VentanaAgregarCliente;
 import cajeroAcciones.CajeroVentana;
 import cajeroPrincipal.paneles.ArribaPanel;
 import cajeroPrincipal.paneles.BotonesPanel;
+import controlador.Cajero;
 
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame implements ActionListener
@@ -33,12 +34,16 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 
 	public JButton nuevoCliente;
 	public JButton iniciarCompra;
+	
+	public Cajero CAJERO = new Cajero();
 
 	public VentanaPrincipal() throws IOException
 	{
+		CAJERO.readCSV(System.getProperty("user.dir") + "/data/clientes.csv"); // se cargan los clientes
+		
 		this.setTitle("Cajero");
 
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(true);
 		this.setSize(1000, 800);
 		this.setLayout(new BorderLayout());
@@ -80,19 +85,40 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 		{
 
 			String cedulaCliente = JOptionPane.showInputDialog(this, "Ingrese el número de cédula del cliente registrado (No ingrese nada y oprima OK si el cliente no está registrado)");
-			if (cedulaCliente != null)
+			
+			if (cedulaCliente.equals(""))
+			{
+				try {
+					new CajeroVentana(cedulaCliente);
+				} catch (IOException e1) {
+				}
+				this.dispose();
+			}
+			
+			else
 			{
 				try
 				{
-					new CajeroVentana(cedulaCliente);
-					this.dispose();
+					
+					if (CAJERO.pos.getClientes().containsKey(cedulaCliente))
+					{
+						new CajeroVentana(cedulaCliente);
+						this.dispose();
+					}
+					
+					else if (!CAJERO.pos.getClientes().containsKey(cedulaCliente))
+					{
+						new VentanaAgregarCliente();
+						this.dispose();
+					}
+					
 				} catch (IOException e1)
 				{
 					e1.printStackTrace();
 				} // Se abre la ventana de agregar productos (con el numero de cedula incluido)
 
 			}
-
+			
 		}
 
 	}

@@ -183,7 +183,7 @@ public class POS
 
 		FileWriter writeCSV = new FileWriter(csvfile);
 
-		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Tipo producto,subCategorias";
+		String primeraLineaString = "Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Codigo de barras,Tipo producto,subCategorias";
 
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera linea
 

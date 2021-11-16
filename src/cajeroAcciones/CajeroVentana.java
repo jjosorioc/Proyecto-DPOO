@@ -60,7 +60,8 @@ public class CajeroVentana extends JFrame implements ActionListener
 		if (cedula.length() == 0) // Si el cliente no está registrado
 		{
 			cedula = null;
-		} else
+		} 
+		else if (cedula != null)
 		{
 			ArrayList<Integer> listaMeses = this.CAJERO.pos.puntos.get(cedula);
 			if (listaMeses != null)
@@ -77,7 +78,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 			}
 
 		}
-
+		
 		this.setTitle("Cajero");
 
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -131,9 +132,22 @@ public class CajeroVentana extends JFrame implements ActionListener
 
 					if (esEmpacado) // Si es empacado
 					{
+						
+						String cantidadString;
+						
+						ImageIcon icono = null;
 
-						ImageIcon icono = new ImageIcon(new ImageIcon("./images/cajero/productos/" + nombreProducto + ".png").getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-						String cantidadString = (String) JOptionPane.showInputDialog(this, "\nPor favor ingrese la cantidad de " + nombreProducto + " que desea comprar el cliente", null,
+						try //Si hay imagen del producto
+						{
+							icono = new ImageIcon(new ImageIcon("./images/cajero/productos/" + nombreProducto + ".png").getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
+							
+						} catch (Exception e1) //Si NO hay imagen del producto
+						{
+							cantidadString = (String) JOptionPane.showInputDialog(this, "\nPor favor ingrese la cantidad de " + nombreProducto + " que desea comprar el cliente", null,
+									JOptionPane.INFORMATION_MESSAGE, null, null, null);
+						} // Se guarda y se cierra la compra realizada.
+						
+						cantidadString = (String) JOptionPane.showInputDialog(this, "\nPor favor ingrese la cantidad de " + nombreProducto + " que desea comprar el cliente", null,
 								JOptionPane.INFORMATION_MESSAGE, icono, null, null);
 
 						if (cantidadString != null)
@@ -155,10 +169,23 @@ public class CajeroVentana extends JFrame implements ActionListener
 
 					} else // Si es no empacado
 					{
-						ImageIcon icono = new ImageIcon(new ImageIcon("./images/cajero/productos/" + nombreProducto + ".png").getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-						String pesoString = (String) JOptionPane.showInputDialog(this, "\nPor favor ingrese el peso de " + nombreProducto + " que desea comprar el cliente", null,
-								JOptionPane.INFORMATION_MESSAGE, icono, null, null);
+							
+						String pesoString;
+						
+						ImageIcon icono = null;
 
+						try //Si hay imagen del producto
+						{
+							icono = new ImageIcon(new ImageIcon("./images/cajero/productos/" + nombreProducto + ".png").getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
+							pesoString = (String) JOptionPane.showInputDialog(this, "\nPor favor ingrese el peso de " + nombreProducto + " que desea comprar el cliente", null,
+									JOptionPane.INFORMATION_MESSAGE, icono, null, null);
+						} catch (Exception e2) //Si NO hay imagen del producto
+						{
+							pesoString = (String) JOptionPane.showInputDialog(this, "\nPor favor ingrese el peso de " + nombreProducto + " que desea comprar el cliente", null,
+									JOptionPane.INFORMATION_MESSAGE, null, null, null);
+						} // Se guarda y se cierra la compra realizada.
+						
+						
 						if (pesoString != null)
 						{
 							double peso = Double.parseDouble(pesoString);

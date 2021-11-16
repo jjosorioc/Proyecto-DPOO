@@ -26,17 +26,34 @@ public class AbajoPanel extends JPanel
 		FlowLayout layout = new FlowLayout();
 		this.setLayout(layout);
 		
-		JLabel text = new JLabel("Cliente registrado: ");
+		JLabel text;
 		
-		numeroCliente = new JLabel(cedula);
-		
-		Font f = new Font("TimesRoman",Font.BOLD,25);
-	    text.setForeground(Color.BLUE);
-	    text.setFont(f);
-	    numeroCliente.setForeground(Color.BLUE);
-	    numeroCliente.setFont(f);
+		if (cedula != null)
+		{
+			text = new JLabel("Cliente registrado: ");
+			numeroCliente = new JLabel(cedula);
+			
+			Font f = new Font("TimesRoman",Font.BOLD,25);
+		    text.setForeground(Color.BLUE);
+		    text.setFont(f);
+		    numeroCliente.setForeground(Color.BLUE);
+		    numeroCliente.setFont(f);
 
-		add(text, BorderLayout.EAST);
-		add(numeroCliente, BorderLayout.EAST);
+			add(text, BorderLayout.EAST);
+			add(numeroCliente, BorderLayout.EAST);
+			
+		}
+		else
+		{
+			text = new JLabel("Cliente NO registrado");
+			
+			Font f = new Font("TimesRoman",Font.BOLD,25);
+		    text.setForeground(Color.BLUE);
+		    text.setFont(f);
+		    
+		    add(text, BorderLayout.EAST);
+		}
+		
+		
 	}
 }

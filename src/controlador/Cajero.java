@@ -347,10 +347,13 @@ public class Cajero
 	public String finalizarCompra()
 	{
 		String resultado = compraActiva.getFactura(this.pos.inventario);
-		if (compraActiva.cedula != null)
+		
+		if (!compraActiva.cedula.equals(""))
 		{
+			
 			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
 			this.pos.agregarPuntosClienteMes(compraActiva.cedula, compraActiva.puntos, compraActiva.mes);
+			
 		}
 		this.compraActiva = null;
 		this.pos.updateUnidadesDuranteEjecucion();
@@ -363,7 +366,6 @@ public class Cajero
 	public void eliminarCompra()
 	{
 		this.compraActiva = null;
-		System.out.println("\nSe eliminó la compra.\n");
 	}
 
 	/**

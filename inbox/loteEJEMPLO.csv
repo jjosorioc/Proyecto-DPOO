@@ -1,5 +1,5 @@
 Producto,Categor�a,Vencimiento (YYYY-MM-DD),Ingreso (YYYY-MM-DD),Precio Proveedor,Precio P�blico,Unidades,Peso por una unidad (g),Empacado,Unidad,Codigo de barras,Tipo producto,subCategorias
 manzana,fruta,2021-05-13,2021-05-08,200,2000,500,25,false,g,3748291918,congelado,null
 pera,fruta,2021-05-13,2021-05-08,300,2000,200,25,false,g,3281947270,fresco,null
-fresa,fruta,2019-05-13,2019-05-08,500,2000,30,25,false,g,3281947270,gondola,rojo;saludable
+fresa,fruta,2019-05-13,2019-05-08,500,2000,30,25,false,g,3281943382,gondola,rojo;saludable
 papasBBQ,mecato,2025-06-02,2021-05-08,3000,4000,500,25,true,g,2748235918,gondola,paquetes;mecato
