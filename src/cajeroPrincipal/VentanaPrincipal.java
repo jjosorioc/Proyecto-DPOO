@@ -13,10 +13,8 @@ import cajero.VentanaAgregarCliente;
 import cajeroAcciones.CajeroVentana;
 import cajeroPrincipal.paneles.ArribaPanel;
 import cajeroPrincipal.paneles.BotonesPanel;
-import controlador.Cajero;
-import controlador.EncargadoInventario;
 
-
+@SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame implements ActionListener
 {
 
@@ -28,13 +26,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 		VentanaPrincipal ventanaCajero = new VentanaPrincipal();
 
 	}
-	
+
 	public ArribaPanel panelDeArriba;
 	public BotonesPanel botonesPanel;
-	
+
 	public JButton nuevoCliente;
 	public JButton iniciarCompra;
-	
+
 	public VentanaPrincipal() throws IOException
 	{
 		this.setTitle("Cajero");
@@ -43,7 +41,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 		this.setResizable(true);
 		this.setSize(1000, 800);
 		this.setLayout(new BorderLayout());
-
 
 		panelDeArriba = new ArribaPanel(this);
 		this.add(panelDeArriba, BorderLayout.NORTH);
@@ -64,37 +61,39 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 	{
 		this.nuevoCliente = botonesPanel.nuevoCliente;
 		this.iniciarCompra = botonesPanel.iniciarCompra;
-		
-		if (e.getSource() == nuevoCliente) //Si se selecciona el botón de nuevo cliente
+
+		if (e.getSource() == nuevoCliente) // Si se selecciona el botón de nuevo cliente
 		{
-			
-			try {
-				new VentanaAgregarCliente(); //Se abre la ventana de agregar un nuevo cliente
-			} catch (IOException e1) {
-				e1.printStackTrace(); //Se cierra la ventana actual
+
+			try
+			{
+				new VentanaAgregarCliente(); // Se abre la ventana de agregar un nuevo cliente
+			} catch (IOException e1)
+			{
+				e1.printStackTrace(); // Se cierra la ventana actual
 			}
 			this.dispose();
 		}
-		
-		if (e.getSource() == iniciarCompra) //Si se selecciona el botón de iniciar compra
+
+		if (e.getSource() == iniciarCompra) // Si se selecciona el botón de iniciar compra
 		{
-		
-				String cedulaCliente = JOptionPane.showInputDialog(this, "Ingrese el número de cédula del cliente registrado (No ingrese nada y oprima OK si el cliente no está registrado)");
-				if (cedulaCliente != null)
+
+			String cedulaCliente = JOptionPane.showInputDialog(this, "Ingrese el número de cédula del cliente registrado (No ingrese nada y oprima OK si el cliente no está registrado)");
+			if (cedulaCliente != null)
+			{
+				try
 				{
-					try {
-						new CajeroVentana(cedulaCliente);
-						this.dispose();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} //Se abre la ventana de agregar productos (con el numero de cedula incluido)
-					
-				}
-		
-			
+					new CajeroVentana(cedulaCliente);
+					this.dispose();
+				} catch (IOException e1)
+				{
+					e1.printStackTrace();
+				} // Se abre la ventana de agregar productos (con el numero de cedula incluido)
+
+			}
+
 		}
-		
-		
+
 	}
 
 }
