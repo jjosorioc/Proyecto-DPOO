@@ -4,53 +4,36 @@
 ! IMPORTANTE LEER:
 ```
 
-__Intrucciones de como usar nuestro Proyecto 1:__
+__Intrucciones de como usar nuestro Proyecto 2:__
 
 Por Juan José Osorio (202021720)
+Mariana Diaz (202020993)
 y Thais Tamaio (2020222213)
 
 ```diff
-- Para cargar los lotes:
+- Para ejecutar la interfaz de encargado inventario:
 ```
 
-- Los archivos de los lotes deben estar dentro de la carpeta "inbox". Dentro de esta carpeta se encuentran dos ejemplos de archivos con su respectivo formato. Si se desean agregar lotes distintos a los de los ejemplos, se pueden modificar los archivos existentes (conservando el formato mostrado) o se puede crear un nuevo archivo con el mismo formato de los archivos de ejemplo. 
+__1.__ Para ejecutar la interfaz de __encargado inventario__ se debe acceder a la clase __"encargadoInventario.interfaz"__ y abrir y ejecutar el archivo __"VentanaPrincipalEncargado.java"__.
+
+__2.__ Para cargar el lote, se abrirá una ventana en la que debe seleccionar el archivo. Para que estos cambios se vean reflejados en el archivo de inventario.csv se debe orpimir __guardar y cerrar__ después de cargar el lote. 
+
+__3.__ Para cualquier opción de consultar, se le pedirá el nombre del producto, el cuál debe ingresar __con minúsculas__, luego se mostrará la información solicitada. 
+
+__4.__  Para eliminar lotes vencidos debe orpimir el botón correspondiente y luego se debe oprimir __guardar y cerrar__ para que se vean reflejados los cambios en el archivo inventario.csv
 
 ```diff
-- Para consultar resulatdos:
+- Para ejecutar la interfaz de cajero
 ```
 
-Si desea consultar si se está actualizando correctamente el inventario, los clientes y las ganancias y pérdidas. Puede obvservar esta información en la carpeta "data" donde encontrará los archivos que se actualizan cada vez que se ejecutan las opciones de guardar y cerrar.
+__1.__  Para ejecutar la interfaz de __cajero__ se debe acceder a la clase __"cajeroPrincipal"__ y abrir y ejecutar el archivo __"VentanaPrincipal.java"__.
 
-```diff
-- Para encargado de inventario:
-```
+__2.__  Para agregar un cliente nuevo, oprima su respecitvo botón e ingrese los datos solicitados. Después el programa regresará a la ventana principal y luego se podrá iniciar una compra con el número de cédula del cliente recien agregado. 
 
-__0.__ Para cargar el lote ingrese el nombre completo del archivo en la carpeta inbox (incluyendo el .csv). Puede cargar varios archivos, pero debe siempre ejecutar la opción 0.
+__3.__  Para iniciar una compra, el programa le pedirá al usuario el número de cédula. Si este no está registrado el programa abrirá la ventana de agrega cliente. Si el cliente ya está registrado se iniciará una nueva compra y se pasará a la ventana donde se podrá modificar la compra. Si se desea iniciar una compra de un cliente no registrado, solo __se debe oprimir OK sin escribir nada en la ventana__ (para las compras de un cliente no registrado, no se agregarán los puntos al sistema POS).
 
-__1.__ Para consultar la disponibilidad de un producto, ingrese el nombre de este en minúsculas. Puede consultar la disponibilidad de varios productos, pero debe siempre ejecutar la opción 1.
+__4.__  Después de iniciar una compra, para agregar los productos se debe ingresar el __código de barras__ del producto que desea comrpar el cliente. Luego dependiendo de si es empacado o no, se pedirá el peso o la cantidad que desea llevar el cliente. Se pueden agregar la cantidad de productos que se deseen, mientras haya disponibilidad en el inventario. 
 
-__2.__ Para eliminar lotes vencidos ingrese la fecha actual (decidimos que el encargado de inventario es el que debe ingresar la fecha actual para que se pueden hacer distintas pruebas de eliminar lotes vencidos) y __POSTERIORMENTE ejecute la opción 6. de guardar y cerrar__, ya que si no hace eso, no se guardarán los cambios en el inventario.
+__5.__  En caso de que se desee eliminar la compra, se debe oprimir el botón correspondiente. Luego el programa pasará a la ventana principal donde se puede iniciar una compra nueva. 
 
-__3.__ Para consultar las unidades disponibles en un lote, ingrese  del producto que contiene el lote en minúsculas. Luego se desplegará un menú de todos los lotes que contienen ese producto. Para seleccionar el lote que desea contular escriba el número que aparece junto a ese lote. Puede consultar varios lotes, pero debe siempre ejecutar la opción 3. 
-
-__4.__ Para consultar la fecha de venciimiento de un lote, ingrese el nombre del producto que contiene el lote en minúsculas. Luego se desplegará un menú de todos los lotes que contienen ese producto. Para seleccionar el lote que desea contular escriba el número que aparece junto a ese lote. Puede consultar varios lotes, pero debe siempre ejecutar la opción 4. 
-
-__5.__ Para consultar el desempeño financiero de un producto, ingrese el nombre del producto que desea contular. Para consultar el desempeño financiero de varios productos, ejecute siempre la opción 5.
-
-__6.__ La opción de guardar y cerrar sirve para actualizar el inventario después de agregar un lote o eliminar un lote. Es MUY IMPORTANTE ejecutar esta opción luego de eliminar un lote vencido. 
-
-```diff
-- Para el cajero:
-```
-
-__0.__ Para agregar un nuevo cliente al sistema, ingresar la información que se solicita en la consola y __POSTERIORMENTE ejecute la opción 5. de guardar y cerrar__, ya que si no hace eso, no se guardará el nuevo cliente. 
-
-__1.__ Para iniciar una compra de un cliente, ingrese el número de cédula del cliente. Si el cliente no se encuentra registrado, igual lo dejará continuar con la compra. 
-
-__2.__ Para agregar un prodcuto a la compra del cliente, ingrese el CODIGO DE BARRAS del producto que se desea agregar. En caso de que el producto sea empeacado, se le pedirá también el peso total del producto que desea llevar el cliente. Si desea agregar otro producto, debe volver a ejecutar la opción 2. 
-
-__3.__ Para finalizar la compra de un cliente solo es necesario que ejecute la opción 3 y que __POSTERIORMENTE ejecute la opción 5. para actualizar el inventario, las ganancias y las pérdidas de los productos adquiridos.__ 
-
-__4.__ Para finalizar la compra de un cliente solo es necesario que ejecute la opción 4.
-
-__5.__ La opción de guardar y cerrar sirve para actualizar el inventario, las ganancias y las pérdidas de los productos. Es MUY IMPORTANTE ejecutar esta opción luego de agregar un cliente o finalizar una compra. 
+__6.__  Para finalizar una compra, oprimir el botón correspondiente y luego oprimir __guardar y cerrar__ para que se actualicen las ganancias y pérdidas, los puntos del cliente y el inventario. 
