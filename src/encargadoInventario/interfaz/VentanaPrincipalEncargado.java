@@ -149,6 +149,8 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			{
 				ENCARGADO.readCSV(pathAlCsvString);
 				JOptionPane.showMessageDialog(this, "¡Se cargó el Lote al sistema!", "Nice", JOptionPane.PLAIN_MESSAGE);
+
+				JOptionPane.showMessageDialog(this, "¡Asegúrese de GUARDAR y CERRAR :) !", "Cargar Lote", JOptionPane.PLAIN_MESSAGE);
 			} catch (IOException e1)
 			{
 
@@ -187,6 +189,8 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		{
 			this.ENCARGADO.eliminarLotesVencidos();
 			JOptionPane.showMessageDialog(this, "¡Los lotes vencidos fueron eliminados con éxito!", "Lotes Vencidos", JOptionPane.PLAIN_MESSAGE);
+
+			JOptionPane.showMessageDialog(this, "¡Asegúrese de GUARDAR y CERRAR :) !", "Lotes Vencidos", JOptionPane.PLAIN_MESSAGE);
 		}
 
 		/*
