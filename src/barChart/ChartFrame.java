@@ -15,6 +15,8 @@ public class ChartFrame extends JFrame
 		this.setSize(1000, 400);
 		this.getContentPane().add(new ChartPanel(this, this.lista, cedulaString));
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setAlwaysOnTop(true);
 		this.setVisible(true);
 	}
 }
