@@ -150,13 +150,13 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 				ENCARGADO.readCSV(pathAlCsvString);
 				JOptionPane.showMessageDialog(this, "¡Se cargó el Lote al sistema!", "Nice", JOptionPane.PLAIN_MESSAGE);
 
-				JOptionPane.showMessageDialog(this, "¡Asegúrese de GUARDAR y CERRAR :) !", "Cargar Lote", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "¡Asegúrese de GUARDAR y CERRAR :) !", "Cargar Lote", JOptionPane.WARNING_MESSAGE);
 			} catch (IOException e1)
 			{
 
 			} catch (NullPointerException e2)
 			{
-				JOptionPane.showMessageDialog(this, "¡No se ingresó un archivo!", ":(", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "¡No se ingresó un archivo!", ":(", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
@@ -173,7 +173,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			if (cantidadDelProductoInteger == -1) // Si no se encontraron
 			{
 				mensaje = "¡No se encontró el producto que ingresó!: " + nombreProducto;
-				JOptionPane.showMessageDialog(this, mensaje, "Disponibilidad de un Producto", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, mensaje, "Disponibilidad de un Producto", JOptionPane.ERROR_MESSAGE);
 			} else
 			{
 				mensaje = "Nombre del producto: " + nombreProducto + "\n- Cantidad: " + cantidadDelProductoInteger;
@@ -190,7 +190,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			this.ENCARGADO.eliminarLotesVencidos();
 			JOptionPane.showMessageDialog(this, "¡Los lotes vencidos fueron eliminados con éxito!", "Lotes Vencidos", JOptionPane.PLAIN_MESSAGE);
 
-			JOptionPane.showMessageDialog(this, "¡Asegúrese de GUARDAR y CERRAR :) !", "Lotes Vencidos", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "¡Asegúrese de GUARDAR y CERRAR :) !", "Lotes Vencidos", JOptionPane.WARNING_MESSAGE);
 		}
 
 		/*
@@ -204,7 +204,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			if (!this.ENCARGADO.existeElLote(nombreProducto)) // No existen lotes que contienen ese producto
 			{
 				mensaje = "¡No hay lotes con ese producto!";
-				JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.ERROR_MESSAGE);
 			} else
 			{
 				ArrayList<Lote> arregloDeLotes = this.ENCARGADO.lotesDeUnProducto(nombreProducto); // Arreglo con los lotes del producto.
@@ -224,7 +224,10 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 					JOptionPane.showMessageDialog(this, mensaje, "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE);
 				} catch (IndexOutOfBoundsException e2)
 				{
-					JOptionPane.showMessageDialog(this, "El producto no tiene Lotes disponibles", "Unidades en un Lote", JOptionPane.PLAIN_MESSAGE, null);
+					JOptionPane.showMessageDialog(this, "El producto no tiene Lotes disponibles", "Unidades en un Lote", JOptionPane.ERROR_MESSAGE, null);
+				} catch (NullPointerException e2)
+				{
+					JOptionPane.showMessageDialog(this, "¡Seleccione un lote!", "Fecha de Vencimiento de un Lote", JOptionPane.ERROR_MESSAGE, null);
 				}
 
 			}
@@ -259,7 +262,10 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 					JOptionPane.showMessageDialog(this, mensaje, "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2)
 				{
-					JOptionPane.showMessageDialog(this, "El producto no tiene Lotes disponibles", "Fecha de Vencimiento de un Lote", JOptionPane.PLAIN_MESSAGE, null);
+					JOptionPane.showMessageDialog(this, "El producto no tiene Lotes disponibles", "Fecha de Vencimiento de un Lote", JOptionPane.ERROR_MESSAGE, null);
+				} catch (NullPointerException e2)
+				{
+					JOptionPane.showMessageDialog(this, "¡Seleccione un lote!", "Fecha de Vencimiento de un Lote", JOptionPane.ERROR_MESSAGE, null);
 				}
 
 			}
@@ -285,7 +291,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			} else
 			{
 				mensaje = "¡No se encontró el producto que ingresó!";
-				JOptionPane.showMessageDialog(this, mensaje, "Desempeño Financiero", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, mensaje, "Desempeño Financiero", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
@@ -321,7 +327,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			} catch (NullPointerException | IOException e2)
 			{
 				String mensaje = "¡No se logró agregar la imagen!";
-				JOptionPane.showMessageDialog(this, mensaje, "Agregar Imagen", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, mensaje, "Agregar Imagen", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
