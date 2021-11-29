@@ -2,6 +2,7 @@ package modelo.promociones;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Combo implements Promocion
 {
@@ -10,11 +11,38 @@ public class Combo implements Promocion
 	 */
 	private static String tipoPromocion = "combo";
 
+	private String nombreCombo = null;
+
 	private LocalDate fechaInicio = null;
 
 	private LocalDate fechaFin = null;
-	
-	private ArrayList<String> productoStrings = null;
+
+	private Double descuentoPorcentaje;
+
+	private HashMap<String, Integer> productosCantidad; // Bananos-3,Manzanas-5,Limon-6
+
+	/*
+	 * Atributos
+	 */
+	public Combo(LocalDate inicio, LocalDate fin, String producto, String porcentaje)
+	{
+		this.fechaInicio = inicio;
+		this.fechaFin = fin;
+
+		String[] arrayString = producto.split(",");
+		this.productosCantidad = new HashMap<>();
+		for (int i = 0; i < arrayString.length; i++)
+		{
+			String[] separado = (arrayString[i]).split("-");
+			String nombre = separado[0];
+			Integer cantidad = Integer.parseInt(separado[1]);
+
+			this.productosCantidad.put(nombre, cantidad); // Se agrega al hashmap
+		}
+
+		this.descuentoPorcentaje = Double.parseDouble(porcentaje.replace("%", "")) / 100;
+
+	}
 
 	@Override
 	public String getTipoPromocion()
@@ -34,10 +62,12 @@ public class Combo implements Promocion
 		return this.fechaFin;
 	}
 
-	@Override
-	public ArrayList<String> getProductoStrings()
+	/**
+	 * @return the productosCantidad
+	 */
+	public HashMap<String, Integer> getProductosCantidad()
 	{
-		return this.productoStrings;
+		return productosCantidad;
 	}
 
 	@Override

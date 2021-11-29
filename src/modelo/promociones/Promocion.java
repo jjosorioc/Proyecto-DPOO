@@ -40,7 +40,10 @@ public interface Promocion
 	/**
 	 * @return the productoStrings
 	 */
-	public ArrayList<String> getProductoStrings();
+	public default ArrayList<String> getProductoStrings()
+	{
+		return this.productoStrings;
+	}
 
 	public boolean esVigente(LocalDate inferior, LocalDate superior);
 
