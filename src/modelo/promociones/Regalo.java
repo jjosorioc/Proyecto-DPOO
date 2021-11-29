@@ -16,13 +16,16 @@ public class Regalo implements Promocion
 	
 	private ArrayList<String> productoStrings = null;
 	
-	private Integer cantidadUnidades;
+	// 4,5
+	private Integer pague; 
+	
+	private Integer lleve;
 	
 	/*
 	 * Atributos
 	 */
 	
-	public Regalo(LocalDate inicio, LocalDate fin, String producto, Integer unidades)
+	public Regalo(LocalDate inicio, LocalDate fin, String producto, String pagueLleve)
 	{
 		this.fechaInicio = inicio;
 		this.fechaFin = fin;
@@ -34,7 +37,11 @@ public class Regalo implements Promocion
 			this.productoStrings.add(arrayString[i]);
 		}
 
-		this.cantidadUnidades = unidades;
+		String[] arrayPagarLlevar = pagueLleve.split(",");
+		
+		this.pague = Integer.parseInt(arrayPagarLlevar[0]);
+		
+		this.lleve = Integer.parseInt(arrayPagarLlevar[1]);
 
 	}
 
