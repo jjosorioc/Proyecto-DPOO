@@ -1,7 +1,6 @@
 package modelo.promociones;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Combo implements Promocion
@@ -24,8 +23,9 @@ public class Combo implements Promocion
 	/*
 	 * Atributos
 	 */
-	public Combo(LocalDate inicio, LocalDate fin, String producto, String porcentaje)
+	public Combo(String nombreParam, LocalDate inicio, LocalDate fin, String producto, String porcentaje)
 	{
+		this.nombreCombo = nombreParam;
 		this.fechaInicio = inicio;
 		this.fechaFin = fin;
 

@@ -14,6 +14,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import modelo.Inventario;
 import modelo.Lote;
+import modelo.promociones.Combo;
+import modelo.promociones.Descuento;
+import modelo.promociones.Promocion;
+import modelo.promociones.PuntosMultiplicados;
+import modelo.promociones.Regalo;
 
 public class EncargadoInventario
 {
@@ -64,8 +69,7 @@ public class EncargadoInventario
 		return null;
 
 	}
-	
-	
+
 	/**
 	 * 
 	 * @return el path del archivo o null si no es valido
@@ -103,92 +107,96 @@ public class EncargadoInventario
 	 */
 	public void readCSV(String pathCSV) throws IOException, NullPointerException // Opción 1
 	{
-		try {
-		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
-
-		/*
-		 * Estructura CSV: Producto Categoría Vencimiento (D/M/A) Ingreso (D/M/A) Precio Proveedor Precio Público Unidades Peso (g) Empacado
-		 */
-		csvReader.readLine(); // Lee primera linea
-		String row;
-		while ((row = csvReader.readLine()) != null)
+		try
 		{
-			String[] elArray = row.split(","); // Main array
+			BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
 
-			String nombreProducto = elArray[0].toLowerCase();
-
-			String categoria = elArray[1];
-
-			String[] vencimientoString = (elArray[2]).split("-");
-			LocalDate vencimiento = LocalDate.of(Integer.parseInt(vencimientoString[0]), Integer.parseInt(vencimientoString[1]), Integer.parseInt(vencimientoString[2]));
-
-			String[] ingresoString = (elArray[3]).split("-");
-			LocalDate ingreso = LocalDate.of(Integer.parseInt(ingresoString[0]), Integer.parseInt(ingresoString[1]), Integer.parseInt(ingresoString[2]));
-
-			double proveedor = Double.parseDouble(elArray[4]);
-
-			double publico = Double.parseDouble(elArray[5]);
-
-			int unidades = Integer.parseInt(elArray[6]);
-
-			double peso = Double.parseDouble(elArray[7]);
-
-			boolean empacado = Boolean.parseBoolean(elArray[8]);
-
-			String unidad = elArray[9];
-
-			String codigoBarras = elArray[10];
-
-			String tipoProducto = elArray[11];
-
-			String subCategorias = elArray[12];
-
-			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
-
-			// Poner lo de abajo en Inventario + camiar el precio
-			if (this.inventario.getLotes().containsKey(nombreProducto))
+			/*
+			 * Estructura CSV: Producto Categoría Vencimiento (D/M/A) Ingreso (D/M/A) Precio Proveedor Precio Público Unidades Peso (g) Empacado
+			 */
+			csvReader.readLine(); // Lee primera linea
+			String row;
+			while ((row = csvReader.readLine()) != null)
 			{
-				ArrayList<Lote> arrayDelHash = this.inventario.getLotes().get(nombreProducto);
+				String[] elArray = row.split(","); // Main array
 
-				for (int counter = 0; counter < arrayDelHash.size(); counter++) // Se reemplaza la categoría de artículos previamente cargados si se ingresa un lote con un artículo que ya forma parte
-																				// del inventario, pero que tiene una categoría distinta.
+				String nombreProducto = elArray[0].toLowerCase();
+
+				String categoria = elArray[1];
+
+				String[] vencimientoString = (elArray[2]).split("-");
+				LocalDate vencimiento = LocalDate.of(Integer.parseInt(vencimientoString[0]), Integer.parseInt(vencimientoString[1]), Integer.parseInt(vencimientoString[2]));
+
+				String[] ingresoString = (elArray[3]).split("-");
+				LocalDate ingreso = LocalDate.of(Integer.parseInt(ingresoString[0]), Integer.parseInt(ingresoString[1]), Integer.parseInt(ingresoString[2]));
+
+				double proveedor = Double.parseDouble(elArray[4]);
+
+				double publico = Double.parseDouble(elArray[5]);
+
+				int unidades = Integer.parseInt(elArray[6]);
+
+				double peso = Double.parseDouble(elArray[7]);
+
+				boolean empacado = Boolean.parseBoolean(elArray[8]);
+
+				String unidad = elArray[9];
+
+				String codigoBarras = elArray[10];
+
+				String tipoProducto = elArray[11];
+
+				String subCategorias = elArray[12];
+
+				Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
+
+				// Poner lo de abajo en Inventario + camiar el precio
+				if (this.inventario.getLotes().containsKey(nombreProducto))
 				{
-					Double precioProveedor = arrayDelHash.get(counter).getPrecioProveedor(); // Se mantiene el precio, unidades y fechas que se tenía antes, lo demás se mantiene igual al nuevo lote.
-					Integer unidadesOtroLote = arrayDelHash.get(counter).getCantidadUnidades();
-					LocalDate vencimientoOtroLote = arrayDelHash.get(counter).getfechaDeVencimiento();
-					LocalDate ingresoOtroLote = arrayDelHash.get(counter).getfechaDeIngreso();
-					Lote loteCambiado = new Lote(nombreProducto, categoria, vencimientoOtroLote, ingresoOtroLote, precioProveedor, publico, unidadesOtroLote, peso, empacado, unidad, codigoBarras,
-							tipoProducto, subCategorias);
-					arrayDelHash.set(counter, loteCambiado);
-				}
+					ArrayList<Lote> arrayDelHash = this.inventario.getLotes().get(nombreProducto);
 
-				arrayDelHash.add(newLote);
+					for (int counter = 0; counter < arrayDelHash.size(); counter++) // Se reemplaza la categoría de artículos previamente cargados si se ingresa un lote con un artículo que ya forma
+																					// parte
+																					// del inventario, pero que tiene una categoría distinta.
+					{
+						Double precioProveedor = arrayDelHash.get(counter).getPrecioProveedor(); // Se mantiene el precio, unidades y fechas que se tenía antes, lo demás se mantiene igual al nuevo
+																									// lote.
+						Integer unidadesOtroLote = arrayDelHash.get(counter).getCantidadUnidades();
+						LocalDate vencimientoOtroLote = arrayDelHash.get(counter).getfechaDeVencimiento();
+						LocalDate ingresoOtroLote = arrayDelHash.get(counter).getfechaDeIngreso();
+						Lote loteCambiado = new Lote(nombreProducto, categoria, vencimientoOtroLote, ingresoOtroLote, precioProveedor, publico, unidadesOtroLote, peso, empacado, unidad, codigoBarras,
+								tipoProducto, subCategorias);
+						arrayDelHash.set(counter, loteCambiado);
+					}
 
-				// Ajustar el nuevo precio
+					arrayDelHash.add(newLote);
 
-				for (Lote i : arrayDelHash)
+					// Ajustar el nuevo precio
+
+					for (Lote i : arrayDelHash)
+					{
+						i.setPrecioPublico(publico);
+					}
+				} else
 				{
-					i.setPrecioPublico(publico);
-				}
-			} else
-			{
-				ArrayList<Lote> arrayDelHash = new ArrayList<Lote>();
-				arrayDelHash.add(newLote);
-				this.inventario.getLotes().put(nombreProducto, arrayDelHash);
+					ArrayList<Lote> arrayDelHash = new ArrayList<Lote>();
+					arrayDelHash.add(newLote);
+					this.inventario.getLotes().put(nombreProducto, arrayDelHash);
 
-				if (!this.inventario.getGanancias().containsKey(nombreProducto) && !this.inventario.getPerdidas().containsKey(nombreProducto))
-				{
-					// Agregar a Ganancias/Pérdidas
-					this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
-					this.inventario.getPerdidas().put(newLote.getNameProducto(), 0.0);
-				}
+					if (!this.inventario.getGanancias().containsKey(nombreProducto) && !this.inventario.getPerdidas().containsKey(nombreProducto))
+					{
+						// Agregar a Ganancias/Pérdidas
+						this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
+						this.inventario.getPerdidas().put(newLote.getNameProducto(), 0.0);
+					}
 
-				// Mapa para obtener el nombre del producto con el código de barras.
-				this.inventario.getCodigos().put(codigoBarras, nombreProducto);
+					// Mapa para obtener el nombre del producto con el código de barras.
+					this.inventario.getCodigos().put(codigoBarras, nombreProducto);
+				}
 			}
-		}
-		csvReader.close();
-		}catch (NullPointerException e) {
+			csvReader.close();
+		} catch (NullPointerException e)
+		{
 			throw new NullPointerException("No se ingresó un archivo");
 		}
 	}
@@ -219,6 +227,56 @@ public class EncargadoInventario
 			this.inventario.getPerdidas().put(nombreProducto, perdidasDouble);
 		}
 		csvReader.close();
+	}
+
+	public void cargarPromociones() throws Exception
+	{
+		BufferedReader csvReader = new BufferedReader(new FileReader("./data/promociones.csv"));
+		// Tipo;FechaInicio;FechaFin;Productos;Valor;Nombre
+
+		csvReader.readLine();
+		String row;
+		while ((row = csvReader.readLine()) != null)
+		{
+			Promocion laPromocion = null; // La promoción que se va a ingresar
+
+			String[] separada = row.split(";");
+
+			String tipo = separada[0];
+
+			String[] fecha1 = separada[1].split("-");
+			LocalDate inicioDate = LocalDate.of(Integer.parseInt(fecha1[0]), Integer.parseInt(fecha1[1]), Integer.parseInt(fecha1[2]));
+
+			String[] fecha2 = separada[2].split("-");
+			LocalDate finDate = LocalDate.of(Integer.parseInt(fecha2[0]), Integer.parseInt(fecha2[1]), Integer.parseInt(fecha2[2]));
+
+			String productos = separada[3];
+
+			String valor = separada[4];
+
+			String nombre = separada[5];
+
+			// Condicionales
+
+			if (tipo.equals("descuento"))
+			{
+				laPromocion = new Descuento(inicioDate, finDate, productos, valor);
+			} else if (tipo.equals("regalo"))
+			{
+				laPromocion = new Regalo(inicioDate, finDate, productos, valor);
+			} else if (tipo.equals("combo"))
+			{
+				laPromocion = new Combo(nombre, inicioDate, finDate, productos, valor);
+			} else if (tipo.equals("puntos"))
+			{
+				laPromocion = new PuntosMultiplicados(inicioDate, finDate, productos, Integer.parseInt(valor));
+			} else
+			{
+				throw new Exception("No se encontró la promoción");
+			}
+
+			// TODO: Agregar al inventario
+		}
 	}
 
 	/**
