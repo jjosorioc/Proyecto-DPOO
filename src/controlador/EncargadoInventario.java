@@ -22,11 +22,12 @@ import modelo.promociones.Regalo;
 
 public class EncargadoInventario
 {
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args) throws Exception
 	{
 		EncargadoInventario objEncargadoInventario = new EncargadoInventario();
 		objEncargadoInventario.cargarGananciasPerdidas(); // Cargar ganancias y pérdidas
 		objEncargadoInventario.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
+		objEncargadoInventario.cargarPromociones();
 
 	}
 
@@ -275,7 +276,8 @@ public class EncargadoInventario
 				throw new Exception("No se encontró la promoción");
 			}
 
-			// TODO: Agregar al inventario
+			// Se agrega la promoción al inventario
+			this.inventario.addPromocion(laPromocion);
 		}
 	}
 

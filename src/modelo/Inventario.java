@@ -1,8 +1,9 @@
 package modelo;
 
 import java.util.ArrayList;
-
 import java.util.HashMap; // import the HashMap class
+
+import modelo.promociones.Promocion;
 
 public class Inventario
 {
@@ -14,6 +15,9 @@ public class Inventario
 	
 	private HashMap<String, Double> ganancias = new HashMap<String, Double>(); //todo guardar en CSV
 	private HashMap<String, Double> perdidas = new HashMap<String, Double>();
+	
+	
+	private ArrayList<Promocion> promociones = new ArrayList<Promocion>();
 
 	// Métodos
 
@@ -81,6 +85,24 @@ public class Inventario
 
 		this.ganancias.replace(nombre, costoTotal);
 		return costoTotal;
+	}
+
+	/**	
+	 * @return the promociones
+	 */
+	public ArrayList<Promocion> getPromociones()
+	{
+		return promociones;
+	}
+	
+	
+	/**
+	 * 
+	 * @param p
+	 */
+	public void addPromocion(Promocion p)
+	{
+		this.promociones.add(p);
 	}
 
 }

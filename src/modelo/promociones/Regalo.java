@@ -13,18 +13,18 @@ public class Regalo implements Promocion
 	private LocalDate fechaInicio = null;
 
 	private LocalDate fechaFin = null;
-	
+
 	private ArrayList<String> productoStrings = null;
-	
+
 	// 4,5
-	private Integer pague; 
-	
+	private Integer pague;
+
 	private Integer lleve;
-	
+
 	/*
 	 * Atributos
 	 */
-	
+
 	public Regalo(LocalDate inicio, LocalDate fin, String producto, String pagueLleve)
 	{
 		this.fechaInicio = inicio;
@@ -38,9 +38,9 @@ public class Regalo implements Promocion
 		}
 
 		String[] arrayPagarLlevar = pagueLleve.split(",");
-		
+
 		this.pague = Integer.parseInt(arrayPagarLlevar[0]);
-		
+
 		this.lleve = Integer.parseInt(arrayPagarLlevar[1]);
 
 	}

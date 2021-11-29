@@ -13,11 +13,11 @@ public class PuntosMultiplicados implements Promocion
 	private LocalDate fechaInicio = null;
 
 	private LocalDate fechaFin = null;
-	
+
 	private ArrayList<String> productoStrings = null;
-	
+
 	private Integer puntosMultiplicados;
-	
+
 	/*
 	 * Atributos
 	 */

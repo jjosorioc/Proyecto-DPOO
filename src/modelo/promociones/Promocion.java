@@ -3,8 +3,6 @@ package modelo.promociones;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import javax.swing.DefaultListCellRenderer;
-
 public interface Promocion
 {
 	/*
