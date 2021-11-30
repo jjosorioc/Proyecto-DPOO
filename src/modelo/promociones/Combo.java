@@ -23,7 +23,6 @@ public class Combo implements Promocion
 
 	private String codigoQR;
 
-
 	/*
 	 * Métodos
 	 */
@@ -34,7 +33,7 @@ public class Combo implements Promocion
 		this.fechaFin = fin;
 
 		String[] arrayString = producto.split(",");
-		
+
 		/*
 		 * Se inicializan la estructura de datos
 		 */
@@ -45,13 +44,12 @@ public class Combo implements Promocion
 			String[] separado = (arrayString[i]).split("-");
 			String nombre = separado[0];
 			Integer cantidad = Integer.parseInt(separado[1]);
-			
+
 			this.productosCantidad.put(nombre, cantidad); // Se agrega al hashmap
 		}
-		
 
 		this.descuentoPorcentaje = Double.parseDouble(porcentaje.replace("%", "")) / 100;
-		
+
 		this.codigoQR = codigoQR;
 
 	}
@@ -75,11 +73,27 @@ public class Combo implements Promocion
 	}
 
 	/**
+	 * @return the descuentoPorcentaje
+	 */
+	public Double getDescuentoPorcentaje()
+	{
+		return descuentoPorcentaje;
+	}
+
+	/**
 	 * @return the productosCantidad
 	 */
 	public HashMap<String, Integer> getProductosCantidad()
 	{
 		return productosCantidad;
+	}
+
+	/**
+	 * @return the codigoQR
+	 */
+	public String getCodigoQR()
+	{
+		return codigoQR;
 	}
 
 	@Override
@@ -89,6 +103,10 @@ public class Combo implements Promocion
 	}
 	
 	
-
+	@Override
+	public String toString()
+	{
+		return this.nombreCombo;
+	}
 
 }

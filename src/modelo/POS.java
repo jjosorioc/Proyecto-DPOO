@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap; // import the HashMap class
 import java.util.Set;
 
+import modelo.promociones.Combo;
+import modelo.promociones.Descuento;
+import modelo.promociones.Promocion;
+import modelo.promociones.PuntosMultiplicados;
+import modelo.promociones.Regalo;
+
 public class POS
 
 {
@@ -168,6 +174,62 @@ public class POS
 		csvReader.close();
 
 	}
+	
+	
+	public void cargarPromociones() throws Exception
+	{
+		BufferedReader csvReaderPromociones = new BufferedReader(new FileReader("./data/promociones.csv"));
+		// Tipo;FechaInicio;FechaFin;Productos;Valor;Nombre
+
+		csvReaderPromociones.readLine();
+		String row;
+		while ((row = csvReaderPromociones.readLine()) != null)
+		{
+			Promocion laPromocion = null; // La promoción que se va a ingresar
+
+			String[] separada = row.split(";");
+
+			String tipo = separada[0];
+
+			String[] fecha1 = separada[1].split("-");
+			LocalDate inicioDate = LocalDate.of(Integer.parseInt(fecha1[0]), Integer.parseInt(fecha1[1]), Integer.parseInt(fecha1[2]));
+
+			String[] fecha2 = separada[2].split("-");
+			LocalDate finDate = LocalDate.of(Integer.parseInt(fecha2[0]), Integer.parseInt(fecha2[1]), Integer.parseInt(fecha2[2]));
+
+			String productos = separada[3];
+
+			String valor = separada[4];
+
+			String nombre = separada[5];
+
+			String codigoQR = separada[6];
+
+			// Condicionales
+
+			if (tipo.equals("descuento"))
+			{
+				laPromocion = new Descuento(inicioDate, finDate, productos, valor);
+			} else if (tipo.equals("regalo"))
+			{
+				laPromocion = new Regalo(inicioDate, finDate, productos, valor);
+			} else if (tipo.equals("combo"))
+			{
+				Combo elCombo = new Combo(nombre, inicioDate, finDate, productos, valor, codigoQR);
+				this.inventario.addCombo(elCombo);
+			} else if (tipo.equals("puntos"))
+			{
+				laPromocion = new PuntosMultiplicados(inicioDate, finDate, productos, Integer.parseInt(valor));
+			} else
+			{
+				throw new Exception("No se encontró la promoción");
+			}
+
+			// Se agrega la promoción al inventario, NO se agregan Combos
+			this.inventario.addPromocion(laPromocion);
+		}
+		csvReaderPromociones.close();
+	}	
 	
 	
 	

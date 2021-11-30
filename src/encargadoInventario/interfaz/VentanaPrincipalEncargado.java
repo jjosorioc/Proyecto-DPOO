@@ -35,10 +35,10 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 {
 	/**
 	 * @param args
-	 * @throws IOException
+	 * @throws Exception
 	 */
 
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args) throws Exception
 	{
 		FlatLightLaf.setup();
 		// FlatLightLaf.install();
@@ -47,6 +47,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		// Carga de datos
 		objEncargado.ENCARGADO.cargarGananciasPerdidas();
 		objEncargado.ENCARGADO.readCSV(System.getProperty("user.dir") + "/data/inventario.csv"); // Leer inventario.csv
+		objEncargado.ENCARGADO.cargarPromociones();
 
 	}
 

@@ -232,12 +232,12 @@ public class EncargadoInventario
 
 	public void cargarPromociones() throws Exception
 	{
-		BufferedReader csvReader = new BufferedReader(new FileReader("./data/promociones.csv"));
+		BufferedReader csvReaderPromociones = new BufferedReader(new FileReader("./data/promociones.csv"));
 		// Tipo;FechaInicio;FechaFin;Productos;Valor;Nombre
 
-		csvReader.readLine();
+		csvReaderPromociones.readLine();
 		String row;
-		while ((row = csvReader.readLine()) != null)
+		while ((row = csvReaderPromociones.readLine()) != null)
 		{
 			Promocion laPromocion = null; // La promoción que se va a ingresar
 
@@ -256,7 +256,7 @@ public class EncargadoInventario
 			String valor = separada[4];
 
 			String nombre = separada[5];
-			
+
 			String codigoQR = separada[6];
 
 			// Condicionales
@@ -269,7 +269,8 @@ public class EncargadoInventario
 				laPromocion = new Regalo(inicioDate, finDate, productos, valor);
 			} else if (tipo.equals("combo"))
 			{
-				laPromocion = new Combo(nombre, inicioDate, finDate, productos, valor, codigoQR);
+				Combo elCombo = new Combo(nombre, inicioDate, finDate, productos, valor, codigoQR);
+				this.inventario.addCombo(elCombo);
 			} else if (tipo.equals("puntos"))
 			{
 				laPromocion = new PuntosMultiplicados(inicioDate, finDate, productos, Integer.parseInt(valor));
@@ -278,9 +279,10 @@ public class EncargadoInventario
 				throw new Exception("No se encontró la promoción");
 			}
 
-			// Se agrega la promoción al inventario
+			// Se agrega la promoción al inventario, NO se agregan Combos
 			this.inventario.addPromocion(laPromocion);
 		}
+		csvReaderPromociones.close();
 	}
 
 	/**

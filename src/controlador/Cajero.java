@@ -12,12 +12,12 @@ import modelo.POS;
 
 public class Cajero
 {
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args) throws Exception
 	{
 		Cajero objCajero = new Cajero();
 		objCajero.readCSV(System.getProperty("user.dir") + "/data/clientes.csv"); // se cargan los clientes
 		objCajero.pos.cargarInventario(); // Se carga inventario.csv
-		objCajero.ejecutarOpcion();
+		objCajero.pos.cargarPromociones();
 	}
 
 	// Atributos
@@ -27,138 +27,6 @@ public class Cajero
 	public Compra compraActiva = null;
 
 	// Métodos
-	
-	/**
-	 * Método para imprimir el menú en consola
-	 */
-	private void mostrarMenu()
-	{
-		System.out.println("\n******************** MENÚ PRINCIPAL ********************\n");
-		System.out.println("\nBienvenido a la consola para el cajero");
-		System.out.println("\n0. Agregar un nuevo cliente al sistema.");
-		System.out.println("\n1. Iniciar una compra de un cliente.");
-		System.out.println("\n2. Agregar un producto a la compra del cliente.");
-		System.out.println("\n3. Finalizar compra cliente.");
-		System.out.println("\n4. Eliminar compra cliente.");
-		System.out.println("\n5. GUARDAR y CERRAR (Si no selecciona esta opción sus cambios no serán guardados).\n");
-		System.out.println("*********************************************************\n");
-	}
-
-	/**
-	 * Método que interactúa con el usuario a través de la consola.
-	 * @throws IOException 
-	 */
-	@SuppressWarnings("unused")
-	public void ejecutarOpcion() throws IOException
-	{
-		System.out.println("Iniciando programa...");
-
-		boolean continuar = true;
-
-		while (continuar)
-		{
-
-			
-			mostrarMenu();
-			int opcion_seleccionada = -1;
-			try
-			{
-				opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opción\n"));
-			} catch (NumberFormatException e)
-			{
-				opcion_seleccionada = -1;
-			}
-			
-			
-			if (opcion_seleccionada == 0)
-			{
-				String cedula = input("\nPor favor ingrese el número de cédula del cliente");
-				int edad = Integer.parseInt(input("\nPor favor ingrese la edad del cliente"));
-				String sexo = input("\nIngrese el género del cliente");
-				String estadoCivil = input("\nIngrese el estado civil del cliente");
-				String situacionLaboral = input("\nIngrese la situación laboral del cliente");
-				crearCliente(cedula);
-				System.out.println("\nCliente agregado al sistema de puntos! ATENCIÓN: Asegúrese de seleccionar la opción 5) para completar la solicitud.\n");
-				
-			}
-			else if (opcion_seleccionada == 1)
-			{
-				String cedula = input("\nPor favor ingrese el número de cédula del cliente (Espiche enter si no está registrado)");
-				Boolean existe = pos.getClientes().containsKey(cedula);
-				if (existe)
-				{
-					inicarCompraCliente(cedula);
-				}
-				else
-				{
-					inicarCompraCliente(null);
-				}
-				System.out.println("\nCompra iniciada con éxito!\n");
-			}
-			else if (opcion_seleccionada == 2)
-			{
-				if (this.compraActiva != null)
-				{
-					String codigoProducto = input("\nPor favor ingrese el código de barras del producto que desea registrar");
-					
-					String nombreProducto = this.pos.inventario.getCodigos().get(codigoProducto);
-					
-					if (nombreProducto == null) // Si el producto no se encontró
-					{
-						System.out.println("\nEl producto con código " +  codigoProducto + " no forma parte de nuestro inventario.\n");
-					}
-					else 
-					{	
-						boolean esEmpacado = this.pos.inventario.getLotes().get(nombreProducto).get(0).getEsEmpacado();
-						
-						if (esEmpacado) // Si es empacado
-						{
-							Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
-							Double peso = -1.0;
-							agregarProducto(nombreProducto, cantidad, peso);
-						}
-						else // Si es no empacado
-						{
-							//Double cantidad = (double) Integer.parseInt(input("\nPor favor ingrese la cantidad de "+ nombreProducto + " que desea comprar el cliente"));
-							Double peso = Double.parseDouble(input("\nPor favor ingrese el peso de "+ nombreProducto + " que desea comprar el cliente"));
-							Double cantidad = Math.ceil(peso / this.pos.inventario.getLotes().get(nombreProducto).get(0).getPeso());
-							System.out.println("\nLa cantidad de " + nombreProducto + " según el peso ingresado es: " + cantidad);
-							agregarProducto(nombreProducto, cantidad, peso);
-						}
-				}
-			}else {
-				System.out.println("\nINICIE UNA COMPRA");
-			}
-				
-			}
-			
-			else if (opcion_seleccionada == 3)
-			{
-				if (this.compraActiva != null)
-				{
-					finalizarCompra();
-					System.out.println("\nCompra finalizada! ATENCIÓN: Asegúrese de seleccionar la opción 5) para completar la solicitud.\n");
-				}
-				else
-				{
-					System.out.println("\nINICIE UNA COMPRA");
-				}
-				
-			}
-			else if (opcion_seleccionada == 4)
-			{
-				eliminarCompra();
-			}
-			else if (opcion_seleccionada == 5)
-			{
-				guardarYcerrar();
-			}
-			else {
-				System.out.println("\n¡INGRESE UNA OPCIÓN VÁLIDA!");
-			}
-
-		}
-	}
 
 	/**
 	 * Método para obtener el input del usuario.
@@ -192,70 +60,71 @@ public class Cajero
 		BufferedReader csvReader = new BufferedReader(new FileReader(pathCSV));
 
 		/*
-		 * Estructura CSV: Cedula Puntos PuntosEnero PuntosFebrero PuntosMarzo PuntosAbril PuntosMayo PuntosJunio PuntosJulio PuntosAgosto PuntosSeptiembre PuntosOctubre PuntosNoviembre PuntosDiciembre
+		 * Estructura CSV: Cedula Puntos PuntosEnero PuntosFebrero PuntosMarzo PuntosAbril PuntosMayo PuntosJunio PuntosJulio PuntosAgosto PuntosSeptiembre PuntosOctubre PuntosNoviembre
+		 * PuntosDiciembre
 		 */
 		csvReader.readLine(); // Lee primera linea
 		String row;
 		while ((row = csvReader.readLine()) != null)
 		{
 			ArrayList<Integer> puntosMes = new ArrayList<Integer>();
-			
+
 			String[] elArray = row.split(","); // Main array
 
 			String documento = elArray[0];
 
 			Integer puntos = Integer.parseInt(elArray[1]);
-			
+
 			pos.getClientes().put(documento, puntos);
-			
+
 			Integer puntosEnero = Integer.parseInt(elArray[2]);
-			
+
 			puntosMes.add(puntosEnero);
-			
+
 			Integer puntosFebrero = Integer.parseInt(elArray[3]);
-			
+
 			puntosMes.add(puntosFebrero);
-			
+
 			Integer puntosMarzo = Integer.parseInt(elArray[4]);
-			
+
 			puntosMes.add(puntosMarzo);
-			
+
 			Integer puntosAbril = Integer.parseInt(elArray[5]);
-			
+
 			puntosMes.add(puntosAbril);
-			
+
 			Integer puntosMayo = Integer.parseInt(elArray[6]);
-			
+
 			puntosMes.add(puntosMayo);
-			
+
 			Integer puntosJunio = Integer.parseInt(elArray[7]);
-			
+
 			puntosMes.add(puntosJunio);
-			
+
 			Integer puntosJulio = Integer.parseInt(elArray[8]);
-			
+
 			puntosMes.add(puntosJulio);
-			
+
 			Integer puntosAgosto = Integer.parseInt(elArray[9]);
-			
+
 			puntosMes.add(puntosAgosto);
-			
+
 			Integer puntosSeptiembre = Integer.parseInt(elArray[10]);
-			
+
 			puntosMes.add(puntosSeptiembre);
-			
+
 			Integer puntosOctubre = Integer.parseInt(elArray[11]);
-			
+
 			puntosMes.add(puntosOctubre);
-			
+
 			Integer puntosNoviembre = Integer.parseInt(elArray[12]);
-			
+
 			puntosMes.add(puntosNoviembre);
-			
+
 			Integer puntosDiciembre = Integer.parseInt(elArray[13]);
-			
+
 			puntosMes.add(puntosDiciembre);
-			
+
 			pos.getPuntos().put(documento, puntosMes);
 
 		}
@@ -291,7 +160,7 @@ public class Cajero
 	public int agregarProducto(String productoNombre, Double cantidad, Double peso) // el producto debe estar en minúsculas
 	{
 		if (this.compraActiva != null)
-		{	
+		{
 			if (disponibilidadProducto(productoNombre) >= cantidad && disponibilidadProducto(productoNombre) != -1 && this.pos.getUnidadesDuranteEjecucion().get(productoNombre) >= cantidad)
 			{
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
@@ -300,13 +169,13 @@ public class Cajero
 				return (1);
 			} else
 			{
-				//El producto no existe o la cantidad de unidades no alcanza.
-				return(2);
+				// El producto no existe o la cantidad de unidades no alcanza.
+				return (2);
 			}
 		} else
 		{
-			//No se agregó ningún producto... Inicie una compra.
-			return(3);
+			// No se agregó ningún producto... Inicie una compra.
+			return (3);
 		}
 	}
 
@@ -342,18 +211,19 @@ public class Cajero
 
 	/**
 	 * Método para finalizar la compra del cliente
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public String finalizarCompra()
 	{
 		String resultado = compraActiva.getFactura(this.pos.inventario);
-		
+
 		if (!compraActiva.cedula.equals(""))
 		{
-			
+
 			this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos);
 			this.pos.agregarPuntosClienteMes(compraActiva.cedula, compraActiva.puntos, compraActiva.mes);
-			
+
 		}
 		this.compraActiva = null;
 		this.pos.updateUnidadesDuranteEjecucion();
