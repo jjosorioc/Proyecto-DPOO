@@ -40,13 +40,14 @@ public class CajeroVentana extends JFrame implements ActionListener
 	public Cajero CAJERO;
 	// public POS pos = new POS();
 
-	public CajeroVentana(String cedula) throws IOException
+	public CajeroVentana(String cedula) throws Exception
 	{
 
 		CAJERO = new Cajero();
 
 		CAJERO.readCSV(System.getProperty("user.dir") + "/data/clientes.csv"); // se cargan los clientes
 		CAJERO.pos.cargarInventario(); // Se carga inventario.csv
+		CAJERO.pos.cargarPromociones(); // Se cargan las promociones
 
 		CAJERO.inicarCompraCliente(cedula);
 

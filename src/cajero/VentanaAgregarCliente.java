@@ -89,8 +89,6 @@ public class VentanaAgregarCliente extends JFrame implements ActionListener
 		this.setLocationRelativeTo(null);
 	}
 
-
-
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -102,6 +100,9 @@ public class VentanaAgregarCliente extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this, "El cliente ha sido agregado con exito.", "Cliente Agregado", JOptionPane.PLAIN_MESSAGE);
 				new CajeroVentana(numeroCedula);
 			} catch (IOException e1)
+			{
+
+			} catch (Exception e1)
 			{
 
 			}

@@ -96,6 +96,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 					new CajeroVentana(cedulaCliente);
 				} catch (IOException e1)
 				{
+				} catch (Exception e1)
+				{
+
 				}
 				this.dispose();
 			}
@@ -121,6 +124,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener
 				{
 
 				} // Se abre la ventana de agregar productos (con el numero de cedula incluido)
+				catch (Exception e1)
+				{
+
+				}
 
 			}
 
