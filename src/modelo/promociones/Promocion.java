@@ -2,19 +2,11 @@ package modelo.promociones;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface Promocion
 {
-	/*
-	 * descuento regalo combo puntos
-	 */
-	String tipoPromocion = "";
 
-	LocalDate fechaInicio = null;
-
-	LocalDate fechaFin = null;
-
-	ArrayList<String> productoStrings = null;
 
 	/*
 	 * Métodos
@@ -38,10 +30,8 @@ public interface Promocion
 	/**
 	 * @return the productoStrings
 	 */
-	public default ArrayList<String> getProductoStrings()
-	{
-		return this.productoStrings;
-	}
+	public HashMap<String, Integer> getProductosCantidad();
+
 
 	public boolean esVigente(LocalDate inferior, LocalDate superior);
 

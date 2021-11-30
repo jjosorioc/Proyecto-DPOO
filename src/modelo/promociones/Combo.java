@@ -1,6 +1,7 @@
 package modelo.promociones;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Combo implements Promocion
@@ -22,6 +23,7 @@ public class Combo implements Promocion
 
 	private String codigoQR;
 
+
 	/*
 	 * Métodos
 	 */
@@ -32,13 +34,18 @@ public class Combo implements Promocion
 		this.fechaFin = fin;
 
 		String[] arrayString = producto.split(",");
+		
+		/*
+		 * Se inicializan la estructura de datos
+		 */
+
 		this.productosCantidad = new HashMap<>();
 		for (int i = 0; i < arrayString.length; i++)
 		{
 			String[] separado = (arrayString[i]).split("-");
 			String nombre = separado[0];
 			Integer cantidad = Integer.parseInt(separado[1]);
-
+			
 			this.productosCantidad.put(nombre, cantidad); // Se agrega al hashmap
 		}
 		
@@ -80,4 +87,8 @@ public class Combo implements Promocion
 	{
 		return (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
 	}
+	
+	
+
+
 }

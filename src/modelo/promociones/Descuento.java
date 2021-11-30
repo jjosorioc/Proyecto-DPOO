@@ -5,6 +5,7 @@ package modelo.promociones;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Descuento implements Promocion
 {
@@ -17,7 +18,7 @@ public class Descuento implements Promocion
 
 	private LocalDate fechaFin = null;
 
-	private ArrayList<String> productoStrings;
+	private HashMap<String, Integer> productosCantidad;
 
 	private Double porcentajeDescuento = null;
 
@@ -31,10 +32,10 @@ public class Descuento implements Promocion
 		this.fechaFin = fin;
 
 		String[] arrayString = producto.split(",");
-		this.productoStrings = new ArrayList<>();
+		this.productosCantidad = new HashMap<>();
 		for (int i = 0; i < arrayString.length; i++)
 		{
-			this.productoStrings.add(arrayString[i]);
+			this.productosCantidad.put(arrayString[i], 1);
 		}
 
 		this.porcentajeDescuento = Double.parseDouble(porcentaje.replace("%", "")) / 100;
@@ -59,15 +60,20 @@ public class Descuento implements Promocion
 		return this.fechaFin;
 	}
 
-	@Override
-	public ArrayList<String> getProductoStrings()
-	{
-		return this.productoStrings;
-	}
+
 
 	@Override
 	public boolean esVigente(LocalDate inferior, LocalDate superior)
 	{
 		return (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
 	}
+
+	@Override
+	public HashMap<String, Integer> getProductosCantidad()
+	{
+		
+		return this.productosCantidad;
+	}
+
+
 }

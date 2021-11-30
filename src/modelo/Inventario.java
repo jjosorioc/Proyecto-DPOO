@@ -85,7 +85,7 @@ public class Inventario
 
 		this.ganancias.replace(nombre, costoTotal);
 		return costoTotal;
-	}
+	} //TODO: getPrecioPromocion()
 
 	/**	
 	 * @return the promociones
