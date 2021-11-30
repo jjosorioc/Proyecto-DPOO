@@ -23,9 +23,9 @@ public class POS
 	public Inventario inventario = new Inventario();
 
 	public HashMap<String, Integer> clientes = new HashMap<String, Integer>(); // Cédula y Puntos
-	
-	public HashMap<String, ArrayList<Integer>> puntos = new HashMap<String, ArrayList<Integer>>(); //Puntos por mes
-	
+
+	public HashMap<String, ArrayList<Integer>> puntos = new HashMap<String, ArrayList<Integer>>(); // Puntos por mes
+
 	public HashMap<String, Integer> unidadesDuranteEjecucion = new HashMap<>();
 
 	// Métodos
@@ -37,15 +37,15 @@ public class POS
 	{
 		return clientes;
 	}
-	
+
 	public HashMap<String, ArrayList<Integer>> getPuntos()
 	{
 		return puntos;
 	}
-	
-	
+
 	/**
 	 * Se agregan los puntos del clente
+	 * 
 	 * @param cedula
 	 * @param puntos
 	 */
@@ -55,49 +55,47 @@ public class POS
 		{
 			Integer nuevosPuntos = this.clientes.get(cedula) + puntosActuales;
 			this.clientes.replace(cedula, nuevosPuntos);
-		}
-		else {
+		} else
+		{
 			this.clientes.put(cedula, puntosActuales);
 		}
 	}
-	
-	
+
 	public void agregarPuntosClienteMes(String cedula, Integer puntosActuales, Integer mes)
 	{
 		if (this.puntos.containsKey(cedula))
 		{
-			Integer nuevosPuntosMes = this.puntos.get(cedula).get(mes-1) + puntosActuales;
-			this.puntos.get(cedula).set(mes-1, nuevosPuntosMes);
-			
-		}
-		else {
+			Integer nuevosPuntosMes = this.puntos.get(cedula).get(mes - 1) + puntosActuales;
+			this.puntos.get(cedula).set(mes - 1, nuevosPuntosMes);
+
+		} else
+		{
 			ArrayList<Integer> puntosMes = new ArrayList<Integer>();
-			
-			for (int i = 0; i < 12; i++) 
+
+			for (int i = 0; i < 12; i++)
 			{
-			    puntosMes.add(0);
+				puntosMes.add(0);
 			}
-			    
-		    for (int j = 0; j < 12; j++) 
-		    {
-			    if (j != mes-1)
-			    {
-			    	puntosMes.set(j, 0);
-			    }
-			    else
-			    {
-			    	puntosMes.set(j, puntosActuales);
-			    }
+
+			for (int j = 0; j < 12; j++)
+			{
+				if (j != mes - 1)
+				{
+					puntosMes.set(j, 0);
+				} else
+				{
+					puntosMes.set(j, puntosActuales);
+				}
 			}
-		    
-		    this.puntos.put(cedula, puntosMes);
+
+			this.puntos.put(cedula, puntosMes);
 		}
-		
-		
+
 	}
-	
+
 	/**
 	 * Se carga el inventario de inventario.csv
+	 * 
 	 * @throws IOException
 	 */
 	public void cargarInventario() throws IOException // Se carga el inventario
@@ -135,11 +133,11 @@ public class POS
 			boolean empacado = Boolean.parseBoolean(elArray[8]);
 
 			String unidad = elArray[9];
-			
+
 			String codigoBarras = elArray[10];
-			
+
 			String tipoProducto = elArray[11];
-			
+
 			String subCategorias = elArray[12];
 
 			Lote newLote = new Lote(nombreProducto, categoria, vencimiento, ingreso, proveedor, publico, unidades, peso, empacado, unidad, codigoBarras, tipoProducto, subCategorias);
@@ -165,17 +163,15 @@ public class POS
 				// Agregar a Ganancias/Pérdidas
 				this.inventario.getGanancias().put(newLote.getNameProducto(), 0.0);
 				this.inventario.getPerdidas().put(newLote.getNameProducto(), 0.0);
-				
-				
-				//Mapa para obtener el nombre del producto con el código de barras.
+
+				// Mapa para obtener el nombre del producto con el código de barras.
 				this.inventario.getCodigos().put(codigoBarras, nombreProducto);
 			}
 		}
 		csvReader.close();
 
 	}
-	
-	
+
 	public void cargarPromociones() throws Exception
 	{
 		BufferedReader csvReaderPromociones = new BufferedReader(new FileReader("./data/promociones.csv"));
@@ -229,12 +225,11 @@ public class POS
 			this.inventario.addPromocion(laPromocion);
 		}
 		csvReaderPromociones.close();
-	}	
-	
-	
-	
+	}
+
 	/**
 	 * Guardar el inventario al csv
+	 * 
 	 * @throws IOException
 	 */
 	public void guardarInventario() throws IOException
@@ -274,24 +269,25 @@ public class POS
 				String empacado = i.getEsEmpacado().toString();
 
 				String unidadPeso = i.getUnidadMedida();
-				
+
 				String codigoBarras = i.getCodigoBarras();
-				
+
 				String tipoProducto = i.getTipoProducto();
-				
+
 				String subCategorias = i.getSubCategorias();
 
 				// Nueva linea
-				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso + "," + codigoBarras + "," + tipoProducto + "," + subCategorias;
+				String nuevaLinea = producto + "," + categoria + "," + vencimiento + "," + ingreso + "," + proveedor + "," + publico + "," + unidades + "," + peso + "," + empacado + "," + unidadPeso
+						+ "," + codigoBarras + "," + tipoProducto + "," + subCategorias;
 				writeCSV.write(nuevaLinea + "\n");
 			}
 		}
 		writeCSV.close();
 	}
-	
-	
+
 	/**
 	 * Guardar clientes al csv
+	 * 
 	 * @throws IOException
 	 */
 	public void guardarClientes() throws IOException
@@ -301,29 +297,30 @@ public class POS
 		csvfile.createNewFile();
 
 		FileWriter writeCSV = new FileWriter(csvfile);
-		
+
 		String primeraLineaString = "Cedula,Puntos,PuntosEnero,PuntosFebrero,PuntosMarzo,PuntosAbril,PuntosMayo,PuntosJunio,PuntosJulio,PuntosAgosto,PuntosSeptiembre,PuntosOctubre,PuntosNoviembre,PuntosDiciembre";
-	
+
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
-	
+
 		Set<String> llaves = this.clientes.keySet();
-		
-		for (String cedula: llaves)
+
+		for (String cedula : llaves)
 		{
 			String puntosActuales = this.clientes.get(cedula).toString();
-			
+
 			ArrayList<Integer> puntosMes = this.puntos.get(cedula);
-			
-			String nuevaLinea = cedula + "," + puntosActuales + "," + puntosMes.get(0)+ "," + puntosMes.get(1)+ "," + puntosMes.get(2)+ "," + puntosMes.get(3)+ "," + puntosMes.get(4)+ "," + puntosMes.get(5)+ "," + puntosMes.get(6)+ "," + puntosMes.get(7)+ "," + puntosMes.get(8)+ "," + puntosMes.get(9)+ "," + puntosMes.get(10)+ "," + puntosMes.get(11);
+
+			String nuevaLinea = cedula + "," + puntosActuales + "," + puntosMes.get(0) + "," + puntosMes.get(1) + "," + puntosMes.get(2) + "," + puntosMes.get(3) + "," + puntosMes.get(4) + ","
+					+ puntosMes.get(5) + "," + puntosMes.get(6) + "," + puntosMes.get(7) + "," + puntosMes.get(8) + "," + puntosMes.get(9) + "," + puntosMes.get(10) + "," + puntosMes.get(11);
 			writeCSV.write(nuevaLinea + "\n");
 		}
-		
+
 		writeCSV.close();
 	}
-	
-	
+
 	/**
 	 * Guarda las ganancias y perdidas en gananciasYperdidas.csv
+	 * 
 	 * @throws IOException
 	 */
 	public void guardarGananciasYPerdidas() throws IOException
@@ -333,26 +330,24 @@ public class POS
 		csvfile.createNewFile();
 
 		FileWriter writeCSV = new FileWriter(csvfile);
-		
+
 		String primeraLineaString = "Producto,Ganancias,Perdidas";
-	
+
 		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
-		
-		
+
 		Set<String> llaves = inventario.getGanancias().keySet();
-		
-		for (String llave: llaves)
+
+		for (String llave : llaves)
 		{
 			String ganancia = inventario.getGanancias().get(llave).toString();
 			String perdida = inventario.getPerdidas().get(llave).toString();
-			
+
 			String nuevaLinea = llave + "," + ganancia + "," + perdida;
-			writeCSV.write(nuevaLinea+"\n");
+			writeCSV.write(nuevaLinea + "\n");
 		}
 		writeCSV.close();
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param nombreProducto
@@ -382,18 +377,16 @@ public class POS
 
 		return cantidadTotal;
 	}
-	
-	
-	
-	public void updateUnidadesDuranteEjecucion() {
+
+	public void updateUnidadesDuranteEjecucion()
+	{
 		Set<String> llaveSet = inventario.getLotes().keySet();
-		
-		for (String llave: llaveSet)
+
+		for (String llave : llaveSet)
 		{
 			this.unidadesDuranteEjecucion.put(llave, disponibilidadProducto(llave));
 		}
 	}
-
 
 	/**
 	 * @return the unidadesDuranteEjecucion

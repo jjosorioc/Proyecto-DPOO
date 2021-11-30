@@ -125,4 +125,24 @@ public class Inventario
 		this.combos.add(c);
 	}
 
+	/**
+	 * Retorna el Combo según su QR && null si no existe.
+	 * 
+	 * @param QRcode
+	 * @return
+	 */
+	public Combo getComboBasedOnQR(String QRcode)
+	{
+		Combo retornoCombo = null;
+		for (Combo c : this.combos)
+		{
+			if (c.getCodigoQR().equals(QRcode))
+			{
+				retornoCombo = c;
+			}
+		}
+
+		return retornoCombo;
+	}
+
 }
