@@ -19,7 +19,7 @@ public class PuntosMultiplicados implements Promocion
 	private Integer puntosMultiplicados;
 
 	/*
-	 * Atributos
+	 * Métodos
 	 */
 	public PuntosMultiplicados(LocalDate inicio, LocalDate fin, String producto, Integer puntos)
 	{

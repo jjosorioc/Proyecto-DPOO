@@ -22,7 +22,7 @@ public class Descuento implements Promocion
 	private Double porcentajeDescuento = null;
 
 	/*
-	 * Atributos
+	 * Métodos
 	 */
 
 	public Descuento(LocalDate inicio, LocalDate fin, String producto, String porcentaje)

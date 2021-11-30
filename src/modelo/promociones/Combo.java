@@ -23,7 +23,7 @@ public class Combo implements Promocion
 	private String codigoQR;
 
 	/*
-	 * Atributos
+	 * Métodos
 	 */
 	public Combo(String nombreParam, LocalDate inicio, LocalDate fin, String producto, String porcentaje, String codigoQR)
 	{

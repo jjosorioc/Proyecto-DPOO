@@ -22,7 +22,7 @@ public class Regalo implements Promocion
 	private Integer lleve;
 
 	/*
-	 * Atributos
+	 * Métodos
 	 */
 
 	public Regalo(LocalDate inicio, LocalDate fin, String producto, String pagueLleve)

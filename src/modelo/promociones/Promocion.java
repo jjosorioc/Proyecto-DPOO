@@ -17,7 +17,7 @@ public interface Promocion
 	ArrayList<String> productoStrings = null;
 
 	/*
-	 * Atributos
+	 * Métodos
 	 */
 
 	/**
