@@ -256,6 +256,8 @@ public class EncargadoInventario
 			String valor = separada[4];
 
 			String nombre = separada[5];
+			
+			String codigoQR = separada[6];
 
 			// Condicionales
 
@@ -267,7 +269,7 @@ public class EncargadoInventario
 				laPromocion = new Regalo(inicioDate, finDate, productos, valor);
 			} else if (tipo.equals("combo"))
 			{
-				laPromocion = new Combo(nombre, inicioDate, finDate, productos, valor);
+				laPromocion = new Combo(nombre, inicioDate, finDate, productos, valor, codigoQR);
 			} else if (tipo.equals("puntos"))
 			{
 				laPromocion = new PuntosMultiplicados(inicioDate, finDate, productos, Integer.parseInt(valor));

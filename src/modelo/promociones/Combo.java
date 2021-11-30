@@ -20,10 +20,12 @@ public class Combo implements Promocion
 
 	private HashMap<String, Integer> productosCantidad; // Bananos-3,Manzanas-5,Limon-6
 
+	private String codigoQR;
+
 	/*
 	 * Atributos
 	 */
-	public Combo(String nombreParam, LocalDate inicio, LocalDate fin, String producto, String porcentaje)
+	public Combo(String nombreParam, LocalDate inicio, LocalDate fin, String producto, String porcentaje, String codigoQR)
 	{
 		this.nombreCombo = nombreParam;
 		this.fechaInicio = inicio;
@@ -39,8 +41,11 @@ public class Combo implements Promocion
 
 			this.productosCantidad.put(nombre, cantidad); // Se agrega al hashmap
 		}
+		
 
 		this.descuentoPorcentaje = Double.parseDouble(porcentaje.replace("%", "")) / 100;
+		
+		this.codigoQR = codigoQR;
 
 	}
 
