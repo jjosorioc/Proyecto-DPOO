@@ -111,7 +111,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 
 				ImageIcon iconoLupa = new ImageIcon(new ImageIcon("./images/cajero/productos/lupa.png").getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
 				String codigoProducto = (String) JOptionPane.showInputDialog(this, "Ingrese el codigo de barras del producto:", null, JOptionPane.INFORMATION_MESSAGE, iconoLupa, null, null);
-				// TODO: Revisar si es un Combo
+
 				/*
 				 * SI ES UN COMBO
 				 */

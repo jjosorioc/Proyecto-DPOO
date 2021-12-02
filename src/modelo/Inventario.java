@@ -97,7 +97,7 @@ public class Inventario
 
 		this.ganancias.replace(nombre, costoTotal);
 		return costoTotal;
-	} // TODO: getPrecioPromocion()
+	}
 
 	/**
 	 * @return the promociones
@@ -140,7 +140,7 @@ public class Inventario
 				precioTotalSinDescuento += precioProductoPorCantidaDouble;
 			} else // Si el prudcto no existe
 			{
-				//throw new Exception("No existe el Producto. Ya debería existir");
+				// throw new Exception("No existe el Producto. Ya debería existir");
 			}
 
 		}
