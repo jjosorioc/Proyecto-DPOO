@@ -19,6 +19,8 @@ public class Combo implements Promocion
 
 	private Double descuentoPorcentaje;
 
+	private Double precioDelCombo;
+
 	private HashMap<String, Integer> productosCantidad; // Bananos-3,Manzanas-5,Limon-6
 
 	private String codigoQR;
@@ -49,7 +51,7 @@ public class Combo implements Promocion
 		}
 
 		this.descuentoPorcentaje = Double.parseDouble(porcentaje.replace("%", "")) / 100;
-
+		this.precioDelCombo = null;
 		this.codigoQR = codigoQR;
 
 	}
@@ -81,6 +83,22 @@ public class Combo implements Promocion
 	}
 
 	/**
+	 * @return the precioDelCombo
+	 */
+	public Double getPrecioDelCombo()
+	{
+		return precioDelCombo;
+	}
+
+	/**
+	 * @param precioDelCombo the precioDelCombo to set
+	 */
+	public void setPrecioDelCombo(Double precioDelCombo)
+	{
+		this.precioDelCombo = precioDelCombo;
+	}
+
+	/**
 	 * @return the productosCantidad
 	 */
 	public HashMap<String, Integer> getProductosCantidad()
@@ -101,8 +119,7 @@ public class Combo implements Promocion
 	{
 		return (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
 	}
-	
-	
+
 	@Override
 	public String toString()
 	{

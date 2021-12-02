@@ -102,9 +102,6 @@ public class VentanaAgregarCliente extends JFrame implements ActionListener
 			} catch (IOException e1)
 			{
 
-			} catch (Exception e1)
-			{
-
 			}
 
 			this.dispose();

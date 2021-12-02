@@ -5,14 +5,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Set;
 
 import modelo.Compra;
 import modelo.Lote;
 import modelo.POS;
+import modelo.promociones.Combo;
 
 public class Cajero
 {
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws IOException
 	{
 		Cajero objCajero = new Cajero();
 		objCajero.readCSV(System.getProperty("user.dir") + "/data/clientes.csv"); // se cargan los clientes
@@ -152,7 +154,7 @@ public class Cajero
 	}
 
 	/**
-	 * 
+	 * @return 1 = Se agregó con éxito || 2 = El producto no existe o la cantidad es insuficiente || 3 = No hay una compra activa
 	 * @param productoNombre
 	 * @param cantidad
 	 * @param peso
@@ -176,6 +178,70 @@ public class Cajero
 		{
 			// No se agregó ningún producto... Inicie una compra.
 			return (3);
+		}
+	}
+
+	/**
+	 * 
+	 * @param c
+	 * @return true si es posible agregar el Combo
+	 */
+	private Boolean esPosibleAgregarCombo(Combo c)
+	{
+
+		Boolean esPosibleBoolean = true;
+		Set<String> llaveSet = c.getProductosCantidad().keySet();
+
+		for (String nombreDelProducto : llaveSet)
+		{
+			Double cantidadDelProducto = (double) c.getProductosCantidad().get(nombreDelProducto);
+
+			// Revisar que haya suficiente cantidad o exista
+			if (disponibilidadProducto(nombreDelProducto) >= cantidadDelProducto && disponibilidadProducto(nombreDelProducto) != -1
+					&& this.pos.getUnidadesDuranteEjecucion().get(nombreDelProducto) >= cantidadDelProducto)
+			{
+				continue; // Continuar con siguiente ciclo
+			} else
+			{
+				esPosibleBoolean = false;
+				break; // terminar el for
+			}
+		}
+
+		return esPosibleBoolean;
+	}
+
+	/**
+	 * Agrega un combo a la compra activa
+	 * 
+	 * @param c
+	 * @throws Exception => Hay un producto que no existe o no tiene la suficiente cantidad
+	 */
+	public void agregarCombo(Combo c) throws Exception
+	{
+
+		if (this.compraActiva != null)
+		{
+			Set<String> llaveSet = c.getProductosCantidad().keySet();
+
+			if (this.esPosibleAgregarCombo(c)) // Si es posible agregar el combo
+			{
+				// Se agrega el Combo al ArrayList
+				this.compraActiva.agregarCombo(c);
+
+				for (String nombreDelProducto : llaveSet)
+				{
+					Double cantidadDelProducto = (double) c.getProductosCantidad().get(nombreDelProducto);
+
+					Integer cantidadActualProducto = this.pos.getUnidadesDuranteEjecucion().get(nombreDelProducto);
+
+					this.pos.getUnidadesDuranteEjecucion().replace(nombreDelProducto, (int) (cantidadActualProducto - cantidadDelProducto));
+
+				}
+			} else // No es posible agregar el combo
+			{
+				throw new Exception("¡No es posible agregar el Combo!");
+			}
 		}
 	}
 

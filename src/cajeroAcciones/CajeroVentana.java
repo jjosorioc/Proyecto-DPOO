@@ -39,7 +39,7 @@ public class CajeroVentana extends JFrame implements ActionListener
 	public Cajero CAJERO;
 	// public POS pos = new POS();
 
-	public CajeroVentana(String cedula) throws Exception
+	public CajeroVentana(String cedula) throws IOException
 	{
 
 		CAJERO = new Cajero();
@@ -119,11 +119,21 @@ public class CajeroVentana extends JFrame implements ActionListener
 				{
 					Combo comboEscogido = CAJERO.pos.inventario.getComboBasedOnQR(codigoProducto);
 
-					if (comboEscogido == null)
+					if (comboEscogido == null) // No existe el combo
 					{
 						String mensaje = "¡No se encontró el combo que ingresó!";
 						JOptionPane.showMessageDialog(this, mensaje, null, JOptionPane.ERROR_MESSAGE);
-					}//TODO: Terminar proceso de comprar un combo
+					} else
+					{
+						try
+						{
+							this.CAJERO.agregarCombo(comboEscogido);
+						} catch (Exception e1)
+						{
+							String mensaje = "¡No es posible agregar el Combo, faltan productos!";
+							JOptionPane.showMessageDialog(this, mensaje, null, JOptionPane.ERROR_MESSAGE);
+						}
+					}
 				}
 
 				/*

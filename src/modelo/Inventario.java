@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.HashMap; // import the HashMap class
+import java.util.Set;
 
 import modelo.promociones.Combo;
 import modelo.promociones.Promocion;
@@ -60,7 +61,7 @@ public class Inventario
 		return perdidas;
 	}
 
-	public Double getPrecioProducto(String nombre, Double cantidad)
+	public Double getPrecioProducto(String nombre, Double cantidad) // TODO: Cambiar nombre del método
 	{
 		Double costoTotal = 0.0;
 
@@ -119,9 +120,33 @@ public class Inventario
 	 * Agregar un Combo al ArrayList
 	 * 
 	 * @param c
+	 * @throws Exception
 	 */
 	public void addCombo(Combo c)
 	{
+		Double precioTotalSinDescuento = 0.0;
+
+		Set<String> llaveSet = c.getProductosCantidad().keySet();
+
+		for (String nombreProducto : llaveSet)
+		{
+			if (this.lotes.containsKey(nombreProducto))
+			{
+				Double precioProductoDouble = this.lotes.get(nombreProducto).get(0).getPrecioPublico();
+
+				// Ej. 6 unidades de Chocolates == precio * 6 unidades
+				Double precioProductoPorCantidaDouble = precioProductoDouble * c.getProductosCantidad().get(nombreProducto);
+
+				precioTotalSinDescuento += precioProductoPorCantidaDouble;
+			} else // Si el prudcto no existe
+			{
+				//throw new Exception("No existe el Producto. Ya debería existir");
+			}
+
+		}
+
+		Double precioConDescuento = precioTotalSinDescuento - (precioTotalSinDescuento * c.getDescuentoPorcentaje());
+		c.setPrecioDelCombo(precioConDescuento); // Precio con el combo incluido
 		this.combos.add(c);
 	}
 

@@ -172,7 +172,7 @@ public class POS
 
 	}
 
-	public void cargarPromociones() throws Exception
+	public void cargarPromociones() throws IOException// throws Exception
 	{
 		BufferedReader csvReaderPromociones = new BufferedReader(new FileReader("./data/promociones.csv"));
 		// Tipo;FechaInicio;FechaFin;Productos;Valor;Nombre
@@ -193,7 +193,7 @@ public class POS
 			String[] fecha2 = separada[2].split("-");
 			LocalDate finDate = LocalDate.of(Integer.parseInt(fecha2[0]), Integer.parseInt(fecha2[1]), Integer.parseInt(fecha2[2]));
 
-			String productos = separada[3];
+			String productos = separada[3].toLowerCase();
 
 			String valor = separada[4];
 
@@ -218,7 +218,7 @@ public class POS
 				laPromocion = new PuntosMultiplicados(inicioDate, finDate, productos, Integer.parseInt(valor));
 			} else
 			{
-				throw new Exception("No se encontró la promoción");
+				//throw new Exception("No se encontró la promoción");
 			}
 
 			// Se agrega la promoción al inventario, NO se agregan Combos
