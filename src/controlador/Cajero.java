@@ -231,12 +231,17 @@ public class Cajero
 
 				for (String nombreDelProducto : llaveSet)
 				{
-					Double cantidadDelProducto = (double) c.getProductosCantidad().get(nombreDelProducto);
+					Integer cantidadDelProducto = c.getProductosCantidad().get(nombreDelProducto);
 
 					Integer cantidadActualProducto = this.pos.getUnidadesDuranteEjecucion().get(nombreDelProducto);
-
-					this.pos.getUnidadesDuranteEjecucion().replace(nombreDelProducto, (int) (cantidadActualProducto - cantidadDelProducto));
-
+					System.out.println(nombreDelProducto);
+					System.out.println(cantidadActualProducto);
+					System.out.println(cantidadDelProducto);
+					//TODO: Que se actualice el inventario
+					Integer cantidadActualizadaInteger = cantidadActualProducto - cantidadDelProducto;
+					System.out.println("Resta: "+ cantidadActualizadaInteger);
+					System.out.println("Replace: " + this.pos.getUnidadesDuranteEjecucion().replace(nombreDelProducto, cantidadActualProducto,cantidadActualizadaInteger));
+					System.out.println("Se ha actualizado");
 				}
 			} else // No es posible agregar el combo
 			{
