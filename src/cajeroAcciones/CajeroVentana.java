@@ -236,7 +236,24 @@ public class CajeroVentana extends JFrame implements ActionListener
 
 			if (CAJERO.compraActiva != null)
 			{
+				if (CAJERO.compraActiva.cedula != null)
+				{
+					int deseaUtilizarPuntos = JOptionPane.showConfirmDialog(this, "¿Desea utilizar puntos para pagar?");
+					if (deseaUtilizarPuntos == 0) // Yes
+					{
+						int cantidadPuntos = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos puntos quiere utilizar? Tiene: " + CAJERO.pos.getClientes().get(CAJERO.compraActiva.cedula)));
+						System.out.println(cantidadPuntos);
+						// Integer
+					} else if (deseaUtilizarPuntos == 1) // No
+					{
 
+						JOptionPane.showMessageDialog(this, CAJERO.finalizarCompra(), "Compra finalizada!", JOptionPane.PLAIN_MESSAGE);
+					} else
+					{
+
+					}
+				}
+				// Si cedula == null
 				JOptionPane.showMessageDialog(this, CAJERO.finalizarCompra(), "Compra finalizada!", JOptionPane.PLAIN_MESSAGE);
 
 			} else

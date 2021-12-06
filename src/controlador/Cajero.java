@@ -300,6 +300,21 @@ public class Cajero
 		this.pos.updateUnidadesDuranteEjecucion();
 		return resultado;
 	}
+	
+	
+	//TODO: finalizar compra con puntos
+	public String finalizarCompraPuntos(Integer cantidadPuntos)
+	{
+		String resultado = ""; //TODO: compraActiva.getFacturaPuntos(inventario, cantidadPuntos)
+		
+		this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos - cantidadPuntos);
+		this.pos.agregarPuntosClienteMes(compraActiva.cedula, compraActiva.puntos - cantidadPuntos, compraActiva.mes);
+		
+		this.compraActiva = null;
+		this.pos.updateUnidadesDuranteEjecucion();
+		
+		return resultado;
+	}
 
 	/**
 	 * Método para eliminar la compra del cliente activo.
