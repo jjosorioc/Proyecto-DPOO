@@ -22,6 +22,7 @@ public class Descuento implements Promocion
 
 	private Double porcentajeDescuento = null;
 
+	private Double precioPromocion;
 	/*
 	 * Métodos
 	 */
@@ -60,8 +61,6 @@ public class Descuento implements Promocion
 		return this.fechaFin;
 	}
 
-
-
 	@Override
 	public boolean esVigente(LocalDate inferior, LocalDate superior)
 	{
@@ -71,9 +70,26 @@ public class Descuento implements Promocion
 	@Override
 	public HashMap<String, Integer> getProductosCantidad()
 	{
-		
+
 		return this.productosCantidad;
 	}
 
+	@Override
+	public Double getDescuentoPorcentaje()
+	{
+		return this.porcentajeDescuento;
+	}
+
+	@Override
+	public void setPrecioPromocion(Double precioConDescuento)
+	{
+		this.precioPromocion = precioConDescuento;
+	}
+
+	@Override
+	public Double getPrecioPromocion()
+	{
+		return this.precioPromocion;
+	}
 
 }

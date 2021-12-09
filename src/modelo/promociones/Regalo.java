@@ -22,6 +22,8 @@ public class Regalo implements Promocion
 
 	private Integer lleve;
 
+	private Double precioPromocion;
+
 	/*
 	 * Métodos
 	 */
@@ -64,8 +66,6 @@ public class Regalo implements Promocion
 		return this.fechaFin;
 	}
 
-
-
 	@Override
 	public boolean esVigente(LocalDate inferior, LocalDate superior)
 	{
@@ -75,7 +75,26 @@ public class Regalo implements Promocion
 	@Override
 	public HashMap<String, Integer> getProductosCantidad()
 	{
-	
+
 		return this.productosCantidad;
+	}
+
+	@Override
+	public void setPrecioPromocion(Double precioConDescuento)
+	{
+		this.precioPromocion = precioConDescuento;
+	}
+
+	@Override
+	public Double getPrecioPromocion()
+	{
+		return this.precioPromocion;
+	}
+
+	@Override
+	public Double getDescuentoPorcentaje()
+	{
+		// TODO Auto-generated method stub
+		return null; // TODO:Producto de regalo???
 	}
 }

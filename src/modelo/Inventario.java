@@ -113,7 +113,31 @@ public class Inventario
 	 */
 	public void addPromocion(Promocion p)
 	{
+		// this.promociones.add(p);
+
+		Double precioTotalSinDescuento = 0.0;
+		Set<String> llaveSet = p.getProductosCantidad().keySet();
+
+		for (String nombreProducto : llaveSet)
+		{
+			if (this.lotes.containsKey(nombreProducto))
+			{
+				Double precioProductoDouble = this.lotes.get(nombreProducto).get(0).getPrecioPublico();
+
+				// Ej. 6 unidades de Chocolates == precio * 6 unidades
+				Double precioProductoPorCantidaDouble = precioProductoDouble * p.getProductosCantidad().get(nombreProducto);
+
+				precioTotalSinDescuento += precioProductoPorCantidaDouble;
+			} else // Si el prudcto no existe
+			{
+				// throw new Exception("No existe el Producto. Ya debería existir");
+			}
+
+		}
+		Double precioConDescuento = precioTotalSinDescuento - (precioTotalSinDescuento * p.getDescuentoPorcentaje());
+		p.setPrecioPromocion(precioConDescuento); // Precio con el combo incluido
 		this.promociones.add(p);
+
 	}
 
 	/**
@@ -146,7 +170,7 @@ public class Inventario
 		}
 
 		Double precioConDescuento = precioTotalSinDescuento - (precioTotalSinDescuento * c.getDescuentoPorcentaje());
-		c.setPrecioDelCombo(precioConDescuento); // Precio con el combo incluido
+		c.setPrecioPromocion(precioConDescuento); // Precio con el combo incluido
 		this.combos.add(c);
 	}
 

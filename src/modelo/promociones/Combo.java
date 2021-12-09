@@ -85,7 +85,7 @@ public class Combo implements Promocion
 	/**
 	 * @return the precioDelCombo
 	 */
-	public Double getPrecioDelCombo()
+	public Double getPrecioPromocion()
 	{
 		return precioDelCombo;
 	}
@@ -93,7 +93,7 @@ public class Combo implements Promocion
 	/**
 	 * @param precioDelCombo the precioDelCombo to set
 	 */
-	public void setPrecioDelCombo(Double precioDelCombo)
+	public void setPrecioPromocion(Double precioDelCombo)
 	{
 		this.precioDelCombo = precioDelCombo;
 	}

@@ -7,7 +7,6 @@ import java.util.HashMap;
 public interface Promocion
 {
 
-
 	/*
 	 * Métodos
 	 */
@@ -32,8 +31,15 @@ public interface Promocion
 	 */
 	public HashMap<String, Integer> getProductosCantidad();
 
-
 	public boolean esVigente(LocalDate inferior, LocalDate superior);
+
+	public Double getDescuentoPorcentaje();
+
+	public void setPrecioPromocion(Double precioConDescuento);
+	
+	public Double getPrecioPromocion();
+
+	// public Double retornarAhorro();
 
 	// return (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
 

@@ -17,7 +17,9 @@ public class PuntosMultiplicados implements Promocion
 
 	private HashMap<String, Integer> productosCantidad;
 
-	private Integer puntosMultiplicados;
+	private Integer puntosMultiplicados; // TODO: wtf
+
+	private Double precioPromocion;
 
 	/*
 	 * Métodos
@@ -56,8 +58,6 @@ public class PuntosMultiplicados implements Promocion
 		return this.fechaFin;
 	}
 
-
-
 	@Override
 	public boolean esVigente(LocalDate inferior, LocalDate superior)
 	{
@@ -68,5 +68,23 @@ public class PuntosMultiplicados implements Promocion
 	public HashMap<String, Integer> getProductosCantidad()
 	{
 		return this.productosCantidad;
+	}
+
+	@Override
+	public void setPrecioPromocion(Double precioConDescuento)
+	{
+		this.precioPromocion = precioConDescuento;
+	}
+
+	@Override
+	public Double getPrecioPromocion()
+	{
+		return this.precioPromocion;
+	}
+
+	@Override
+	public Double getDescuentoPorcentaje()
+	{
+		return null;// TODO: puntos???
 	}
 }

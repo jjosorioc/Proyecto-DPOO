@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import modelo.promociones.Combo;
+import modelo.promociones.Promocion;
 
 public class Compra
 {
@@ -81,9 +82,9 @@ public class Compra
 
 			for (Combo c : combos)
 			{
-				this.factura += "\n-Nombre: " + c.toString() + " | Precio: " + c.getPrecioDelCombo() + " | Descuento: " + (c.getDescuentoPorcentaje() * 100) + "%\n";
+				this.factura += "\n-Nombre: " + c.toString() + " | Precio: " + c.getPrecioPromocion() + " | Descuento: " + (c.getDescuentoPorcentaje() * 100) + "%\n";
 
-				valorTotal += c.getPrecioDelCombo();
+				valorTotal += c.getPrecioPromocion();
 			}
 		}
 
@@ -178,9 +179,9 @@ public class Compra
 
 			for (Combo c : combos)
 			{
-				this.factura += "\n-Nombre: " + c.toString() + " | Precio: " + c.getPrecioDelCombo() + " | Descuento: " + (c.getDescuentoPorcentaje() * 100) + "%\n";
+				this.factura += "\n-Nombre: " + c.toString() + " | Precio: " + c.getPrecioPromocion() + " | Descuento: " + (c.getDescuentoPorcentaje() * 100) + "%\n";
 
-				valorTotal += c.getPrecioDelCombo();
+				valorTotal += c.getPrecioPromocion();
 			}
 		}
 
@@ -311,8 +312,18 @@ public class Compra
 		this.productoCantidad.put(nombreProducto, porIngesar);
 	}
 
+	/**
+	 * 
+	 * @param c
+	 */
 	public void agregarCombo(Combo c)
 	{
 		this.combos.add(c);
+	}
+
+	// TODO: completar la función
+	private ArrayList<Promocion> buscarPromociones()
+	{
+		return null;
 	}
 }
