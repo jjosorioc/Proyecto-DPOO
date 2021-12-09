@@ -238,24 +238,45 @@ public class CajeroVentana extends JFrame implements ActionListener
 			{
 				if (CAJERO.compraActiva.cedula != null)
 				{
-					int deseaUtilizarPuntos = JOptionPane.showConfirmDialog(this, "¿Desea utilizar puntos para pagar?");
+					
+					int deseaUtilizarPuntos = JOptionPane.showConfirmDialog(this,"¿Desea utilizar puntos para pagar?", "Pago con puntos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					
 					if (deseaUtilizarPuntos == 0) // Yes
 					{
-						int cantidadPuntos = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos puntos quiere utilizar? Tiene: " + CAJERO.pos.getClientes().get(CAJERO.compraActiva.cedula)));
-						System.out.println(cantidadPuntos);
+						int puntosActuales = CAJERO.pos.getClientes().get(CAJERO.compraActiva.cedula);
+						
+						Boolean centinela = true;
+						
+						while(centinela)
+						{
+							int cantidadPuntosRedimidos = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos puntos quiere utilizar? Tiene: " + puntosActuales));
+							
+							if (puntosActuales >= cantidadPuntosRedimidos)
+							{
+								JOptionPane.showMessageDialog(this, CAJERO.finalizarCompraPuntos(cantidadPuntosRedimidos,puntosActuales), "Compra finalizada!", JOptionPane.PLAIN_MESSAGE);
+								centinela = false;
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(this, "No cuenta con esa cantidad de puntos!");
+							}
+						}
+						
+						
 						// Integer
 					} else if (deseaUtilizarPuntos == 1) // No
 					{
 
 						JOptionPane.showMessageDialog(this, CAJERO.finalizarCompra(), "Compra finalizada!", JOptionPane.PLAIN_MESSAGE);
-					} else
-					{
-
 					}
 				}
-				// Si cedula == null
-				JOptionPane.showMessageDialog(this, CAJERO.finalizarCompra(), "Compra finalizada!", JOptionPane.PLAIN_MESSAGE);
-
+				
+				else
+				{
+					// Si cedula == null
+					JOptionPane.showMessageDialog(this, CAJERO.finalizarCompra(), "Compra finalizada!", JOptionPane.PLAIN_MESSAGE);
+				}
+				
 			} else
 			{
 				JOptionPane.showMessageDialog(this, "INICIE UNA COMPRA!");

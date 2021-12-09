@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import modelo.Compra;
+import modelo.Inventario;
 import modelo.Lote;
 import modelo.POS;
 import modelo.promociones.Combo;
@@ -303,12 +304,14 @@ public class Cajero
 	
 	
 	//TODO: finalizar compra con puntos
-	public String finalizarCompraPuntos(Integer cantidadPuntos)
+	public String finalizarCompraPuntos(Integer puntosRedimidos, Integer puntosActuales)
 	{
-		String resultado = ""; //TODO: compraActiva.getFacturaPuntos(inventario, cantidadPuntos)
 		
-		this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos - cantidadPuntos);
-		this.pos.agregarPuntosClienteMes(compraActiva.cedula, compraActiva.puntos - cantidadPuntos, compraActiva.mes);
+		
+		String resultado = compraActiva.getFacturaPuntos(this.pos.inventario, puntosRedimidos, puntosActuales);
+		
+		this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos - puntosRedimidos);
+		this.pos.agregarPuntosClienteMes(compraActiva.cedula, compraActiva.puntos - puntosRedimidos, compraActiva.mes);
 		
 		this.compraActiva = null;
 		this.pos.updateUnidadesDuranteEjecucion();
