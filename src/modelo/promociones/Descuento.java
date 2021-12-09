@@ -23,6 +23,8 @@ public class Descuento implements Promocion
 	private Double porcentajeDescuento = null;
 
 	private Double precioPromocion;
+
+	private Double precioSinDescuento = 0.0;
 	/*
 	 * Métodos
 	 */
@@ -90,6 +92,22 @@ public class Descuento implements Promocion
 	public Double getPrecioPromocion()
 	{
 		return this.precioPromocion;
+	}
+
+	/**
+	 * @return the precioSinDescuento
+	 */
+	public Double getPrecioSinDescuento()
+	{
+		return precioSinDescuento;
+	}
+
+	/**
+	 * @param precioSinDescuento the precioSinDescuento to set
+	 */
+	public void setPrecioSinDescuento(Double precioSinDescuento)
+	{
+		this.precioSinDescuento = precioSinDescuento;
 	}
 
 }

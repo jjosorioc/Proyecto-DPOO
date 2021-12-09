@@ -5,6 +5,7 @@ import java.util.HashMap; // import the HashMap class
 import java.util.Set;
 
 import modelo.promociones.Combo;
+import modelo.promociones.Descuento;
 import modelo.promociones.Promocion;
 
 public class Inventario
@@ -114,28 +115,33 @@ public class Inventario
 	public void addPromocion(Promocion p)
 	{
 		// this.promociones.add(p);
-
-		Double precioTotalSinDescuento = 0.0;
-		Set<String> llaveSet = p.getProductosCantidad().keySet();
-
-		for (String nombreProducto : llaveSet)
+		if (p.getTipoPromocion().equals("descuento"))
 		{
-			if (this.lotes.containsKey(nombreProducto))
-			{
-				Double precioProductoDouble = this.lotes.get(nombreProducto).get(0).getPrecioPublico();
+			Double precioTotalSinDescuento = 0.0;
+			Set<String> llaveSet = p.getProductosCantidad().keySet();
 
-				// Ej. 6 unidades de Chocolates == precio * 6 unidades
-				Double precioProductoPorCantidaDouble = precioProductoDouble * p.getProductosCantidad().get(nombreProducto);
-
-				precioTotalSinDescuento += precioProductoPorCantidaDouble;
-			} else // Si el prudcto no existe
+			for (String nombreProducto : llaveSet)
 			{
-				// throw new Exception("No existe el Producto. Ya debería existir");
+				if (this.lotes.containsKey(nombreProducto))
+				{
+					Double precioProductoDouble = this.lotes.get(nombreProducto).get(0).getPrecioPublico();
+
+					// Ej. 6 unidades de Chocolates == precio * 6 unidades
+					Double precioProductoPorCantidaDouble = precioProductoDouble * p.getProductosCantidad().get(nombreProducto);
+
+					precioTotalSinDescuento += precioProductoPorCantidaDouble;
+				} else // Si el prudcto no existe
+				{
+					// throw new Exception("No existe el Producto. Ya debería existir");
+				}
+
 			}
-
+			Double precioConDescuento = precioTotalSinDescuento - (precioTotalSinDescuento * p.getDescuentoPorcentaje());
+			p.setPrecioPromocion(precioConDescuento); // Precio con el combo incluido
+			p.setPrecioSinDescuento(precioTotalSinDescuento);
+			
+			
 		}
-		Double precioConDescuento = precioTotalSinDescuento - (precioTotalSinDescuento * p.getDescuentoPorcentaje());
-		p.setPrecioPromocion(precioConDescuento); // Precio con el combo incluido
 		this.promociones.add(p);
 
 	}
@@ -171,6 +177,7 @@ public class Inventario
 
 		Double precioConDescuento = precioTotalSinDescuento - (precioTotalSinDescuento * c.getDescuentoPorcentaje());
 		c.setPrecioPromocion(precioConDescuento); // Precio con el combo incluido
+		c.setPrecioSinDescuento(precioTotalSinDescuento);
 		this.combos.add(c);
 	}
 

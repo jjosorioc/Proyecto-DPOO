@@ -21,6 +21,8 @@ public class Combo implements Promocion
 
 	private Double precioDelCombo;
 
+	private Double precioSinDescuento = 0.0;
+
 	private HashMap<String, Integer> productosCantidad; // Bananos-3,Manzanas-5,Limon-6
 
 	private String codigoQR;
@@ -88,6 +90,22 @@ public class Combo implements Promocion
 	public Double getPrecioPromocion()
 	{
 		return precioDelCombo;
+	}
+
+	/**
+	 * @return the precioSinDescuento
+	 */
+	public Double getPrecioSinDescuento()
+	{
+		return precioSinDescuento;
+	}
+
+	/**
+	 * @param precioSinDescuento the precioSinDescuento to set
+	 */
+	public void setPrecioSinDescuento(Double precioSinDescuento)
+	{
+		this.precioSinDescuento = precioSinDescuento;
 	}
 
 	/**

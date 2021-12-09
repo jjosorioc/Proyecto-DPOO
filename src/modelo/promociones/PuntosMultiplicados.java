@@ -87,4 +87,9 @@ public class PuntosMultiplicados implements Promocion
 	{
 		return null;// TODO: puntos???
 	}
+
+	@Override
+	public void setPrecioSinDescuento(Double precio)
+	{
+	}
 }

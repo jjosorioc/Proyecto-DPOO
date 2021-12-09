@@ -23,6 +23,8 @@ public class Compra
 
 	HashMap<String, ArrayList<Double>> productoCantidad = new HashMap<>(); // Producto: [Cantidad, Peso]
 
+	ArrayList<Promocion> promociones = new ArrayList<>(); // Sin los Combos
+
 	ArrayList<Combo> combos;
 
 	private String factura = "";
@@ -59,6 +61,10 @@ public class Compra
 
 	public Integer mes = 0;
 
+	private int puntosMultiplicados = 1;
+
+	private Double restaDeDescuentosYCombosDouble = 0.0;
+
 	// Methods
 
 	/**
@@ -94,7 +100,7 @@ public class Compra
 		{
 
 			this.factura += "\nNúmero de cédula de usuario registrado: " + this.cedula + "\n";
-			this.puntos = (int) (this.valorTotal / 1000);
+			this.puntos = (int) (this.valorTotal / 1000) * this.puntosMultiplicados;
 			this.factura += "\nPuntos acumulados antes de la compra: " + puntosActuales + "\n";
 			this.factura += "\nPuntos redimidos: El cliente no quiso redimir puntos\n";
 			this.factura += "\nPuntos obtenidos: " + this.puntos;
@@ -164,6 +170,14 @@ public class Compra
 		return this.factura;
 	}
 
+	/**
+	 * Retorna la factura en la cual se han redimido puntos
+	 * 
+	 * @param inventario
+	 * @param puntosRedimidos
+	 * @param puntosActuales
+	 * @return
+	 */
 	public String getFacturaPuntos(Inventario inventario, Integer puntosRedimidos, Integer puntosActuales)
 	{
 		this.factura += "\nFACTURA\n";
@@ -284,6 +298,7 @@ public class Compra
 	}
 
 	/**
+	 * Se agrega un producto a la compra con una cantidad.
 	 * 
 	 * @param nombreProducto
 	 * @param cantidad
@@ -322,8 +337,11 @@ public class Compra
 	}
 
 	// TODO: completar la función
-	private ArrayList<Promocion> buscarPromociones()
+	private void buscarPromociones()
 	{
-		return null;
+		/*
+		 * restaDeDescuentosYCombosDouble+= SinDescuento - ConDescuento
+		 */
+
 	}
 }

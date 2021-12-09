@@ -38,6 +38,8 @@ public interface Promocion
 	public void setPrecioPromocion(Double precioConDescuento);
 	
 	public Double getPrecioPromocion();
+	
+	public void setPrecioSinDescuento(Double precio);
 
 	// public Double retornarAhorro();
 

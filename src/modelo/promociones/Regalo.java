@@ -97,4 +97,9 @@ public class Regalo implements Promocion
 		// TODO Auto-generated method stub
 		return null; // TODO:Producto de regalo???
 	}
+
+	@Override
+	public void setPrecioSinDescuento(Double precio)
+	{
+	}
 }
