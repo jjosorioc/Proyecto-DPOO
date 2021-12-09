@@ -286,9 +286,9 @@ public class Cajero
 	 * 
 	 * @return
 	 */
-	public String finalizarCompra()
+	public String finalizarCompra(Integer puntosActuales)
 	{
-		String resultado = compraActiva.getFactura(this.pos.inventario);
+		String resultado = compraActiva.getFactura(this.pos.inventario, puntosActuales);
 
 		if (!compraActiva.cedula.equals(""))
 		{
@@ -306,8 +306,6 @@ public class Cajero
 	//TODO: finalizar compra con puntos
 	public String finalizarCompraPuntos(Integer puntosRedimidos, Integer puntosActuales)
 	{
-		
-		
 		String resultado = compraActiva.getFacturaPuntos(this.pos.inventario, puntosRedimidos, puntosActuales);
 		
 		this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos - puntosRedimidos);

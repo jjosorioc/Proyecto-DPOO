@@ -65,7 +65,7 @@ public class Compra
 	 * @param inventario
 	 * @return Factura completa
 	 */
-	public String getFactura(Inventario inventario)
+	public String getFactura(Inventario inventario, Integer puntosActuales)
 	{
 
 		this.factura += "\nFACTURA\n";
@@ -94,6 +94,8 @@ public class Compra
 
 			this.factura += "\nNúmero de cédula de usuario registrado: " + this.cedula + "\n";
 			this.puntos = (int) (this.valorTotal / 1000);
+			this.factura += "\nPuntos acumulados antes de la compra: " + puntosActuales + "\n";
+			this.factura += "\nPuntos redimidos: El cliente no quiso redimir puntos\n";
 			this.factura += "\nPuntos obtenidos: " + this.puntos;
 			this.mes = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
 
