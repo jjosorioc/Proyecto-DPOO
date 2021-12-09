@@ -270,7 +270,10 @@ public class EncargadoInventario
 			} else if (tipo.equals("combo"))
 			{
 				Combo elCombo = new Combo(nombre, inicioDate, finDate, productos, valor, codigoQR);
-				this.inventario.addCombo(elCombo);
+				if (elCombo.isVigente())
+				{
+					this.inventario.addCombo(elCombo);
+				}
 			} else if (tipo.equals("puntos"))
 			{
 				laPromocion = new PuntosMultiplicados(inicioDate, finDate, productos, Integer.parseInt(valor));
@@ -279,8 +282,11 @@ public class EncargadoInventario
 				throw new Exception("No se encontró la promoción");
 			}
 
-			// Se agrega la promoción al inventario, NO se agregan Combos
-			this.inventario.addPromocion(laPromocion);
+			if (laPromocion.isVigente())
+			{
+				// Se agrega la promoción al inventario, NO se agregan Combos
+				this.inventario.addPromocion(laPromocion);
+			}
 		}
 		csvReaderPromociones.close();
 	}

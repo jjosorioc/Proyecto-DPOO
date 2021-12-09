@@ -21,6 +21,8 @@ public class PuntosMultiplicados implements Promocion
 
 	private Double precioPromocion;
 
+	private boolean esVigente;
+
 	/*
 	 * Métodos
 	 */
@@ -28,6 +30,8 @@ public class PuntosMultiplicados implements Promocion
 	{
 		this.fechaInicio = inicio;
 		this.fechaFin = fin;
+
+		this.esVigenteMethod(inicio, fin);
 
 		String[] arrayString = producto.split(",");
 		this.productosCantidad = new HashMap<>();
@@ -59,9 +63,9 @@ public class PuntosMultiplicados implements Promocion
 	}
 
 	@Override
-	public boolean esVigente(LocalDate inferior, LocalDate superior)
+	public void esVigenteMethod(LocalDate inferior, LocalDate superior)
 	{
-		return (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
+		this.esVigente = (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
 	}
 
 	@Override
@@ -91,5 +95,13 @@ public class PuntosMultiplicados implements Promocion
 	@Override
 	public void setPrecioSinDescuento(Double precio)
 	{
+	}
+
+	/**
+	 * @return the esVigente
+	 */
+	public boolean isVigente()
+	{
+		return esVigente;
 	}
 }

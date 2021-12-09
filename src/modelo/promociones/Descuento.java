@@ -29,10 +29,14 @@ public class Descuento implements Promocion
 	 * Métodos
 	 */
 
+	private boolean esVigente;
+
 	public Descuento(LocalDate inicio, LocalDate fin, String producto, String porcentaje)
 	{
 		this.fechaInicio = inicio;
 		this.fechaFin = fin;
+
+		this.esVigenteMethod(inicio, fin);
 
 		String[] arrayString = producto.split(",");
 		this.productosCantidad = new HashMap<>();
@@ -64,9 +68,9 @@ public class Descuento implements Promocion
 	}
 
 	@Override
-	public boolean esVigente(LocalDate inferior, LocalDate superior)
+	public void esVigenteMethod(LocalDate inferior, LocalDate superior)
 	{
-		return (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
+		this.esVigente = (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
 	}
 
 	@Override
@@ -108,6 +112,14 @@ public class Descuento implements Promocion
 	public void setPrecioSinDescuento(Double precioSinDescuento)
 	{
 		this.precioSinDescuento = precioSinDescuento;
+	}
+
+	/**
+	 * @return the esVigente
+	 */
+	public boolean isVigente()
+	{
+		return esVigente;
 	}
 
 }

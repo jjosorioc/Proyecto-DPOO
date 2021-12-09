@@ -27,6 +27,8 @@ public class Combo implements Promocion
 
 	private String codigoQR;
 
+	private boolean esVigente;
+
 	/*
 	 * Métodos
 	 */
@@ -35,6 +37,8 @@ public class Combo implements Promocion
 		this.nombreCombo = nombreParam;
 		this.fechaInicio = inicio;
 		this.fechaFin = fin;
+
+		this.esVigenteMethod(inicio, fin);
 
 		String[] arrayString = producto.split(",");
 
@@ -133,15 +137,23 @@ public class Combo implements Promocion
 	}
 
 	@Override
-	public boolean esVigente(LocalDate inferior, LocalDate superior)
+	public void esVigenteMethod(LocalDate inferior, LocalDate superior)
 	{
-		return (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
+		this.esVigente = (this.fechaInicio.isAfter(inferior) || this.fechaInicio.equals(inferior)) && (this.fechaFin.isBefore(superior) || this.fechaFin.equals(superior));
 	}
 
 	@Override
 	public String toString()
 	{
 		return this.nombreCombo;
+	}
+
+	/**
+	 * @return the esVigente
+	 */
+	public boolean isVigente()
+	{
+		return esVigente;
 	}
 
 }

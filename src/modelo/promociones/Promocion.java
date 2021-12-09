@@ -31,7 +31,7 @@ public interface Promocion
 	 */
 	public HashMap<String, Integer> getProductosCantidad();
 
-	public boolean esVigente(LocalDate inferior, LocalDate superior);
+	public void esVigenteMethod(LocalDate inferior, LocalDate superior);
 
 	public Double getDescuentoPorcentaje();
 
@@ -40,6 +40,8 @@ public interface Promocion
 	public Double getPrecioPromocion();
 	
 	public void setPrecioSinDescuento(Double precio);
+	
+	public boolean isVigente();
 
 	// public Double retornarAhorro();
 
