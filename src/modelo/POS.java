@@ -218,7 +218,7 @@ public class POS
 				laPromocion = new PuntosMultiplicados(inicioDate, finDate, productos, Integer.parseInt(valor));
 			} else
 			{
-				//throw new Exception("No se encontró la promoción");
+				// throw new Exception("No se encontró la promoción");
 			}
 
 			// Se agrega la promoción al inventario, NO se agregan Combos

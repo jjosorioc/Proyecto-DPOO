@@ -238,10 +238,10 @@ public class Cajero
 					System.out.println(nombreDelProducto);
 					System.out.println(cantidadActualProducto);
 					System.out.println(cantidadDelProducto);
-					//TODO: Que se actualice el inventario
+					// TODO: Que se actualice el inventario
 					Integer cantidadActualizadaInteger = cantidadActualProducto - cantidadDelProducto;
-					System.out.println("Resta: "+ cantidadActualizadaInteger);
-					System.out.println("Replace: " + this.pos.getUnidadesDuranteEjecucion().replace(nombreDelProducto, cantidadActualProducto,cantidadActualizadaInteger));
+					System.out.println("Resta: " + cantidadActualizadaInteger);
+					System.out.println("Replace: " + this.pos.getUnidadesDuranteEjecucion().replace(nombreDelProducto, cantidadActualProducto, cantidadActualizadaInteger));
 					System.out.println("Se ha actualizado");
 				}
 			} else // No es posible agregar el combo
@@ -301,19 +301,24 @@ public class Cajero
 		this.pos.updateUnidadesDuranteEjecucion();
 		return resultado;
 	}
-	
-	
-	//TODO: finalizar compra con puntos
+
+	/**
+	 * Finalizar compra cuando se redimen puntos.
+	 * 
+	 * @param puntosRedimidos
+	 * @param puntosActuales
+	 * @return
+	 */
 	public String finalizarCompraPuntos(Integer puntosRedimidos, Integer puntosActuales)
 	{
 		String resultado = compraActiva.getFacturaPuntos(this.pos.inventario, puntosRedimidos, puntosActuales);
-		
+
 		this.pos.agregarPuntosCliente(compraActiva.cedula, compraActiva.puntos - puntosRedimidos);
 		this.pos.agregarPuntosClienteMes(compraActiva.cedula, compraActiva.puntos - puntosRedimidos, compraActiva.mes);
-		
+
 		this.compraActiva = null;
 		this.pos.updateUnidadesDuranteEjecucion();
-		
+
 		return resultado;
 	}
 

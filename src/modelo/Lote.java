@@ -41,7 +41,6 @@ public class Lote
 		this.codigoBarras = codigoBarras;
 		this.tipoProducto = tipoProducto;
 		this.subCategorias = subCategorias;
-		
 
 		// method para codigo de barras
 	}
@@ -65,11 +64,11 @@ public class Lote
 	private boolean esEmpacado; // para saber cómo se debe obtener el precio
 
 	private String unidadMedida;
-	
+
 	private String codigoBarras;
-	
+
 	private String tipoProducto;
-	
+
 	private String subCategorias;
 
 	public String getNameProducto()
@@ -124,21 +123,22 @@ public class Lote
 	{
 		return this.unidadMedida;
 	}
-	
+
 	public String getCodigoBarras()
 	{
 		return this.codigoBarras;
 	}
-	
+
 	public String getTipoProducto()
 	{
 		return this.tipoProducto;
 	}
-	
+
 	public String getSubCategorias()
 	{
 		return this.subCategorias;
 	}
+
 	/**
 	 * @param precioPublico the precioPublico to set
 	 */
@@ -146,9 +146,10 @@ public class Lote
 	{
 		this.precioPublico = precioPublico;
 	}
-	
+
 	/**
 	 * Se restan unidades de este lote.
+	 * 
 	 * @param cantidadComprada
 	 */
 	public void restarCantidadUnidades(Double cantidadComprada)

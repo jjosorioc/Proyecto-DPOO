@@ -162,8 +162,7 @@ public class Compra
 
 		return this.factura;
 	}
-	
-	
+
 	public String getFacturaPuntos(Inventario inventario, Integer puntosRedimidos, Integer puntosActuales)
 	{
 		this.factura += "\nFACTURA\n";
@@ -184,40 +183,39 @@ public class Compra
 				valorTotal += c.getPrecioDelCombo();
 			}
 		}
-		
+
 		this.factura += "\nVALOR TOTAL DE LA COMPRA: " + valorTotal + "\n";
 
 		if (this.cedula != null)
 		{
 
 			this.factura += "\nNúmero de cédula de usuario registrado: " + this.cedula + "\n";
-			
+
 			double valor = this.valorTotal;
-			
-			if (puntosRedimidos*15 > valor)
+
+			if (puntosRedimidos * 15 > valor)
 			{
 				puntosRedimidos = (int) (valor / 15);
 			}
-			
-			Double valorConPuntos = (valorTotal - (puntosRedimidos*15));
-			
+
+			Double valorConPuntos = (valorTotal - (puntosRedimidos * 15));
+
 			this.puntos = (int) (valorConPuntos / 1000);
-			
+
 			this.factura += "\nSECCIÓN DE PUNTOS: " + "\n";
-			
+
 			this.factura += "\nPuntos acumulados antes de la compra: " + puntosActuales + "\n";
-			
-			
+
 			this.factura += "\nPuntos redimidos: " + puntosRedimidos + "\n";
-			
+
 			this.factura += "\nPuntos obtenidos: " + this.puntos + "\n";
-			
+
 			Integer puntosFinales = (puntosActuales - puntosRedimidos) + this.puntos;
-			
+
 			this.factura += "\nPuntos finales: " + puntosFinales + "\n";
-			
-			this.factura += "\nVALOR TOTAL DE LA COMPRA CON PUNTOS REDIMIDOS: " +(valorConPuntos) + "\n";
-			
+
+			this.factura += "\nVALOR TOTAL DE LA COMPRA CON PUNTOS REDIMIDOS: " + (valorConPuntos) + "\n";
+
 			this.mes = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
 
 			if (this.mes == 0)
