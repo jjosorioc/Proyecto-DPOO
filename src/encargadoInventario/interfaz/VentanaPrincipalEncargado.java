@@ -344,12 +344,14 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			try
 			{
 				String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:");
-				this.ENCARGADO.consultarComportamiento(nombreProducto);
+				String fechaInicial = JOptionPane.showInputDialog(this, "Ingrese la fecha inicial(YYYY-MM-DD):");
+				String fechaFinal = JOptionPane.showInputDialog(this, "Ingrese la fecha final(YYYY-MM-DD):");
+				this.ENCARGADO.consultarComportamiento(nombreProducto,fechaInicial,fechaFinal);
 				
-			} catch (NullPointerException | IOException e2)
+			} catch (Exception e2)
 			{
 				String mensaje = "¡No se logró mostrar el gráfico!";
-				JOptionPane.showMessageDialog(this, mensaje, "Agregar Imagen", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, e2.getMessage(), "Agregar Imagen", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}

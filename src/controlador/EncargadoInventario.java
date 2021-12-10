@@ -666,36 +666,57 @@ public class EncargadoInventario
 		writeCSV.close();
 	}
 	
-	public void consultarComportamiento(String nombreProducto) throws IOException
+	public void consultarComportamiento(String nombreProducto, String fechaInicial, String fechaFinal) throws Exception
 	{
+		String [] fechaInicioSeparada = fechaInicial.split("-");
+		LocalDate fechaInicio = LocalDate.of(Integer.parseInt(fechaInicioSeparada[0]), Integer.parseInt(fechaInicioSeparada[1]), Integer.parseInt(fechaInicioSeparada[2]));
+		
+		String [] fechaFinSeparada = fechaFinal.split("-");
+		LocalDate fechaFin = LocalDate.of(Integer.parseInt(fechaFinSeparada[0]), Integer.parseInt(fechaFinSeparada[1]), Integer.parseInt(fechaFinSeparada[2]));
+		
 		String fechas = "";
 		ArrayList<Integer> unidades = new ArrayList<Integer>();
-		
-		String dataDirectory = System.getProperty("user.dir") + "/data/estadisticas.csv";
-		BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
 
 		// NombreProducto, Fecha, Unidades
 
-		csvReader.readLine();
-		String row;
-		while ((row = csvReader.readLine()) != null)
-		{
-			String[] separada = row.split(",");
-
-			String producto = separada[0];
-			String fechaString = (separada[1]);
-			
-			int cantidad = Integer.parseInt(separada[2]);
-			
-			if (producto.equals(nombreProducto))
+		try {
+			String dataDirectory = System.getProperty("user.dir") + "/data/estadisticas.csv";
+			BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
+			csvReader.readLine();
+			String row;
+			while ((row = csvReader.readLine()) != null)
 			{
-				fechas += fechaString + ",";
-				unidades.add(cantidad);
+				String[] separada = row.split(",");
+
+				String producto = separada[0];
+				String fechaString = (separada[1]);
+				String[] fechaSeparada =(separada[1]).split("-");
+				LocalDate fecha = LocalDate.of(Integer.parseInt(fechaSeparada[0]), Integer.parseInt(fechaSeparada[1]), Integer.parseInt(fechaSeparada[2]));
+				
+				int cantidad = Integer.parseInt(separada[2]);
+				
+				if (producto.equals(nombreProducto))
+				{
+					if (fecha.isBefore(fechaFin) && fecha.isAfter(fechaInicio))	
+					{
+						System.out.println("Si");
+						fechas += fechaString + ",";
+						unidades.add(cantidad);
+						new FrameEstadisticas(unidades,nombreProducto,fechas);
+					}
+					else
+					{
+						throw new Exception("No hay información del producto en estas fechas");
+					}
+				}
+				
 			}
+			csvReader.close();
 			
+		} catch (IOException e) {
+			throw new Exception ("¡No se logró cargar el archivo!");
 		}
-		csvReader.close();
-		new FrameEstadisticas(unidades,nombreProducto,fechas);
+		
 	}
 
 
