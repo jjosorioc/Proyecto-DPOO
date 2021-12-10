@@ -120,4 +120,20 @@ public class Regalo implements Promocion
 	{
 		return null;
 	}
+
+	/**
+	 * @return the pague
+	 */
+	public Integer getPague()
+	{
+		return pague;
+	}
+
+	/**
+	 * @return the lleve
+	 */
+	public Integer getLleve()
+	{
+		return lleve;
+	}
 }

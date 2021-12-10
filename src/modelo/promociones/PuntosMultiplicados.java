@@ -110,4 +110,12 @@ public class PuntosMultiplicados implements Promocion
 	{
 		return null;
 	}
+
+	/**
+	 * @return the puntosMultiplicados
+	 */
+	public Integer getPuntosMultiplicados()
+	{
+		return puntosMultiplicados;
+	}
 }

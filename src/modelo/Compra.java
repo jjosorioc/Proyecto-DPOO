@@ -8,6 +8,8 @@ import java.util.Set;
 
 import modelo.promociones.Combo;
 import modelo.promociones.Promocion;
+import modelo.promociones.PuntosMultiplicados;
+import modelo.promociones.Regalo;
 
 public class Compra
 {
@@ -101,7 +103,7 @@ public class Compra
 
 			for (Promocion p : promociones)
 			{
-				this.factura += "\n-Tipo: " + p.getTipoPromocion()+ "\n";
+				this.factura += "\n-Tipo: " + p.getTipoPromocion() + "\n";
 			}
 		}
 
@@ -212,7 +214,7 @@ public class Compra
 				valorTotal += c.getPrecioPromocion();
 			}
 		}
-		
+
 		if (this.promociones.size() > 0)
 		{
 			this.factura += "\nPROMOCIONES:\n";
@@ -222,7 +224,7 @@ public class Compra
 				this.factura += "\n-Tipo: " + p.getTipoPromocion() + "\n";
 			}
 		}
-		
+
 		this.valorTotal = (valorTotal - this.restaDeDescuentosYCombosDouble);
 
 		this.factura += "\nVALOR TOTAL DE LA COMPRA: " + valorTotal + "\n";
@@ -241,7 +243,7 @@ public class Compra
 
 			Double valorConPuntos = (valorTotal - (puntosRedimidos * 15));
 
-			this.puntos = (int) (valorConPuntos / 1000);
+			this.puntos = (int) (valorConPuntos / 1000) * puntosMultiplicados;
 
 			this.factura += "\nSECCIÓN DE PUNTOS: " + "\n";
 
@@ -388,6 +390,33 @@ public class Compra
 					for (String nombre : productosDeLaPromocion.keySet())
 					{
 						this.restaDeDescuentosYCombosDouble += (p.getPrecioSinDescuento() - p.getPrecioPromocion()) * this.productoCantidad.get(nombre).get(0);
+					}
+				} else if (p.getTipoPromocion().equals("regalo"))
+				{
+					Regalo pRegalo = (Regalo) p;
+					int cantidadDelProducto = pRegalo.getLleve() - pRegalo.getPague();
+
+					String nombreProducto = "";
+
+					for (String name : p.getProductosCantidad().keySet())
+					{
+						nombreProducto = name;
+					}
+
+					Lote elProducto = inventario.getLotes().get(nombreProducto).get(0);
+					this.agregarProducto(nombreProducto, (double) cantidadDelProducto, -1.0);
+
+					this.restaDeDescuentosYCombosDouble = elProducto.getPrecioPublico() * cantidadDelProducto;
+				} else if (p.getTipoPromocion().equals("puntos"))
+				{
+					PuntosMultiplicados pPuntos = (PuntosMultiplicados) p;
+
+					if (this.puntosMultiplicados == 1)
+					{
+						puntosMultiplicados = pPuntos.getPuntosMultiplicados();
+					} else
+					{
+						puntosMultiplicados = puntosMultiplicados * pPuntos.getPuntosMultiplicados();
 					}
 				}
 			}
