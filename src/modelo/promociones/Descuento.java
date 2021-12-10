@@ -89,7 +89,7 @@ public class Descuento implements Promocion
 	@Override
 	public void setPrecioPromocion(Double precioConDescuento)
 	{
-		this.precioPromocion = precioConDescuento;
+		this.precioPromocion = precioConDescuento;// - (precioConDescuento * this.porcentajeDescuento);
 	}
 
 	@Override

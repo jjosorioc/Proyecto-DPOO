@@ -282,7 +282,7 @@ public class EncargadoInventario
 				throw new Exception("No se encontró la promoción");
 			}
 
-			if (laPromocion.isVigente())
+			if (laPromocion != null && laPromocion.isVigente())
 			{
 				// Se agrega la promoción al inventario, NO se agregan Combos
 				this.inventario.addPromocion(laPromocion);

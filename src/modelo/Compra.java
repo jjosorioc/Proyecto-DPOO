@@ -75,7 +75,7 @@ public class Compra
 	 */
 	public String getFactura(Inventario inventario, Integer puntosActuales)
 	{
-
+		this.buscarPromociones(inventario);
 		this.factura += "\nFACTURA\n";
 		for (String llave : this.productoCantidad.keySet())
 		{
@@ -98,14 +98,16 @@ public class Compra
 		if (this.promociones.size() > 0)
 		{
 			this.factura += "\nPROMOCIONES:";
-			
-			for (Promocion p: promociones)
+
+			for (Promocion p : promociones)
 			{
-				this.factura += "\n-Tipo: " + p.getTipoPromocion() + " | Ahorro: " + (p.getPrecioSinDescuento() - p.getPrecioPromocion());
+				this.factura += "\n-Tipo: " + p.getTipoPromocion();
 			}
 		}
 
-			this.factura += "\nVALOR TOTAL DE LA COMPRA: " + (valorTotal - this.restaDeDescuentosYCombosDouble) + "\n";
+		this.valorTotal = (valorTotal - this.restaDeDescuentosYCombosDouble);
+
+		this.factura += "\nVALOR TOTAL DE LA COMPRA: " + valorTotal + "\n";
 
 		if (this.cedula != null)
 		{
@@ -366,11 +368,15 @@ public class Compra
 
 			if (this.tieneTodosLosProductos(productosDeLaPromocion))
 			{
+				System.out.println(p.getTipoPromocion());
 				this.promociones.add(p);
 
 				if (p.getTipoPromocion().equals("descuento"))
 				{
-					this.restaDeDescuentosYCombosDouble += p.getPrecioSinDescuento() - p.getPrecioPromocion();
+					for (String nombre : productosDeLaPromocion.keySet())
+					{
+						this.restaDeDescuentosYCombosDouble += (p.getPrecioSinDescuento() - p.getPrecioPromocion()) * this.productoCantidad.get(nombre).get(0);
+					}
 				}
 			}
 		}
@@ -393,8 +399,7 @@ public class Compra
 		for (String nombreProducto : nombreProductoPromocion)
 		{
 			Integer cantidadPromocion = productosDePromocion.get(nombreProducto);
-
-			if ((double) cantidadPromocion != this.productoCantidad.get(nombreProducto).get(0))
+			if (!(this.productoCantidad.get(nombreProducto) != null && (double) cantidadPromocion <= this.productoCantidad.get(nombreProducto).get(0)))
 			{
 				tieneTodos = false;
 				break;
