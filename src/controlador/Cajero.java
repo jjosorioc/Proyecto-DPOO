@@ -170,17 +170,16 @@ public class Cajero
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
 				Integer cantidadActual = this.pos.getUnidadesDuranteEjecucion().get(productoNombre);
 				this.pos.getUnidadesDuranteEjecucion().replace(productoNombre, (int) (cantidadActual - cantidad));
-				
+
 				LocalDate fechaActual = LocalDate.now();
-				
+
 				if (this.pos.inventario.getEstadisticas().get(productoNombre).containsKey(fechaActual))
 				{
 					Integer cantidadAnterior = this.pos.inventario.getEstadisticas().get(productoNombre).get(fechaActual);
-					this.pos.inventario.getEstadisticas().get(productoNombre).put(fechaActual,(int) (cantidadAnterior - cantidad));
-				}
-				else
+					this.pos.inventario.getEstadisticas().get(productoNombre).put(fechaActual, (int) (cantidadAnterior - cantidad));
+				} else
 				{
-					this.pos.inventario.getEstadisticas().get(productoNombre).put(fechaActual,(int) (cantidadActual - cantidad));
+					this.pos.inventario.getEstadisticas().get(productoNombre).put(fechaActual, (int) (cantidadActual - cantidad));
 				}
 				return (1);
 
@@ -232,7 +231,7 @@ public class Cajero
 	 * @param c
 	 * @throws Exception => Hay un producto que no existe o no tiene la suficiente cantidad
 	 */
-	public void agregarCombo(Combo c) throws Exception
+	public void agregarCombo(Combo c)
 	{
 
 		if (this.compraActiva != null)
@@ -249,18 +248,14 @@ public class Cajero
 					Integer cantidadDelProducto = c.getProductosCantidad().get(nombreDelProducto);
 
 					Integer cantidadActualProducto = this.pos.getUnidadesDuranteEjecucion().get(nombreDelProducto);
-					System.out.println(nombreDelProducto);
-					System.out.println(cantidadActualProducto);
-					System.out.println(cantidadDelProducto);
+					
 					// TODO: Que se actualice el inventario
 					Integer cantidadActualizadaInteger = cantidadActualProducto - cantidadDelProducto;
-					System.out.println("Resta: " + cantidadActualizadaInteger);
-					System.out.println("Replace: " + this.pos.getUnidadesDuranteEjecucion().replace(nombreDelProducto, cantidadActualProducto, cantidadActualizadaInteger));
-					System.out.println("Se ha actualizado");
+					this.pos.getUnidadesDuranteEjecucion().put(nombreDelProducto, cantidadActualizadaInteger);
 				}
 			} else // No es posible agregar el combo
 			{
-				throw new Exception("¡No es posible agregar el Combo!");
+				
 			}
 		}
 	}
