@@ -104,4 +104,10 @@ public class PuntosMultiplicados implements Promocion
 	{
 		return esVigente;
 	}
+
+	@Override
+	public Double getPrecioSinDescuento()
+	{
+		return null;
+	}
 }

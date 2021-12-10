@@ -41,6 +41,8 @@ public interface Promocion
 	
 	public void setPrecioSinDescuento(Double precio);
 	
+	public Double getPrecioSinDescuento();
+	
 	public boolean isVigente();
 
 	// public Double retornarAhorro();

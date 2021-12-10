@@ -4,6 +4,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
 
 import modelo.promociones.Combo;
 import modelo.promociones.Promocion;
@@ -94,7 +95,17 @@ public class Compra
 			}
 		}
 
-		this.factura += "\nVALOR TOTAL DE LA COMPRA: " + valorTotal + "\n";
+		if (this.promociones.size() > 0)
+		{
+			this.factura += "\nPROMOCIONES:";
+			
+			for (Promocion p: promociones)
+			{
+				this.factura += "\n-Tipo: " + p.getTipoPromocion() + " | Ahorro: " + (p.getPrecioSinDescuento() - p.getPrecioPromocion());
+			}
+		}
+
+			this.factura += "\nVALOR TOTAL DE LA COMPRA: " + (valorTotal - this.restaDeDescuentosYCombosDouble) + "\n";
 
 		if (this.cedula != null)
 		{
@@ -336,12 +347,60 @@ public class Compra
 		this.combos.add(c);
 	}
 
-	// TODO: completar la función
-	private void buscarPromociones()
+	/**
+	 * Se buscan las promociones que aplican a la compra
+	 * 
+	 * @param inventario
+	 */
+	private void buscarPromociones(Inventario inventario)
 	{
 		/*
 		 * restaDeDescuentosYCombosDouble+= SinDescuento - ConDescuento
 		 */
 
+		ArrayList<Promocion> promocionesInventario = inventario.getPromociones();
+
+		for (Promocion p : promocionesInventario)
+		{
+			HashMap<String, Integer> productosDeLaPromocion = p.getProductosCantidad();
+
+			if (this.tieneTodosLosProductos(productosDeLaPromocion))
+			{
+				this.promociones.add(p);
+
+				if (p.getTipoPromocion().equals("descuento"))
+				{
+					this.restaDeDescuentosYCombosDouble += p.getPrecioSinDescuento() - p.getPrecioPromocion();
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param inventario
+	 * @param productos
+	 * @return
+	 */
+	private boolean tieneTodosLosProductos(HashMap<String, Integer> productosDePromocion)
+	{
+		boolean tieneTodos = true;
+
+		// HashMap<String, Integer> productosDePromocion = p.getProductosCantidad();
+
+		Set<String> nombreProductoPromocion = productosDePromocion.keySet();
+		for (String nombreProducto : nombreProductoPromocion)
+		{
+			Integer cantidadPromocion = productosDePromocion.get(nombreProducto);
+
+			if ((double) cantidadPromocion != this.productoCantidad.get(nombreProducto).get(0))
+			{
+				tieneTodos = false;
+				break;
+			}
+		}
+
+		return tieneTodos;
 	}
 }
