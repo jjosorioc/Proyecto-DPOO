@@ -702,7 +702,7 @@ public class EncargadoInventario
 						System.out.println("Si");
 						fechas += fechaString + ",";
 						unidades.add(cantidad);
-						new FrameEstadisticas(unidades,nombreProducto,fechas);
+						
 					}
 					else
 					{
@@ -712,6 +712,7 @@ public class EncargadoInventario
 				
 			}
 			csvReader.close();
+			new FrameEstadisticas(unidades,nombreProducto,fechas);
 			
 		} catch (IOException e) {
 			throw new Exception ("¡No se logró cargar el archivo!");
