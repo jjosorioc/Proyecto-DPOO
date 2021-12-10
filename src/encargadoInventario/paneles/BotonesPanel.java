@@ -153,7 +153,7 @@ public class BotonesPanel extends JPanel
 		this.add(agregarImagen);
 		
 		// COMPORTAMIENTO PRODUCTO
-		BufferedImage bi = ImageIO.read(new File(pathImagenes + "/botonAgregarImagen.png"));
+		BufferedImage bi = ImageIO.read(new File(pathImagenes + "/consultarComportamientoProducto.png"));
 		ImageIcon biAsIcon = new ImageIcon(bi);
 		Image img9 = biAsIcon.getImage();
 		Image newImg9 = img9.getScaledInstance(300, 102, java.awt.Image.SCALE_SMOOTH);
