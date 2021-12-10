@@ -7,11 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import barChart.FrameEstadisticas;
 import modelo.Inventario;
 import modelo.Lote;
 import modelo.promociones.Combo;
@@ -196,12 +198,49 @@ public class EncargadoInventario
 				}
 			}
 			csvReader.close();
+			cargarEstadisticas();
 		} catch (NullPointerException e)
 		{
 			throw new NullPointerException("No se ingresó un archivo");
 		}
 	}
+	public void cargarEstadisticas() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data/estadisticas.csv";
+		BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
 
+		// NombreProducto, Fecha, Unidades
+
+		csvReader.readLine();
+		String row;
+		while ((row = csvReader.readLine()) != null)
+		{
+			String[] separada = row.split(",");
+
+			String nombreProducto = separada[0];
+			String[] fechaString =(separada[1]).split("-");
+			LocalDate fecha = LocalDate.of(Integer.parseInt(fechaString[0]), Integer.parseInt(fechaString[1]), Integer.parseInt(fechaString[2]));
+
+			int unidades = Integer.parseInt(separada[2]);
+			
+			if (this.inventario.getEstadisticas().containsKey(nombreProducto))
+			{
+			
+				this.inventario.getEstadisticas().get(nombreProducto).put(fecha, unidades);
+		
+			}
+			else
+			{
+				HashMap<LocalDate,Integer> estasEstadisticas = new HashMap<LocalDate,Integer>();
+				estasEstadisticas.put(fecha, unidades);
+				this.inventario.getEstadisticas().put(nombreProducto, estasEstadisticas);
+			}
+
+			
+		}
+		csvReader.close();
+	}
+	
 	/**
 	 * Se carga el archivo de ganaciasYperdidas.csv
 	 * 
@@ -560,7 +599,41 @@ public class EncargadoInventario
 		}
 		writeCSV.close();
 		guardarGananciasYPerdidas();
+		guardarEstadisticas();
 		System.exit(0);// Successful
+	}
+	
+	public void guardarEstadisticas() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data";
+		File csvfile = new File(dataDirectory + "/estadisticas.csv");
+		csvfile.createNewFile();
+
+		FileWriter writeCSV = new FileWriter(csvfile);
+
+		String primeraLineaString = "Producto,Fecha(YYYY-MM-DD),Unidades";
+
+		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
+
+		Set<String> llaves = inventario.getEstadisticas().keySet();
+
+		for (String llave : llaves)
+		{
+			
+			Set<LocalDate> llavesFechas = inventario.getEstadisticas().get(llave).keySet();
+			
+			for (LocalDate fecha: llavesFechas)
+			{
+				String producto = llave;
+				String fechaString = fecha.toString();
+				String unidades = Integer.toString(inventario.getEstadisticas().get(llave).get(fecha));
+
+				String nuevaLinea = producto + "," + fechaString + "," + unidades;
+				writeCSV.write(nuevaLinea + "\n");
+			}
+			
+		}
+		writeCSV.close();
 	}
 
 	/**
@@ -592,5 +665,38 @@ public class EncargadoInventario
 		}
 		writeCSV.close();
 	}
+	
+	public void consultarComportamiento(String nombreProducto) throws IOException
+	{
+		String fechas = "";
+		ArrayList<Integer> unidades = new ArrayList<Integer>();
+		
+		String dataDirectory = System.getProperty("user.dir") + "/data/estadisticas.csv";
+		BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
+
+		// NombreProducto, Fecha, Unidades
+
+		csvReader.readLine();
+		String row;
+		while ((row = csvReader.readLine()) != null)
+		{
+			String[] separada = row.split(",");
+
+			String producto = separada[0];
+			String fechaString = (separada[1]);
+			
+			int cantidad = Integer.parseInt(separada[2]);
+			
+			if (producto.equals(nombreProducto))
+			{
+				fechas += fechaString + ",";
+				unidades.add(cantidad);
+			}
+			
+		}
+		csvReader.close();
+		new FrameEstadisticas(unidades,nombreProducto,fechas);
+	}
+
 
 }

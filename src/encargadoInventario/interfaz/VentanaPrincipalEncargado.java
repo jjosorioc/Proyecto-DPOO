@@ -81,6 +81,8 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 	public JButton guardarYCerrar;
 
 	public JButton agregarImagen;
+	
+	public JButton comportamientoProducto;
 
 	public VentanaPrincipalEncargado() throws IOException
 	{
@@ -138,6 +140,7 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 		this.desempenhoFinancieroProducto = botonesPanel.desempenhoFinancieroProducto;
 		this.guardarYCerrar = botonesPanel.guardarYCerrar;
 		this.agregarImagen = botonesPanel.agregarImagen;
+		this.comportamientoProducto = botonesPanel.comportamientoProducto;
 
 		/*
 		 * Cargar un lote
@@ -328,6 +331,24 @@ public class VentanaPrincipalEncargado extends JFrame implements ActionListener
 			} catch (NullPointerException | IOException e2)
 			{
 				String mensaje = "¡No se logró agregar la imagen!";
+				JOptionPane.showMessageDialog(this, mensaje, "Agregar Imagen", JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+		
+		/*
+		 * CONSULTAR COMPORTAMIENTO PRODUCTO
+		 */
+		if (e.getSource() == this.comportamientoProducto)
+		{
+			try
+			{
+				String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:");
+				this.ENCARGADO.consultarComportamiento(nombreProducto);
+				
+			} catch (NullPointerException | IOException e2)
+			{
+				String mensaje = "¡No se logró mostrar el gráfico!";
 				JOptionPane.showMessageDialog(this, mensaje, "Agregar Imagen", JOptionPane.ERROR_MESSAGE);
 			}
 

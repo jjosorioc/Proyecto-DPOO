@@ -1,5 +1,6 @@
 package modelo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap; // import the HashMap class
 import java.util.Set;
@@ -23,7 +24,14 @@ public class Inventario
 
 	private ArrayList<Combo> combos = new ArrayList<Combo>();
 
+	private HashMap<String, HashMap<LocalDate,Integer>> estadisticas = new HashMap<String, HashMap<LocalDate,Integer>>();
+
 	// Métodos
+	
+	public HashMap<String, HashMap<LocalDate,Integer>> getEstadisticas()
+	{
+		return estadisticas;
+	}
 
 	/**
 	 * @return the combos

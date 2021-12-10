@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -169,7 +170,20 @@ public class Cajero
 				this.compraActiva.agregarProducto(productoNombre, cantidad, peso);
 				Integer cantidadActual = this.pos.getUnidadesDuranteEjecucion().get(productoNombre);
 				this.pos.getUnidadesDuranteEjecucion().replace(productoNombre, (int) (cantidadActual - cantidad));
+				
+				LocalDate fechaActual = LocalDate.now();
+				
+				if (this.pos.inventario.getEstadisticas().get(productoNombre).containsKey(fechaActual))
+				{
+					Integer cantidadAnterior = this.pos.inventario.getEstadisticas().get(productoNombre).get(fechaActual);
+					this.pos.inventario.getEstadisticas().get(productoNombre).put(fechaActual,(int) (cantidadAnterior - cantidad));
+				}
+				else
+				{
+					this.pos.inventario.getEstadisticas().get(productoNombre).put(fechaActual,(int) (cantidadActual - cantidad));
+				}
 				return (1);
+
 			} else
 			{
 				// El producto no existe o la cantidad de unidades no alcanza.
@@ -340,6 +354,7 @@ public class Cajero
 		this.pos.guardarInventario();
 		this.pos.guardarClientes();
 		this.pos.guardarGananciasYPerdidas();
+		this.pos.guardarEstadisticas();
 	}
 
 }

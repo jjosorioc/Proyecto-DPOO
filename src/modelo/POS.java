@@ -169,9 +169,46 @@ public class POS
 			}
 		}
 		csvReader.close();
+		cargarEstadisticas();
 
 	}
+	
+	public void cargarEstadisticas() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data/estadisticas.csv";
+		BufferedReader csvReader = new BufferedReader(new FileReader(dataDirectory));
 
+		// NombreProducto, Fecha, Unidades
+
+		csvReader.readLine();
+		String row;
+		while ((row = csvReader.readLine()) != null)
+		{
+			String[] separada = row.split(",");
+
+			String nombreProducto = separada[0];
+			String[] fechaString =(separada[1]).split("-");
+			LocalDate fecha = LocalDate.of(Integer.parseInt(fechaString[0]), Integer.parseInt(fechaString[1]), Integer.parseInt(fechaString[2]));
+
+			int unidades = Integer.parseInt(separada[2]);
+			
+			if (this.inventario.getEstadisticas().containsKey(nombreProducto))
+			{
+				this.inventario.getEstadisticas().get(nombreProducto).put(fecha, unidades);
+			}
+			else
+			{
+				HashMap<LocalDate,Integer> estasEstadisticas = new HashMap<LocalDate,Integer>();
+				estasEstadisticas.put(fecha, unidades);
+				this.inventario.getEstadisticas().put(nombreProducto, estasEstadisticas);
+			}
+
+			
+		}
+		csvReader.close();
+	}
+
+	
 	public void cargarPromociones() throws IOException// throws Exception
 	{
 		BufferedReader csvReaderPromociones = new BufferedReader(new FileReader("./data/promociones.csv"));
@@ -232,6 +269,40 @@ public class POS
 		}
 		csvReaderPromociones.close();
 	}
+	
+	public void guardarEstadisticas() throws IOException
+	{
+		String dataDirectory = System.getProperty("user.dir") + "/data";
+		File csvfile = new File(dataDirectory + "/estadisticas.csv");
+		csvfile.createNewFile();
+
+		FileWriter writeCSV = new FileWriter(csvfile);
+
+		String primeraLineaString = "Producto,Fecha(YYYY-MM-DD),Unidades";
+
+		writeCSV.write(primeraLineaString + "\n"); // Se agrega la primera línea
+
+		Set<String> llaves = inventario.getEstadisticas().keySet();
+
+		for (String llave : llaves)
+		{
+			
+			Set<LocalDate> llavesFechas = inventario.getEstadisticas().get(llave).keySet();
+			
+			for (LocalDate fecha: llavesFechas)
+			{
+				String producto = llave;
+				String fechaString = fecha.toString();
+				String unidades = Integer.toString(inventario.getEstadisticas().get(llave).get(fecha));
+
+				String nuevaLinea = producto + "," + fechaString + "," + unidades;
+				writeCSV.write(nuevaLinea + "\n");
+			}
+			
+		}
+		writeCSV.close();
+	}
+	
 
 	/**
 	 * Guardar el inventario al csv

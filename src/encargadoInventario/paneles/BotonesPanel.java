@@ -40,6 +40,8 @@ public class BotonesPanel extends JPanel
 	public JButton guardarYCerrar;
 	
 	public JButton agregarImagen;	
+	
+	public JButton comportamientoProducto;
 
 	public BotonesPanel(VentanaPrincipalEncargado padre) throws IOException
 	{
@@ -149,6 +151,18 @@ public class BotonesPanel extends JPanel
 		agregarImagen.setContentAreaFilled(false);
 
 		this.add(agregarImagen);
+		
+		// COMPORTAMIENTO PRODUCTO
+		BufferedImage bi = ImageIO.read(new File(pathImagenes + "/botonAgregarImagen.png"));
+		ImageIcon biAsIcon = new ImageIcon(bi);
+		Image img9 = biAsIcon.getImage();
+		Image newImg9 = img9.getScaledInstance(300, 102, java.awt.Image.SCALE_SMOOTH);
+
+		comportamientoProducto = new JButton(new ImageIcon(newImg9));
+		comportamientoProducto.setBorder(BorderFactory.createEmptyBorder());
+		comportamientoProducto.setContentAreaFilled(false);
+
+		this.add(comportamientoProducto);
 
 		/*
 		 * ACTION LISTENERS
@@ -161,6 +175,7 @@ public class BotonesPanel extends JPanel
 		this.desempenhoFinancieroProducto.addActionListener(padre);
 		this.guardarYCerrar.addActionListener(padre);
 		this.agregarImagen.addActionListener(padre);
+		this.comportamientoProducto.addActionListener(padre);
 
 	}
 }
