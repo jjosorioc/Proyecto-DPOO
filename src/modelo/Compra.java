@@ -85,7 +85,7 @@ public class Compra
 
 		if (this.combos.size() > 0)
 		{
-			this.factura += "\nCOMBOS:";
+			this.factura += "\nCOMBOS:\n";
 
 			for (Combo c : combos)
 			{
@@ -97,11 +97,11 @@ public class Compra
 
 		if (this.promociones.size() > 0)
 		{
-			this.factura += "\nPROMOCIONES:";
+			this.factura += "\nPROMOCIONES:\n";
 
 			for (Promocion p : promociones)
 			{
-				this.factura += "\n-Tipo: " + p.getTipoPromocion();
+				this.factura += "\n-Tipo: " + p.getTipoPromocion()+ "\n";
 			}
 		}
 
@@ -193,6 +193,7 @@ public class Compra
 	 */
 	public String getFacturaPuntos(Inventario inventario, Integer puntosRedimidos, Integer puntosActuales)
 	{
+		this.buscarPromociones(inventario);
 		this.factura += "\nFACTURA\n";
 		for (String llave : this.productoCantidad.keySet())
 		{
@@ -202,7 +203,7 @@ public class Compra
 
 		if (this.combos.size() > 0)
 		{
-			this.factura += "\nCOMBOS:";
+			this.factura += "\nCOMBOS:\n";
 
 			for (Combo c : combos)
 			{
@@ -211,6 +212,18 @@ public class Compra
 				valorTotal += c.getPrecioPromocion();
 			}
 		}
+		
+		if (this.promociones.size() > 0)
+		{
+			this.factura += "\nPROMOCIONES:\n";
+
+			for (Promocion p : promociones)
+			{
+				this.factura += "\n-Tipo: " + p.getTipoPromocion() + "\n";
+			}
+		}
+		
+		this.valorTotal = (valorTotal - this.restaDeDescuentosYCombosDouble);
 
 		this.factura += "\nVALOR TOTAL DE LA COMPRA: " + valorTotal + "\n";
 
@@ -368,7 +381,6 @@ public class Compra
 
 			if (this.tieneTodosLosProductos(productosDeLaPromocion))
 			{
-				System.out.println(p.getTipoPromocion());
 				this.promociones.add(p);
 
 				if (p.getTipoPromocion().equals("descuento"))
