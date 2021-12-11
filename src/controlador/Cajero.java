@@ -47,8 +47,6 @@ public class Cajero
 			return reader.readLine();
 		} catch (IOException e)
 		{
-			System.out.println("Error leyendo de la consola");
-			e.printStackTrace();
 		}
 		return null;
 	}
@@ -249,7 +247,6 @@ public class Cajero
 
 					Integer cantidadActualProducto = this.pos.getUnidadesDuranteEjecucion().get(nombreDelProducto);
 					
-					// TODO: Que se actualice el inventario
 					Integer cantidadActualizadaInteger = cantidadActualProducto - cantidadDelProducto;
 					this.pos.getUnidadesDuranteEjecucion().put(nombreDelProducto, cantidadActualizadaInteger);
 				}

@@ -70,7 +70,7 @@ public class Inventario
 		return perdidas;
 	}
 
-	public Double getPrecioProducto(String nombre, Double cantidad) // TODO: Cambiar nombre del método
+	public Double getPrecioProducto(String nombre, Double cantidad)
 	{
 		Double costoTotal = 0.0;
 

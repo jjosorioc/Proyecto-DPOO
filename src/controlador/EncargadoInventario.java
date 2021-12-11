@@ -699,7 +699,6 @@ public class EncargadoInventario
 				{
 					if (fecha.isBefore(fechaFin) && fecha.isAfter(fechaInicio))	
 					{
-						System.out.println("Si");
 						fechas += fechaString + ",";
 						unidades.add(cantidad);
 						

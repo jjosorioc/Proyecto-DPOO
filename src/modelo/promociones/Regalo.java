@@ -98,8 +98,7 @@ public class Regalo implements Promocion
 	@Override
 	public Double getDescuentoPorcentaje()
 	{
-		// TODO Auto-generated method stub
-		return null; // TODO:Producto de regalo???
+		return null;
 	}
 
 	@Override

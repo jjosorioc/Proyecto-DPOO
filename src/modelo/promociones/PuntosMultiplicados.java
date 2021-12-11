@@ -17,8 +17,7 @@ public class PuntosMultiplicados implements Promocion
 
 	private HashMap<String, Integer> productosCantidad;
 
-	private Integer puntosMultiplicados; // TODO: wtf
-
+	private Integer puntosMultiplicados;
 	private Double precioPromocion;
 
 	private boolean esVigente;
@@ -89,7 +88,7 @@ public class PuntosMultiplicados implements Promocion
 	@Override
 	public Double getDescuentoPorcentaje()
 	{
-		return null;// TODO: puntos???
+		return null;
 	}
 
 	@Override
