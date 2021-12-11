@@ -10,6 +10,27 @@ Por Juan José Osorio (202021720)
 Mariana Diaz (202020993)
 y Thais Tamaio (2020222213)
 
+
+```diff
+- INFORMACIÓN ACERCA DEL PROYECTO 3:
+```
+
+Para los requerimientos adicionales del proyecto 3 se tiene lo siguiente:
+
+
+__Cajero:__
+
+__1.__ Para las promociones: La carga se realiza automáticamente al ejecutar el programa, el cual solo tendrá en cuenta las promociones vigentes.
+
+__2.__ Para la promoción de regalo, se decidió que cada promoción de tipo regalo solo se puede aplicar una vez por compra. Es decir, se pueden aplicar diferentes promociones de tipo regalo, solo que en una sola ocasión cada una. Ejemplo: si hay una promoción de pague 1 lleve 2 manzanas, esta solo se aplicará para las primeras tres manzanas que lleve el cliente. No obstante, si existe otra promoción de pague 1 lleve 2 peras, esta si se podrá aplicar luego de la promoción de las manzanas. 
+
+__3.__ En la factura se imprimirá el nombre de las promociones que fueron aplicadas y el precio total ya incluye las promociones aplicadas.
+
+__Encargado inventario:__ 
+
+__1.__ Para consultar el comportamiento de un producto, la información se carga desde un archivo csv (Estadísticas.csv) que contiene el producto y las unidades de ese producto para cada una de las fechas. En la ventana de encargado inventario se debe ingresar el producto y un rango de fechas en el formato (YYYY-MM-DD) y esto mostrará un gráfico de barras con las fechas en la parte inferior. Si se realiza una compra, se actualiza la información y se agrega una nueva fecha con las unidades ahora disponibles y si esa fecha ya existía, sencillamente se actualiza la cantidad y posteriormente se guarda en el csv (se debe oprimir guardar y cerrar). Esta opcións e ejecuta desde un nuevo botón en la interfaz de encargado inventario, el cuál se encuentra en la esquina inferior derecha.
+
+
 ```diff
 - Para ejecutar la interfaz de encargado inventario:
 ```
